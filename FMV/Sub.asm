@@ -24,9 +24,9 @@
 	move.b	#%11111100,PCMONOFF		; Unmute PCM1 and PCM2
 
 	if DATAFILE=0
-		move.w	#FID_GOODENDSTM,d0
+		move.w	#FID_GOODENDSTM,d0	; Good ending FMV data
 	elseif DATAFILE=1
-		move.w	#FID_BADENDSTM,d0
+		move.w	#FID_BADENDSTM,d0	; Bad ending FMV data
 	endif
 	jsr	GetFileName.w
 	
@@ -63,13 +63,14 @@
 	lea	PCMREGS,a6			; Set PCM bank ID
 	move.b	d1,PCMCTRL-PCMREGS(a6)
 	
-	; Note: They only copy $FFF bytes instead of $1000 because the last PCM bank
+	; Note: They only copied $FFF bytes instead of $1000 because the last PCM bank
 	; holds a loop flag at the very end, and they didn't want to overwrite that.
 	; However, their workaround results in 1 byte gaps every $1000 bytes in wave
 	; RAM, and also results in the last 8 bytes in a PCM data packet to go
 	; unused, causing clicks/skipping.
 	; See the note below for why this workaround wasn't even necessary to begin with.
-	move.w	#$FFF-1,d3			; Number of bytes per bank
+	; Dobby: changed to $1000.
+	move.w	#$1000-1,d3			; Number of bytes per bank
 	lea	PCMWAVE,a6			; PCM wave RAM
 	
 .StreamPCMLoop:
@@ -163,7 +164,8 @@ InitPCMWave:
 	; why the PCM streaming code doesn't copy enough bytes. Setting this flag is
 	; actually unnecessary in this context, because the PCM chip wraps back to
 	; the very start after it goes past the end anyways.
-	move.b	#$FF,PCMWAVE+($FFF*2)		; Set loop flag
+	; Dobby: removed.
+	;move.b	#$FF,PCMWAVE+($FFF*2)		; Set loop flag
 	rts
 	
 ; -------------------------------------------------------------------------
@@ -187,7 +189,10 @@ InitPCMRegs:
 	dbf	d4,*
 	addq.l	#2,a6				; Next register
 	dbf	d7,.InitPCM1			; Loop until all registers are initialized
-	
+
+	; Dobby: a5's value was incremented above.
+	; Reset it back to the start of the data.
+	lea	.RegValues,a5			; Register values
 	lea	PCMREGS,a6			; Control and sound PCM2
 	move.b	#$C1,PCMCTRL-PCMREGS(a6)
 	addq.l	#PCMENV-PCMREGS,a6		; Go to the ENV register

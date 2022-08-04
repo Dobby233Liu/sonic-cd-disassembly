@@ -310,7 +310,9 @@ BuRAMWriteParams:
 	beq.s	.WaitCommand
 	cmp.w	GACOMCMD0.w,d0
 	bne.s	.WaitCommand
-	cmpi.w	#(.SPCmdsEnd-.SPCmds)/2+1,d0	; Note: that "+1" shouldn't be there
+	; Note: that "+1" shouldn't be there
+	; Dobby: removed.
+	cmpi.w	#(.SPCmdsEnd-.SPCmds)/2,d0
 	bcc.w	SPCmdFinish			; If it's an invalid ID, branch
 
 	move.w	d0,d1				; Execute command
