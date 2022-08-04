@@ -235,12 +235,12 @@ PLC_Signpost:
 ; Leftover data from other level files used as padding, can be replaced
 ; with a "align $10000"
 ; -------------------------------------------------------------------------
-
-	if REGION=USA
-	incbin	"Level/Palmtree Panic/Data/Padding/1 (Act 1 Past, U).bin"
-	else
-	incbin	"Level/Palmtree Panic/Data/Padding/1 (Act 1 Past, JE).bin"
-	endif
+; Ralakimus: Allow chunks to be located anywhere #8
+;	if REGION=USA
+;	incbin	"Level/Palmtree Panic/Data/Padding/1 (Act 1 Past, U).bin"
+;	else
+;	incbin	"Level/Palmtree Panic/Data/Padding/1 (Act 1 Past, JE).bin"
+;	endif
 
 ; -------------------------------------------------------------------------
 
@@ -310,12 +310,12 @@ MapSpr_FlowerCapsule:
 ; Leftover data from other level files used as padding, can be replaced
 ; with a "align $20000"
 ; -------------------------------------------------------------------------
-
-	if REGION=USA
-	incbin	"Level/Palmtree Panic/Data/Padding/2 (Act 1 Past, U).bin"
-	else
-	incbin	"Level/Palmtree Panic/Data/Padding/2 (Act 1 Past, JE).bin"
-	endif
+; Ralakimus: Allow chunks to be located anywhere #8
+;	if REGION=USA
+;	incbin	"Level/Palmtree Panic/Data/Padding/2 (Act 1 Past, U).bin"
+;	else
+;	incbin	"Level/Palmtree Panic/Data/Padding/2 (Act 1 Past, JE).bin"
+;	endif
 
 ; -------------------------------------------------------------------------
 	
@@ -557,7 +557,7 @@ Art_Projector:
 ; Leftover data from other level files used as padding, can be replaced
 ; with a "align $40000"
 ; -------------------------------------------------------------------------
-
-	incbin	"Level/Palmtree Panic/Data/Padding/3 (Act 1 Past).bin"
+; Ralakimus: Allow chunks to be located anywhere #8
+;	incbin	"Level/Palmtree Panic/Data/Padding/3 (Act 1 Past).bin"
 
 ; -------------------------------------------------------------------------

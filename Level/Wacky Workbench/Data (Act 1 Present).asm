@@ -134,12 +134,12 @@ PLC_Signpost:
 ; Leftover data from other level files used as padding, can be replaced
 ; with a "align $10000"
 ; -------------------------------------------------------------------------
-
-	if REGION=USA
-	incbin	"Level/Wacky Workbench/Data/Padding/1 (Act 1 Present, U).bin"
-	else
-	incbin	"Level/Wacky Workbench/Data/Padding/1 (Act 1 Present, JE).bin"
-	endif
+; Ralakimus: Allow chunks to be located anywhere #8
+;	if REGION=USA
+;	incbin	"Level/Wacky Workbench/Data/Padding/1 (Act 1 Present, U).bin"
+;	else
+;	incbin	"Level/Wacky Workbench/Data/Padding/1 (Act 1 Present, JE).bin"
+;	endif
 
 ; -------------------------------------------------------------------------
 
@@ -150,8 +150,8 @@ LevelChunks:
 ; Leftover data from other level files used as padding, can be replaced
 ; with a "align $20000"
 ; -------------------------------------------------------------------------
-
-	incbin	"Level/Wacky Workbench/Data/Padding/2 (Act 1 Present).bin"
+; Ralakimus: Allow chunks to be located anywhere #8
+;	incbin	"Level/Wacky Workbench/Data/Padding/2 (Act 1 Present).bin"
 
 ; -------------------------------------------------------------------------
 
@@ -472,7 +472,7 @@ Art_Projector:
 ; Leftover data from other level files used as padding, can be replaced
 ; with a "align $40000"
 ; -------------------------------------------------------------------------
-
-	incbin	"Level/Wacky Workbench/Data/Padding/3 (Act 1 Present).bin"
+; Ralakimus: Allow chunks to be located anywhere #8
+;	incbin	"Level/Wacky Workbench/Data/Padding/3 (Act 1 Present).bin"
 
 ; -------------------------------------------------------------------------

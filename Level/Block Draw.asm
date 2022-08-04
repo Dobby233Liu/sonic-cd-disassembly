@@ -211,7 +211,8 @@ GetBlockDataAbsXY:
 	lsr.w	#5,d0
 	andi.w	#$7F,d0
 	add.w	d3,d0
-	move.l	#LevelChunks,d3
+	; Ralakimus: Allow chunks to be located anywhere #4
+	moveq	#0,d3
 	move.b	(a4,d0.w),d3
 	beq.s	.End				; If it's a blank chunk, branch out of here
 
@@ -223,6 +224,8 @@ GetBlockDataAbsXY:
 	andi.w	#$1E,d5
 	add.w	d4,d3
 	add.w	d5,d3
+	; Ralakimus: Allow chunks to be located anywhere #5
+	add.l	#LevelChunks,d3		; Add base chunk data pointer
 	movea.l	d3,a0
 
 	move.w	(a0),d3				; Get pointer to block data
@@ -256,7 +259,8 @@ GetBlockMetadata:
 	lsr.w	#5,d0
 	andi.w	#$7F,d0
 	add.w	d3,d0
-	move.l	#LevelChunks,d3
+	; Ralakimus: Allow chunks to be located anywhere #6
+	moveq	#0,d3
 	move.b	(a4,d0.w),d3
 
 	subq.b	#1,d3				; Get pointer to block metadata in the chunk
@@ -267,6 +271,8 @@ GetBlockMetadata:
 	andi.w	#$1E,d5
 	add.w	d4,d3
 	add.w	d5,d3
+	; Ralakimus: Allow chunks to be located anywhere #7
+	add.l	#LevelChunks,d3		; Add base chunk data pointer
 	movea.l	d3,a0
 
 	rts

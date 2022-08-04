@@ -463,7 +463,8 @@ GetLevelBlock:
 	andi.w	#$7F,d1
 	add.w	d1,d0				; Combine the X and Y into a level layout data index value
 
-	move.l	#LevelChunks,d1			; Get base chunk data pointer
+	; Ralakimus: Allow chunks to be located anywhere #1
+	moveq	#0,d1
 	lea	levelLayout.w,a1		; Get chunk that the block we want is in
 	move.b	(a1,d0.w),d1
 	beq.s	.Blank				; If it's a blank chunk, branch
@@ -496,6 +497,8 @@ GetLevelBlock:
 	add.w	d0,d1
 
 .Blank:
+	; Ralakimus: Allow chunks to be located anywhere #2
+	add.l	#LevelChunks,d1		; Add base chunk data pointer
 	movea.l	d1,a1				; Get pointer to block
 	rts
 
@@ -648,6 +651,8 @@ GetLevelBlock:
 	andi.w	#$1E,d0
 	add.w	d0,d1
 
+	; Ralakimus: Allow chunks to be located anywhere #3
+	add.l	#LevelChunks,d1		; Add base chunk data pointer
 	movea.l	d1,a1				; Get pointer to block
 	rts
 
