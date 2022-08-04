@@ -463,36 +463,6 @@ VInt_Lag:
 	rte
 
 ; -------------------------------------------------------------------------
-; Unused functions to display a clouds buffer
-; -------------------------------------------------------------------------
-; PARAMETERS:
-;	a1.l - VDP control port
-;	a2.l - VDP data port
-; -------------------------------------------------------------------------
-
-DisplayCloudsBuf1:
-	move.w	#$8F20,(a1)			; Set for every 8 scanlines
-	VDPCMD	move.l,$D002,VRAM,WRITE,VDPCTRL	; Write background scroll data
-	moveq	#0,d0				; Display clouds buffer 1
-	bra.s	DisplayCloudsBuf
-
-; -------------------------------------------------------------------------
-
-DisplayCloudsBuf2:
-	move.w	#$8F20,(a1)			; Set for every 8 scanlines
-	VDPCMD	move.l,$D002,VRAM,WRITE,VDPCTRL	; Write background scroll data
-	move.w	#$100,d0			; Display clouds buffer 2
-
-; -------------------------------------------------------------------------
-
-DisplayCloudsBuf:
-	rept	(IMGHEIGHT-8)/8			; Set scroll offset for clouds
-		move.w	d0,(a2)
-	endr
-	move.w	#$8F02,(a1)			; Restore autoincrement
-	rts
-
-; -------------------------------------------------------------------------
 ; Scroll background (display clouds buffer 1)
 ; -------------------------------------------------------------------------
 
@@ -1589,55 +1559,6 @@ ClearObjects:
 BookmarkObject:
 	move.l	(sp)+,d0			; Set bookmark and exit
 	move.w	d0,oAddr(a0)
-	rts
-
-; -------------------------------------------------------------------------
-; Set object bookmark and continue
-; -------------------------------------------------------------------------
-; PARAMETERS:
-;	a0.l - Pointer to object slot
-; -------------------------------------------------------------------------
-
-BookmarkObjCont:
-	move.l	(sp)+,d0			; Set bookmark
-	move.w	d0,oAddr(a0)
-	movea.l	d0,a0				; BUG: Overwrites object slot pointer
-	jmp	(a0)				; Go back to object code
-
-; -------------------------------------------------------------------------
-; Set object address
-; -------------------------------------------------------------------------
-; PARAMETERS:
-;	a0.l - Pointer to object slot
-;	a1.l - Pointer to object code
-; -------------------------------------------------------------------------
-
-SetObjectAddr:
-	move.l	a1,oAddr(a0)			; BUG: Writes longword when it should've been truncated to a word
-	rts
-
-; -------------------------------------------------------------------------
-; Delete object
-; -------------------------------------------------------------------------
-; PARAMETERS:
-;	a0.l - Pointer to object slot
-; -------------------------------------------------------------------------
-
-DeleteObject:
-	; BUG: It advances a0, but doesn't restore it, so when it exits
-	; back to RunObjects, it'll skip the object after this one
-	moveq	#oSize/4-1,d0			; Clear object
-
-.Clear:
-	clr.l	(a0)+
-	dbf	d0,.Clear
-
-	if (oSize&2)<>0				; Clear leftovers
-		clr.w	(a0)+
-	endif
-	if (oSize&1)<>0
-		clr.b	(a0)+
-	endif
 	rts
 
 ; -------------------------------------------------------------------------

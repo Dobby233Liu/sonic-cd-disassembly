@@ -237,24 +237,6 @@ Finish:
 	;endif
 
 ; -------------------------------------------------------------------------
-; Unused function to send some kind of command ID to the Sub CPU
-; -------------------------------------------------------------------------
-
-UnkSubCPUCmd:
-	move.w	#1,GACOMCMD2			; Send command
-
-.WaitSubCPU:
-	tst.w	GACOMSTAT2			; Has the Sub CPU acknowledged it?
-	beq.s	.WaitSubCPU
-	
-	move.w	#0,GACOMCMD2			; Tell Sub CPU we are ready to send more commands
-
-.WaitSubCPU2:
-	tst.w	GACOMSTAT2			; Is the Sub CPU ready for more commands?
-	bne.s	.WaitSubCPU2			; If not, wait
-	rts
-
-; -------------------------------------------------------------------------
 ; Give Sub CPU Word RAM access
 ; -------------------------------------------------------------------------
 

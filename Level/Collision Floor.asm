@@ -131,75 +131,8 @@ Player_AnglePos_Done:
 	rts
 
 ; -------------------------------------------------------------------------
-; Some kind of unsued object movement with gravity routine
-; -------------------------------------------------------------------------
-; PARAMETERS:
-;	d3.l - Y position
-;	a0.l - Player object RAM
-; -------------------------------------------------------------------------
-
-ObjMoveGrvUnused:
-	move.l	oX(a0),d2			; Apply X velocity
-	move.w	oXVel(a0),d0
-	ext.l	d0
-	asl.l	#8,d0
-	sub.l	d0,d2
-	move.l	d2,oX(a0)
-
-	move.w	#$38,d0				; Apply gravity without first applying Y velocity
-	ext.l	d0				; ...and getting the Y position first
-	asl.l	#8,d0
-	sub.l	d0,d3
-	move.l	d3,oY(a0)
-	rts
-
-; -------------------------------------------------------------------------
 
 Player_WalkVert_Done:
-	rts
-
-; -------------------------------------------------------------------------
-; Unused routine to apply Y velocity and reverse gravity onto an object
-; -------------------------------------------------------------------------
-; PARAMETERS:
-;	a0.l - Player object RAM
-; -------------------------------------------------------------------------
-
-ObjMoveYRevGrv:
-	move.l	oY(a0),d3			; Apply Y velocity
-	move.w	oYVel(a0),d0
-	subi.w	#$38,d0				; ...and reversed gravity
-	move.w	d0,oYVel(a0)
-	ext.l	d0
-	asl.l	#8,d0
-	sub.l	d0,d3
-	move.l	d3,oY(a0)
-	rts
-
-; -------------------------------------------------------------------------
-; Apply X and Y velocity onto an object (unused)
-; -------------------------------------------------------------------------
-; PARAMETERS:
-;	a0.l - Player object RAM
-; -------------------------------------------------------------------------
-
-ObjMoveUnused:
-	rts
-	move.l	oX(a0),d2			; Get position
-	move.l	oY(a0),d3
-
-	move.w	oXVel(a0),d0			; Apply X velocity
-	ext.l	d0
-	asl.l	#8,d0
-	sub.l	d0,d2
-
-	move.w	oYVel(a0),d0			; Apply Y velocity
-	ext.l	d0
-	asl.l	#8,d0
-	sub.l	d0,d3
-
-	move.l	d2,oX(a0)			; Update position
-	move.l	d3,oY(a0)
 	rts
 
 ; -------------------------------------------------------------------------

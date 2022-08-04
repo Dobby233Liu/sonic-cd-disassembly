@@ -18,7 +18,7 @@ PaletteTable:
 	dc.l	Pal_Sonic			; Sonic
 	dc.w	palette
 	dc.w	7
-	dc.l	Pal_LevelProto			; Level (prototype)
+	dc.l	Pal_Level			; Level (prototype)
 	dc.w	palette+$20
 	dc.w	$17
 	dc.l	Pal_Level			; Level
@@ -51,9 +51,9 @@ Pal_Level:
 	even
 
 ; Level palette (prototype)
-Pal_LevelProto:
-	incbin	"Level/Palmtree Panic/Data/Palette (Present, Prototype).bin"
-	even
+;Pal_LevelProto:
+;	incbin	"Level/Palmtree Panic/Data/Palette (Present, Prototype).bin"
+;	even
 
 ; Level palette (loaded at the end of the level after going past Amy)
 Pal_LevelEnd:

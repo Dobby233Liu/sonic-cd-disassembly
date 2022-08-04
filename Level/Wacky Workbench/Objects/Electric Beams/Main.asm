@@ -183,7 +183,8 @@ ObjElectricBeams_RestorePal:
 	
 	lea	palette+$7A.w,a3
 	move.w	#$222,d0
-	move.w	#$680,d2
+	; Dobby: $680 -> $A60
+	move.w	#$A60,d2
 	subq.b	#1,d1
 	beq.s	.RestorePal
 	

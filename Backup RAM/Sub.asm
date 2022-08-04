@@ -90,25 +90,6 @@ MainLoop:
 	rts
 
 ; -------------------------------------------------------------------------
-; Unused function to get a command ID from the Main CPU
-; -------------------------------------------------------------------------
-; RETURNS:
-;	d0.w - Command ID
-; -------------------------------------------------------------------------
-
-GetMainCPUCmd:
-	move.w	GACOMCMD2.w,d0			; Get command ID from Main CPU
-	beq.w	MainLoop			; If it's zero, exit out
-	move.w	GACOMCMD2.w,GACOMSTAT2.w	; Acknowledge command
-
-.WaitMainCPU:
-	tst.w	GACOMCMD2.w			; Is the Main CPU ready to send more commands?
-	bne.s	.WaitMainCPU			; If not, branch
-	
-	move.w	#0,GACOMSTAT2.w			; Mark as ready for another command
-	rts
-
-; -------------------------------------------------------------------------
 ; Unknown IRQ1 handler
 ; -------------------------------------------------------------------------
 

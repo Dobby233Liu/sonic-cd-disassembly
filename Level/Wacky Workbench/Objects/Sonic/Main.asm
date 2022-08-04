@@ -1781,7 +1781,8 @@ ObjSonic_MoveRoll:
 .Spindash:
 	; Note: The increment value here is 50 instead of the normal 75;
 	; prototype leftover?
-	move.w	#50,d0				; Get charge speed increment value
+	; Dobby: changed to 75.
+	move.w	#75,d0				; Get charge speed increment value
 	move.w	sonicTopSpeed.w,d1		; Get max charge speed (top speed * 2)
 	move.w	d1,d2
 	asl.w	#1,d1

@@ -26,35 +26,37 @@ ObjTestBadnik:
 ; -------------------------------------------------------------------------
 
 ObjTestBadnik_Init:
-	btst	#7,oStatus(a0)			; Are we offscreen?
-	bne.w	DeleteObject			; If so, delete ourselves
+	;btst	#7,oStatus(a0)			; Are we offscreen?
+	;bne.w	DeleteObject			; If so, delete ourselves
 
-	addq.b	#2,oRoutine(a0)			; Advance routine
+	;addq.b	#2,oRoutine(a0)			; Advance routine
 
-	move.b	#4,oRender(a0)			; Set render flags
-	move.b	#1,oPriority(a0)		; Set priority
-	move.l	#MapSpr_Powerup,oMap(a0)	; Set mappings
-	move.w	#$541,oTile(a0)			; Set base tile
-	move.w	oX(a0),oUnusedBadX(a0)		; Copy X position
-	move.b	#6,oColType(a0)			; Enable collision
+	;move.b	#4,oRender(a0)			; Set render flags
+	;move.b	#1,oPriority(a0)		; Set priority
+	;move.l	#MapSpr_Powerup,oMap(a0)	; Set mappings
+	;move.w	#$541,oTile(a0)			; Set base tile
+	;move.w	oX(a0),oUnusedBadX(a0)		; Copy X position
+	;move.b	#6,oColType(a0)			; Enable collision
+	bra.w	DeleteObject
 
 ; -------------------------------------------------------------------------
 ; Main unused badnik routine
 ; -------------------------------------------------------------------------
 
 ObjTestBadnik_Main:
-	move.w	oUnusedBadX(a0),d0		; Get the object's chunk position
-	andi.w	#$FF80,d0
-	move.w	cameraX.w,d1			; Get the camera's chunk position
-	subi.w	#$80,d1
-	andi.w	#$FF80,d1
+	;move.w	oUnusedBadX(a0),d0		; Get the object's chunk position
+	;andi.w	#$FF80,d0
+	;move.w	cameraX.w,d1			; Get the camera's chunk position
+	;subi.w	#$80,d1
+	;andi.w	#$FF80,d1
 
-	sub.w	d1,d0				; Has the object gone offscreen?
-	cmpi.w	#$80+(320+$40)+$80,d0
-	bhi.w	DeleteObject			; If so, delete ourselves
+	;sub.w	d1,d0				; Has the object gone offscreen?
+	;cmpi.w	#$80+(320+$40)+$80,d0
+	;bhi.w	DeleteObject			; If so, delete ourselves
 
-	lea	Ani_Powerup,a1			; Animate sprite
-	bsr.w	AnimateObject
-	jmp	DrawObject			; Draw sprite
+	;lea	Ani_Powerup,a1			; Animate sprite
+	;bsr.w	AnimateObject
+	;jmp	DrawObject			; Draw sprite
+	bra.w	DeleteObject
 
 ; -------------------------------------------------------------------------

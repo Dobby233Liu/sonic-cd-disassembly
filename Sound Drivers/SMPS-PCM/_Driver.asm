@@ -1195,7 +1195,7 @@ TrkCmd_CommFlag:
 ; -------------------------------------------------------------------------
 
 TrkCmd_SetCDDALoop:
-	move.b	#1,pdrvCDDALoop(a5)		; Set CDDA loop flag
+	;move.b	#1,pdrvCDDALoop(a5)		; Set CDDA loop flag
 	rts
 
 ; -------------------------------------------------------------------------
