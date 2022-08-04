@@ -73,12 +73,6 @@ ObjSonic:
 
 .NormalMode:
 	;endif
-	tst.b	oPlayerCharge(a0)		; Are we charging?
-	bne.s	.ContNormal				; If so, branch
-	tst.w	timeWarpTimer.w			; Is the time warp timer active?
-	beq.s	.ContNormal				; If not, branch	
-	addq.w	#1,timeWarpTimer.w		; Increment time warp timer
-.ContNormal:
 	move.b	oPlayerCharge(a0),d0		; Get charge time
 	beq.s	.RunRoutines			; If it's 0, branch
 	addq.b	#1,d0				; Increment the charge time
@@ -645,6 +639,12 @@ ObjSonic_ModeIndex:
 ; -------------------------------------------------------------------------
 
 ObjSonic_Display:
+	tst.b	oPlayerCharge(a0)		; Are we charging?
+	bne.s	.ContNormal				; If so, branch
+	tst.w	timeWarpTimer.w			; Is the time warp timer active?
+	beq.s	.ContNormal				; If not, branch	
+	addq.w	#1,timeWarpTimer.w		; Increment time warp timer
+.ContNormal:
 	cmpi.w	#210,timeWarpTimer.w		; Are we about to time travel?
 	bcc.s	.SkipDisplay			; If so, branch
 
