@@ -10,7 +10,7 @@
 ; -------------------------------------------------------------------------
 
 ; Counds
-RHY_TRACK_CNT	EQU	1			; Number of rhythm tracks
+RHY_TRACK_CNT	EQU	0			; Number of rhythm tracks
 PCM_TRACK_CNT	EQU	8			; Number of PCM tracks
 
 ; PCM music
