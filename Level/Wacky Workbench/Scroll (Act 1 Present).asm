@@ -12,16 +12,12 @@
 LevelSizeLoad:
 	lea	objPlayerSlot.w,a6		; Get player slot
 
-	moveq	#0,d0				; Clear unused variables
-	move.b	d0,unusedF740.w
-	move.b	d0,unusedF741.w
-	move.b	d0,unusedF746.w
-	move.b	d0,unusedF748.w
+	moveq	#0,d0
 	move.b	d0,eventRoutine.w		; Clear level event routine
 
 	lea	CamBounds,a0			; Prepare camera boundary information
 	move.w	(a0)+,d0			; Get unused word
-	move.w	d0,unusedF730.w
+	;move.w	d0,unusedF730.w
 	move.l	(a0)+,d0			; Get left and right boundaries
 	move.l	d0,leftBound.w
 	move.l	d0,destLeftBound.w

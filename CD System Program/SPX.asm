@@ -776,47 +776,48 @@ SPCmd_LoadLevel:
 ; Level files
 ; -------------------------------------------------------------------------
 
+LEVEL_NO_FILE equ File_R11A
 .LevelFiles:
-	dc.w	File_R11A-.LevelFiles		; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
 	dc.w	File_R11A-.LevelFiles		; Palmtree Panic Act 1 present
 	dc.w	File_R11B-.LevelFiles		; Palmtree Panic Act 1 past
 	dc.w	File_R11C-.LevelFiles		; Palmtree Panic Act 1 good future
 	dc.w	File_R11D-.LevelFiles		; Palmtree Panic Act 1 bad future
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
 	dc.w	File_R12A-.LevelFiles		; Palmtree Panic Act 2 present
 	dc.w	File_R12B-.LevelFiles		; Palmtree Panic Act 2 past
 	dc.w	File_R12C-.LevelFiles		; Palmtree Panic Act 2 good future
 	dc.w	File_R12D-.LevelFiles		; Palmtree Panic Act 2 bad future
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
 	dc.w	File_Demo43C-.LevelFiles	; Tidal Tempest Act 3 good future demo
 	dc.w	File_Demo82A-.LevelFiles	; Metallic Madness Act 2 present demo
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
 	dc.w	File_R31A-.LevelFiles		; Collision Chaos Act 1 present
 	dc.w	File_R31B-.LevelFiles		; Collision Chaos Act 1 past
 	dc.w	File_R31C-.LevelFiles		; Collision Chaos Act 1 good future
@@ -879,100 +880,101 @@ SPCmd_LoadLevel:
 	dc.w	File_R82D-.LevelFiles		; Metallic Madness Act 2 bad future 
 	dc.w	File_R83C-.LevelFiles		; Metallic Madness Act 3 good future 
 	dc.w	File_R83D-.LevelFiles		; Metallic Madness Act 3 bad future 
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
 	dc.w	File_Demo11A-.LevelFiles	; Palmtree Panic Act 1 present demo
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
-	dc.w	File_R11A-.LevelFiles		; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
+	dc.w	LEVEL_NO_FILE-.LevelFiles	; Invalid
 
 ; -------------------------------------------------------------------------
 ; PCM drivers
 ; -------------------------------------------------------------------------
 
+PCM_NO_DRIVER equ File_R11A
 .PCMDrivers:
-	dc.l	File_R11A			; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
 	dc.l	File_R1PCM			; Palmtree Panic Act 1 present
 	dc.l	File_R1PCM			; Palmtree Panic Act 1 past
 	dc.l	File_R1PCM			; Palmtree Panic Act 1 good future
 	dc.l	File_R1PCM			; Palmtree Panic Act 1 bad future
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
 	dc.l	File_R1PCM			; Palmtree Panic Act 2 present
 	dc.l	File_R1PCM			; Palmtree Panic Act 2 past
 	dc.l	File_R1PCM			; Palmtree Panic Act 2 good future
 	dc.l	File_R1PCM			; Palmtree Panic Act 2 bad future
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
 	dc.l	File_BossPCM			; Tidal Tempest Act 3 good future demo
 	dc.l	File_R8PCM			; Metallic Madness Act 2 present demo
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
 	dc.l	File_R3PCM			; Collision Chaos Act 1 present
 	dc.l	File_R3PCM			; Collision Chaos Act 1 past
 	dc.l	File_R3PCM			; Collision Chaos Act 1 good future
@@ -1035,54 +1037,54 @@ SPCmd_LoadLevel:
 	dc.l	File_R8PCM			; Metallic Madness Act 2 bad future 
 	dc.l	File_BossPCM			; Metallic Madness Act 3 good future 
 	dc.l	File_BossPCM			; Metallic Madness Act 3 bad future 
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
 	dc.l	File_R1PCM			; Palmtree Panic Act 1 present demo
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
-	dc.l	File_R11A			; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
+	dc.l	PCM_NO_DRIVER		; Invalid
 
 ; -------------------------------------------------------------------------
 ; Load Mega Drive initialization
