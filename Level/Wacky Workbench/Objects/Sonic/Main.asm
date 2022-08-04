@@ -199,6 +199,7 @@ ObjSonic_MakeWaterfallSplash:
 	rts
 
 .End2:
+	ObjSonic_SplashEnd:
 	rts
 
 ; -------------------------------------------------------------------------
