@@ -708,8 +708,6 @@ R83SubCmds:
 ; -------------------------------------------------------------------------
 
 StageSelect:
-	; DOBBY HACK
-	bra.w	GameDone			; If not, branch
 	moveq	#SCMD_STAGESEL,d0		; Run stage select file
 	bsr.w	RunMMD
 
