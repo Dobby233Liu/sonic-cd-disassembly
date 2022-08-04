@@ -363,9 +363,9 @@ ObjSonic_ModeIndex:
 ; Leftover music ID list from Sonic 1
 ; -------------------------------------------------------------------------
 
-LevelMusicIDs2_S1:
-	dc.b	$81, $82, $83, $84, $85, $86
-	even
+;LevelMusicIDs2_S1:
+;	dc.b	$81, $82, $83, $84, $85, $86
+;	even
 
 ; -------------------------------------------------------------------------
 ; Display Sonic's sprite and update timers
@@ -481,7 +481,7 @@ ObjSonic_Water:
 	bset	#6,oStatus(a0)			; Mark as underwater
 	bne.s	.End				; If we were already marked as such, branch
 
-	bsr.w	ResumeMusicS1			; In Sonic 1, this routine would resume the background music from the drowning music
+;	bsr.w	ResumeMusicS1			; In Sonic 1, this routine would resume the background music from the drowning music
 
 	move.b	#$21,objBubblesSlot.w		; Create bubbles that come out of our mouth
 	move.b	#$81,objBubblesSlot+oSubtype.w
@@ -1651,21 +1651,21 @@ ObjSonic_MoveAir:
 ; -------------------------------------------------------------------------
 
 ObjSonic_CheckSquash:
-	move.b	oAngle(a0),d0			; Are we on the floor?
-	addi.b	#$20,d0
-	andi.b	#$C0,d0
-	bne.s	.End				; If not, branch
-
-	bsr.w	Player_CheckCeiling		; Are we also colliding with the ceiling?
-	tst.w	d1
-	bpl.s	.End				; If not, branch
-
-	move.w	#0,oPlayerGVel(a0)		; Stop movement
-	move.w	#0,oXVel(a0)
-	move.w	#0,oYVel(a0)
-	move.b	#$B,oAnim(a0)			; Set animation to squished/warping animation (leftover from Sonic 1)
-
-.End:
+;	move.b	oAngle(a0),d0			; Are we on the floor?
+;	addi.b	#$20,d0
+;	andi.b	#$C0,d0
+;	bne.s	.End				; If not, branch
+;
+;	bsr.w	Player_CheckCeiling		; Are we also colliding with the ceiling?
+;	tst.w	d1
+;	bpl.s	.End				; If not, branch
+;
+;	move.w	#0,oPlayerGVel(a0)		; Stop movement
+;	move.w	#0,oXVel(a0)
+;	move.w	#0,oYVel(a0)
+;	move.b	#$B,oAnim(a0)			; Set animation to squished/warping animation (leftover from Sonic 1)
+;
+;.End:
 	rts
 
 ; -------------------------------------------------------------------------

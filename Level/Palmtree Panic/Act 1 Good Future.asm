@@ -30,7 +30,7 @@
 	include	"Level/Sub CPU.asm"
 	include	"Level/Object Animate.asm"
 	include	"Level/_Objects/Checkpoint/Main.asm"
-	include	"Level/Resume Music (Leftover).asm"
+;	include	"Level/Resume Music (Leftover).asm"
 	include	"Level/_Objects/Test Badnik/Main.asm"
 	include	"Level/_Objects/Explosion/Main.asm"
 	include	"Level/_Objects/Flower/Main.asm"

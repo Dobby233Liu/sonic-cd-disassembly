@@ -32,12 +32,12 @@ Pal_S1SegaBG:
 
 ; Sonic 1 title screen (leftover)
 Pal_S1Title:
-	incbin	"Level/_Data/Palette (Sonic 1 Title).bin"
-	even
+;	incbin	"Level/_Data/Palette (Sonic 1 Title).bin"
+;	even
 
 ; Sonic 1 level select screen (leftover)
 Pal_S1LevSel:
-	incbin	"Level/_Data/Palette (Sonic 1 Level Select).bin"
+;	incbin	"Level/_Data/Palette (Sonic 1 Level Select).bin"
 	even
 
 ; Sonic palette

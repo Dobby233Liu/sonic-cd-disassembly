@@ -49,15 +49,15 @@ CamBounds:
 ; Leftover ending demo start positions from Sonic 1
 ; -------------------------------------------------------------------------
 
-EndingStLocsS1:
-	dc.w	$50, $3B0
-	dc.w	$EA0, $46C
-	dc.w	$1750, $BD
-	dc.w	$A00, $62C
-	dc.w	$BB0, $4C
-	dc.w	$1570, $16C
-	dc.w	$1B0, $72C
-	dc.w	$1400, $2AC
+;EndingStLocsS1:
+;	dc.w	$50, $3B0
+;	dc.w	$EA0, $46C
+;	dc.w	$1750, $BD
+;	dc.w	$A00, $62C
+;	dc.w	$BB0, $4C
+;	dc.w	$1570, $16C
+;	dc.w	$1B0, $72C
+;	dc.w	$1400, $2AC
 
 ; -------------------------------------------------------------------------
 
@@ -79,14 +79,14 @@ LevelSizeLoad_StartPos:
 .DefaultStart:
 	lea	LevelStartLoc,a1		; Prepare level start position
 	
-	tst.w	demoMode			; Are we in the credits (Sonic 1 leftover)?
-	bpl.s	.NotS1Credits			; If not, branch
-	move.w	s1CreditsIndex,d0		; Get Sonic 1 credits starting position
-	subq.w	#1,d0
-	lsl.w	#2,d0
-	lea	EndingStLocsS1,a1
-	adda.w	d0,a1
-	bra.s	.SetStartPos
+	;tst.w	demoMode			; Are we in the credits (Sonic 1 leftover)?
+	;bpl.s	.NotS1Credits			; If not, branch
+	;move.w	s1CreditsIndex,d0		; Get Sonic 1 credits starting position
+	;subq.w	#1,d0
+	;lsl.w	#2,d0
+	;lea	EndingStLocsS1,a1
+	;adda.w	d0,a1
+	;bra.s	.SetStartPos
 	
 .NotS1Credits:
 	move.w	demoMode,d0			; Get start position

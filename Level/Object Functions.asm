@@ -305,7 +305,7 @@ DrawObjects:
 .ScreenPos:
 	move.w	oYScr(a0),d2			; The object's position is an absolute screen position
 	move.w	oX(a0),d3
-	bra.s	.DrawSprite
+	;bra.s	.DrawSprite
 
 ; -------------------------------------------------------------------------
 ; Dead code. It's a leftover from Sonic 1, in which if bit 4 of the object's
@@ -314,14 +314,14 @@ DrawObjects:
 ; is left unused.
 ; -------------------------------------------------------------------------
 
-.NoYRadChk:
-	move.w	oY(a0),d2			; Get object's Y position onscreen
-	sub.w	4(a1),d2
-	addi.w	#128,d2
-	cmpi.w	#0-32+128,d2			; Is it onscreen?
-	bcs.s	.NextObj			; If not, branch
-	cmpi.w	#224+32+128,d2
-	bcc.s	.NextObj			; If not, branch
+;.NoYRadChk:
+;	move.w	oY(a0),d2			; Get object's Y position onscreen
+;	sub.w	4(a1),d2
+;	addi.w	#128,d2
+;	cmpi.w	#0-32+128,d2			; Is it onscreen?
+;	bcs.s	.NextObj			; If not, branch
+;	cmpi.w	#224+32+128,d2
+;	bcc.s	.NextObj			; If not, branch
 
 ; -------------------------------------------------------------------------
 

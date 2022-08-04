@@ -710,9 +710,9 @@ ObjSonic_ModeIndex:
 ; Leftover music ID list from Sonic 1
 ; -------------------------------------------------------------------------
 
-LevelMusicIDs2_S1:
-	dc.b	$81, $82, $83, $84, $85, $86
-	even
+;LevelMusicIDs2_S1:
+;	dc.b	$81, $82, $83, $84, $85, $86
+;	even
 
 ; -------------------------------------------------------------------------
 ; Display Sonic's sprite and update timers
@@ -2052,21 +2052,21 @@ ObjSonic_MoveAir:
 ; -------------------------------------------------------------------------
 
 ObjSonic_CheckSquash:
-	move.b	oAngle(a0),d0			; Are we on the floor?
-	addi.b	#$20,d0
-	andi.b	#$C0,d0
-	bne.s	.End				; If not, branch
-
-	bsr.w	Player_CheckCeiling		; Are we also colliding with the ceiling?
-	tst.w	d1
-	bpl.s	.End				; If not, branch
-
-	move.w	#0,oPlayerGVel(a0)		; Stop movement
-	move.w	#0,oXVel(a0)
-	move.w	#0,oYVel(a0)
-	move.b	#$B,oAnim(a0)			; Set animation to squished/warping animation (leftover from Sonic 1)
-
-.End:
+;	move.b	oAngle(a0),d0			; Are we on the floor?
+;	addi.b	#$20,d0
+;	andi.b	#$C0,d0
+;	bne.s	.End				; If not, branch
+;
+;	bsr.w	Player_CheckCeiling		; Are we also colliding with the ceiling?
+;	tst.w	d1
+;	bpl.s	.End				; If not, branch
+;
+;	move.w	#0,oPlayerGVel(a0)		; Stop movement
+;	move.w	#0,oXVel(a0)
+;	move.w	#0,oYVel(a0)
+;	move.b	#$B,oAnim(a0)			; Set animation to squished/warping animation (leftover from Sonic 1)
+;
+;.End:
 	rts
 
 ; -------------------------------------------------------------------------

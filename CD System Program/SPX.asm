@@ -234,10 +234,10 @@ File_ThanksData:
 	dc.b	"THANKS_D.BIN;1", 0		; "Thank You" screen data
 File_EndingMain:
 	dc.b	"ENDING.MMD;1", 0		; Ending FMV (Main CPU)
-File_BadEndSub:
-	dc.b	"GOODEND.BIN;1", 0 		; Bad ending FMV (Sub CPU, not a typo)
 File_GoodEndSub:
-	dc.b	"BADEND.BIN;1", 0 		; Good ending FMV (Sub CPU, not a typo)
+	dc.b	"GOODEND.BIN;1", 0 		; Good ending FMV (Sub CPU)
+File_BadEndSub:
+	dc.b	"BADEND.BIN;1", 0 		; Bad ending FMV (Sub CPU)
 File_FunIsInf:
 	dc.b	"NISI.MMD;1", 0			; "Fun is infinite" screen
 File_StaffCredits:

@@ -119,8 +119,8 @@ FID_THANKSMAIN	rs.b	1			; "Thank You" screen (Main CPU)
 FID_THANKSSUB	rs.b	1			; "Thank You" screen (Sub CPU)
 FID_THANKSDATA	rs.b	1			; "Thank You" screen  data
 FID_ENDMAIN	rs.b	1			; Ending FMV (Main CPU)
-FID_BADENDSUB	rs.b	1			; Bad ending FMV (Sub CPU, not a typo)
-FID_GOODENDSUB	rs.b	1			; Good ending FMV (Sub CPU, not a typo)
+FID_GOODENDSUB	rs.b	1			; Bad ending FMV (Sub CPU)
+FID_BADENDSUB	rs.b	1			; Good ending FMV (Sub CPU)
 FID_FUNISINF	rs.b	1			; "Fun is infinite" screen
 FID_STAFF	rs.b	1			; Staff credits
 FID_MCSONIC	rs.b	1			; M.C. Sonic screen

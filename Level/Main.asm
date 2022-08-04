@@ -9,9 +9,9 @@
 ; Leftover music ID list from Sonic 1
 ; -------------------------------------------------------------------------
 
-LevelMusicIDs_S1:
-	dc.b	$81, $82, $83, $84, $85, $86, $8D
-	even
+;LevelMusicIDs_S1:
+;	dc.b	$81, $82, $83, $84, $85, $86, $8D
+;	even
 
 ; -------------------------------------------------------------------------
 ; Level game mode
@@ -307,7 +307,7 @@ LevelStart:
 	move.b	#$80,updateRings		; Initialize the score in the HUD
 	move.b	#$80,updateScore		; Initialize the score in the HUD
 
-	move.w	#0,demoS1Index.w		; Clear demo data index (Sonic 1 leftover)
+	;move.w	#0,demoS1Index.w		; Clear demo data index (Sonic 1 leftover)
 	move.w	#$202F,palFadeInfo.w		; Set to fade palette lines 1-3
 
 	jsr	UpdateAnimTiles			; Update animated tiles
@@ -776,11 +776,11 @@ VInt_General:
 VInt_S1SegaScr:					; Pointer to here is leftover from Sonic 1's
 						; SEGA screen V-INT routine
 
-	tst.w	vintTimer.w			; Is the V-INT timer running?
-	beq.w	.End				; If not, branch
-	subq.w	#1,vintTimer.w			; Decrement V-INT timer
-
-.End:
+;	tst.w	vintTimer.w			; Is the V-INT timer running?
+;	beq.w	.End				; If not, branch
+;	subq.w	#1,vintTimer.w			; Decrement V-INT timer
+;
+;.End:
 	rts
 
 ; -------------------------------------------------------------------------
@@ -788,15 +788,15 @@ VInt_S1SegaScr:					; Pointer to here is leftover from Sonic 1's
 ; -------------------------------------------------------------------------
 
 VInt_S1Title:
-	bsr.w	DoVIntUpdates			; Do V-INT updates
-	bsr.w	DrawLevelBG			; Draw level BG
-	bsr.w	DecompPLCFast			; Process PLC art decompression
-
-	tst.w	vintTimer.w			; Is the V-INT timer running?
-	beq.w	.End				; If not, branch
-	subq.w	#1,vintTimer.w			; Decrement V-INT timer
-
-.End:
+;	bsr.w	DoVIntUpdates			; Do V-INT updates
+;	bsr.w	DrawLevelBG			; Draw level BG
+;	bsr.w	DecompPLCFast			; Process PLC art decompression
+;
+;	tst.w	vintTimer.w			; Is the V-INT timer running?
+;	beq.w	.End				; If not, branch
+;	subq.w	#1,vintTimer.w			; Decrement V-INT timer
+;
+;.End:
 	rts
 
 ; -------------------------------------------------------------------------
@@ -804,7 +804,7 @@ VInt_S1Title:
 ; -------------------------------------------------------------------------
 
 VInt_Unk6:
-	bsr.w	DoVIntUpdates			; Do V-INT updates
+;	bsr.w	DoVIntUpdates			; Do V-INT updates
 	rts
 
 ; -------------------------------------------------------------------------
@@ -812,8 +812,8 @@ VInt_Unk6:
 ; -------------------------------------------------------------------------
 
 VInt_Pause:
-	cmpi.b	#$10,gameMode.w			; Are we in the Sonic 1 special stage?
-	beq.w	VInt_S1SpecStg			; If so, branch
+;	cmpi.b	#$10,gameMode.w			; Are we in the Sonic 1 special stage?
+;	beq.w	VInt_S1SpecStg			; If so, branch
 
 ; -------------------------------------------------------------------------
 ; V-INT level routine
@@ -881,11 +881,11 @@ VInt_LevelLoad:
 ; -------------------------------------------------------------------------
 
 VInt_UnkE:
-	bsr.w	DoVIntUpdates			; Do V-INT updates
-
-	addq.b	#1,vintECount.w			; Increment counter
-	move.b	#$E,vintRoutine.w		; Set to run this routine again next VBlank
-
+;	bsr.w	DoVIntUpdates			; Do V-INT updates
+;
+;	addq.b	#1,vintECount.w			; Increment counter
+;	move.b	#$E,vintRoutine.w		; Set to run this routine again next VBlank
+;
 	rts
 
 ; -------------------------------------------------------------------------
@@ -912,28 +912,28 @@ VInt_PalFade:
 ; -------------------------------------------------------------------------
 
 VInt_S1ContScr:
-	jsr	StopZ80				; Stop the Z80
-	bsr.w	ReadControllers			; Read controllers
-
-	LVLDMA	palette,$0000,$80,CRAM		; DMA palette
-	LVLDMA	sprites,$F800,$280,VRAM		; DMA sprites
-	LVLDMA	hscroll,$FC00,$380,VRAM		; DMA horizontal scroll data
-
-	jsr	StartZ80			; Start the Z80
-
-	lea	objPlayerSlot.w,a0		; Load player sprite art
-	bsr.w	LoadSonicDynPLC
-	tst.b	updateSonicArt.w
-	beq.s	.NoArtLoad
-	LVLDMA	sonicArtBuf,$F000,$2E0,VRAM
-	move.b	#0,updateSonicArt.w
-
-.NoArtLoad:
-	tst.w	vintTimer.w			; Is the V-INT timer running?
-	beq.w	.End				; If not, branch
-	subq.w	#1,vintTimer.w			; Decrement V-INT timer
-
-.End:
+;	jsr	StopZ80				; Stop the Z80
+;	bsr.w	ReadControllers			; Read controllers
+;
+;	LVLDMA	palette,$0000,$80,CRAM		; DMA palette
+;	LVLDMA	sprites,$F800,$280,VRAM		; DMA sprites
+;	LVLDMA	hscroll,$FC00,$380,VRAM		; DMA horizontal scroll data
+;
+;	jsr	StartZ80			; Start the Z80
+;
+;	lea	objPlayerSlot.w,a0		; Load player sprite art
+;	bsr.w	LoadSonicDynPLC
+;	tst.b	updateSonicArt.w
+;	beq.s	.NoArtLoad
+;	LVLDMA	sonicArtBuf,$F000,$2E0,VRAM
+;	move.b	#0,updateSonicArt.w
+;
+;.NoArtLoad:
+;	tst.w	vintTimer.w			; Is the V-INT timer running?
+;	beq.w	.End				; If not, branch
+;	subq.w	#1,vintTimer.w			; Decrement V-INT timer
+;
+;.End:
 	rts
 
 ; -------------------------------------------------------------------------

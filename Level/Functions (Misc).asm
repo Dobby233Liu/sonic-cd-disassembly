@@ -12,27 +12,27 @@
 ;	a0.l - Object RAM
 ; -------------------------------------------------------------------------
 
-CheckObjDespawnS1:
-	move.w	oX(a0),d0			; Get the object's chunk position
-	andi.w	#$FF80,d0
-	move.w	cameraX.w,d1			; Get the camera's chunk position
-	subi.w	#$80,d1
-	andi.w	#$FF80,d1
-
-	sub.w	d1,d0				; Has the object gone offscreen?
-	cmpi.w	#$80+(320+$40)+$80,d0
-	bhi.w	.NoDraw				; If so, mark it as "gone offscreen"
-	bra.w	DrawObject			; If not, draw the object's sprite
-
-.NoDraw:
-	lea	lvlObjRespawns,a2		; Prepare object respawn table
-	moveq	#0,d0
-	move.b	oRespawn(a0),d0			; Get the object's respawn index
-	beq.s	.NoClear			; If it doesn't have one, branch
-	bclr	#7,2(a2,d0.w)			; Mark it as "gone offscreen"
-
-.NoClear:
-	bra.w	DeleteObject			; Delete the object
+;CheckObjDespawnS1:
+;	move.w	oX(a0),d0			; Get the object's chunk position
+;	andi.w	#$FF80,d0
+;	move.w	cameraX.w,d1			; Get the camera's chunk position
+;	subi.w	#$80,d1
+;	andi.w	#$FF80,d1
+;
+;	sub.w	d1,d0				; Has the object gone offscreen?
+;	cmpi.w	#$80+(320+$40)+$80,d0
+;	bhi.w	.NoDraw				; If so, mark it as "gone offscreen"
+;	bra.w	DrawObject			; If not, draw the object's sprite
+;
+;NoDraw:
+;	lea	lvlObjRespawns,a2		; Prepare object respawn table
+;	moveq	#0,d0
+;	move.b	oRespawn(a0),d0			; Get the object's respawn index
+;	beq.s	.NoClear			; If it doesn't have one, branch
+;	bclr	#7,2(a2,d0.w)			; Mark it as "gone offscreen"
+;
+;.NoClear:
+;	bra.w	DeleteObject			; Delete the object
 
 ; -------------------------------------------------------------------------
 ; Perform VSync

@@ -47,15 +47,15 @@ CamBounds:
 ; Leftover ending demo start positions from Sonic 1
 ; -------------------------------------------------------------------------
 
-EndingStLocsS1:
-	dc.w	$50, $3B0
-	dc.w	$EA0, $46C
-	dc.w	$1750, $BD
-	dc.w	$A00, $62C
-	dc.w	$BB0, $4C
-	dc.w	$1570, $16C
-	dc.w	$1B0, $72C
-	dc.w	$1400, $2AC
+;EndingStLocsS1:
+;	dc.w	$50, $3B0
+;	dc.w	$EA0, $46C
+;	dc.w	$1750, $BD
+;	dc.w	$A00, $62C
+;	dc.w	$BB0, $4C
+;	dc.w	$1570, $16C
+;	dc.w	$1B0, $72C
+;	dc.w	$1400, $2AC
 
 ; -------------------------------------------------------------------------
 

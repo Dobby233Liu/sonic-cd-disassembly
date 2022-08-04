@@ -23,12 +23,10 @@
 	bsr.w	InitPCMRegs			; Initialize PCM registers
 	move.b	#%11111100,PCMONOFF		; Unmute PCM1 and PCM2
 
-	; Note: The good ending loads the bad ending STM file, and vice versa.
-	; This is not a typo.
 	if DATAFILE=0
-		move.w	#FID_BADENDSTM,d0	; Bad ending FMV data
+		move.w	#FID_GOODENDSTM,d0
 	elseif DATAFILE=1
-		move.w	#FID_GOODENDSTM,d0	; Good ending FMV data
+		move.w	#FID_BADENDSTM,d0
 	endif
 	jsr	GetFileName.w
 	
