@@ -199,56 +199,7 @@ ObjSonic_MakeWaterfallSplash:
 	rts
 
 .End2:
-	ObjSonic_SplashEnd:
 	rts
-
-; -------------------------------------------------------------------------
-
-ObjSonic_MakeSplash:
-	move.b	oYRadius(a0),d2			; Get bottom sensor
-	ext.w	d2
-	add.w	oY(a0),d2
-
-	cmpi.b	#$10,d1				; Are we in horizontal range $1000-$10FF?
-	bne.s	.CheckOther			; If not, branch
-	cmpi.w	#$210,d2			; Are we in vertical range $208-$210?
-	bcc.s	ObjSonic_SplashEnd		; If not, branch
-	cmpi.w	#$208,d2
-	bcs.s	ObjSonic_SplashEnd		; If not, branch
-	bra.s	.MakeSplash			; If so, make a splash
-
-.CheckOther:
-	cmpi.b	#$21,d1				; Are we in horizontal range $2100-$21FF?
-	bne.s	ObjSonic_SplashEnd		; If not, branch
-	cmpi.w	#$2A0,d2			; Are we in vertical range $298-$2A0?
-	bcc.s	ObjSonic_SplashEnd		; If not, branch
-	cmpi.w	#$298,d2
-	bcs.s	ObjSonic_SplashEnd		; If not, branch
-
-.MakeSplash:
-	tst.w	oPlayerGVel(a0)			; Are we moving?
-	beq.s	ObjSonic_SplashEnd		; If not, branch
-	
-	jsr	FindObjSlot			; Make a splash
-	bne.s	ObjSonic_SplashEnd
-	move.b	#$B,oID(a1)
-	move.w	oX(a0),oX(a1)
-	andi.w	#$FFF8,d2
-	move.w	d2,oY(a1)
-	move.b	#1,oSubtype(a1)
-
-	move.w	oPlayerGVel(a0),d0		; Get speed
-	bpl.s	.CheckSpeed
-	neg.w	d0
-
-.CheckSpeed:
-	cmpi.w	#$600,d0			; Were we going fast?
-	bcc.s	.Sound				; If so, branch
-	move.b	#2,oSubtype(a1)			; If not, use smaller splash
-
-.Sound:
-	move.w	#FM_A1,d0			; Play sound
-	jmp	PlayFMSound
 
 ; -------------------------------------------------------------------------
 ; Get the chunk at a specific position
@@ -273,6 +224,14 @@ ObjSonic_GetChunkAtPos:
 	move.b	(a1,d0.w),d1
 	andi.b	#$7F,d1
 	rts
+
+; -------------------------------------------------------------------------
+; Handle the extended camera
+; Dummied out in Wacky Workbench
+; -------------------------------------------------------------------------
+
+;ObjSonic_ExtCamera:
+;	rts
 
 ; -------------------------------------------------------------------------
 ; Check rotating pole collision
@@ -636,7 +595,7 @@ ObjSonic_Main:
 	bsr.s	ObjSonic_Display		; Draw sprite and handle timers
 	bsr.w	ObjSonic_RecordPos		; Save current position into the position buffer
 
-						; Update our angle buffers
+	; Update our angle buffers
 	move.b	primaryAngle.w,oPlayerPriAngle(a0)
 	move.b	secondaryAngle.w,oPlayerSecAngle(a0)
 
@@ -951,6 +910,10 @@ ObjSonic_MdGround:
 ; -------------------------------------------------------------------------
 
 ObjSonic_MdAir:
+	tst.b	windTunnelFlag.w		; Are we in a wind tunnel?
+	bne.s	.NotMovingDown			; If so, branch
+	cmpi.b	#$15,oAnim(a0)			; Were we breathing in a bubble?
+	beq.s	.NotMovingDown			; If so, branch
 	tst.w	oYVel(a0)			; Are we moving upwards?
 	bmi.s	.CheckHangBar			; If so, branch
 	cmpi.b	#$2C,oAnim(a0)			; Are we in the hanging animation?
@@ -959,11 +922,11 @@ ObjSonic_MdAir:
 
 .CheckHangBar:
 	btst	#2,oPlayerCtrl(a0)		; Are we hanging on a bar?
-	beq.s	.NoHangBar			; If not, branch
+	beq.s	.NotMovingDown			; If not, branch
 	bsr.w	ObjSonic_HangBar		; Handle hanging bar movement
 	bra.s	.Collision
 
-.NoHangBar:
+.NotMovingDown:
 	bsr.w	ObjSonic_Handle3DRamp		; Check for a 3D ramp
 	bsr.w	ObjSonic_TimeWarp		; Handle time warp
 	bsr.w	ObjSonic_JumpHeight		; Handle jump height
@@ -1201,10 +1164,8 @@ ObjSonic_Handle3DRamp:
 	dc.b	6
 	dc.b	7
 	dc.b	8
-	dc.b	$44
-	dc.b	$45
-	dc.b	$46
 	dc.b	$49
+	dc.b	$4C
 	dc.b	-1
 
 ; -------------------------------------------------------------------------
@@ -1257,7 +1218,7 @@ ObjSonic_MoveGround:
 	lea	objects.w,a1
 	lea	(a1,d0.w),a1
 	tst.b	oStatus(a1)			; Is it a special hazardous object?
-	bmi.s	.CheckCharge			; If so, branch
+	bmi.w	.CheckCharge			; If so, branch
 	cmpi.b	#$1E,oID(a1)			; Is it a pinball flipper from CCZ?
 	bne.s	.CheckObjBalance		; If not, branch
 	move.b	#0,oAnim(a0)			; Set animation to walking animation
@@ -1281,6 +1242,12 @@ ObjSonic_MoveGround:
 	jsr	CheckFloorEdge			; Are we leaning near a ledge on either side?
 	cmpi.w	#$C,d1
 	blt.s	.CheckCharge			; If not, branch
+
+	move.w	#$AB,d0				; Stop any charging
+	jsr	PlayFMSound
+	move.b	#0,oPlayerCharge(a0)
+	move.w	#0,oPlayerGVel(a0)
+
 	cmpi.b	#3,oPlayerPriAngle(a0)		; Are we leaning near a ledge on the right?
 	bne.s	.CheckLeft			; If not, branch
 
@@ -1838,6 +1805,8 @@ ObjSonic_MoveRoll:
 .CheckStopRoll:
 	tst.w	oPlayerGVel(a0)			; Are we still moving?
 	bne.s	.CalcXYVels			; If so, branch
+	move.w	#$AB,d0				; Play charge stop sound
+	jsr	PlayFMSound
 
 .StopRolling:
 	bclr	#2,oStatus(a0)			; Stop rolling
@@ -1846,6 +1815,7 @@ ObjSonic_MoveRoll:
 	beq.s	.NotMini			; If not, branch
 	move.b	#$A,oYRadius(a0)		; Restore miniature hitbox size
 	move.b	#5,oXRadius(a0)
+	subq.w	#2,oY(a0)
 	bra.s	.ResetAnim
 
 .NotMini:
@@ -1934,13 +1904,16 @@ ObjSonic_MoveAir:
 
 	move.w	oXVel(a0),d0			; Get current X velocity
 
+	cmpi.b	#1,timeZone			; Are we in the present?
+	bne.s	.CheckLeft			; If not, branch
 	tst.w	level				; Are we in Palmtree Panic act 1?
 	bne.s	.CheckLeft			; If not, branch
 
 	cmpi.w	#$6C8,oX(a0)			; Are we left of the first 3D ramp launch area?
 	bcs.s	.Check3DRamp			; If so, branch
 	cmpi.w	#$840,oX(a0)			; Are we right of the first 3D ramp launch area?
-	bcs.s	.SetXVel			; If not, branch
+	bcc.s	.Check3DRamp			; If so, branch
+	rts					; Lock our horizontal movement while we launch off the first 3D ramp
 
 .Check3DRamp:
 	btst	#1,oPlayerCtrl(a0)		; Are we on a 3D ramp?
@@ -2112,14 +2085,15 @@ ObjSonic_CheckRoll:
 ObjSonic_StartRoll:
 	btst	#2,oStatus(a0)			; Are we already rolling?
 	beq.s	.DoRoll				; If not, branch
-	rts
+	bra.s	.SetRollAnim			; If so, don't worry about fixing the hitbox size
 
 .DoRoll:
 	bset	#2,oStatus(a0)			; Mark as rolling
 	tst.b	miniSonic			; Are we miniature?
 	beq.s	.NotMini			; If not, branch
-	move.b	#$A,oYRadius(a0)			; Set miniature rolling hitbox size
+	move.b	#8,oYRadius(a0)			; Set miniature rolling hitbox size
 	move.b	#5,oXRadius(a0)
+	addq.w	#2,oY(a0)
 	bra.s	.SetRollAnim			; Set animatiion
 
 .NotMini:
@@ -2130,9 +2104,11 @@ ObjSonic_StartRoll:
 .SetRollAnim:
 	move.b	#2,oAnim(a0)			; Set animation to rolling animation
 
-	tst.w	oPlayerGVel(a0)			; Are we moving?
-	bne.s	.End				; If so, branch
-	move.w	#$200,oPlayerGVel(a0)		; If not, get a slight boost
+	tst.w	oPlayerGVel(a0)			; Are we moving left?
+	bmi.s	.End				; If not, branch
+	cmpi.w	#$200,oPlayerGVel(a0)		; Is our ground velocity less than 2?
+	bcc.s	.End				; If not, branch
+	move.w	#$200,oPlayerGVel(a0)		; If so, cap our ground velocity at 2
 
 .End:
 	rts
@@ -2204,8 +2180,9 @@ ObjSonic_CheckJump:
 	bne.s	.RollJump			; If so, branch
 	tst.b	miniSonic			; Are we miniature?
 	beq.s	.SetJumpSize			; If not, branch
-	move.b	#$A,oYRadius(a0)			; Set miniature jumping hitbox size
+	move.b	#8,oYRadius(a0)			; Set miniature jumping hitbox size
 	move.b	#5,oXRadius(a0)
+	addq.w	#2,oY(a0)
 	bra.s	.StartJump			; Mark as jumping
 
 .SetJumpSize:
@@ -2251,6 +2228,11 @@ ObjSonic_JumpHeight:
 	rts
 
 .NotJump:
+	cmpi.w	#-$FC0,oYVel(a0)		; Is our Y velocity less than -15.75?
+	bge.s	.End2				; If not, branch
+	move.w	#-$FC0,oYVel(a0)		; Cap our Y velocity at -15.75
+
+.End2:
 	rts
 
 ; -------------------------------------------------------------------------
@@ -2670,6 +2652,7 @@ Player_ResetOnFloor:
 
 	move.b	#$A,oYRadius(a0)		; Restore miniature hitbox size
 	move.b	#5,oXRadius(a0)
+	subq.w	#2,oY(a0)
 	bra.s	.LandSound			; Continue resetting more flags
 
 .NormalSize:
@@ -2679,6 +2662,8 @@ Player_ResetOnFloor:
 
 .LandSound:
 	move.b	#0,oAnim(a0)			; Set animation to walking animation
+	move.w	#$AB,d0				; Play charge stop sound
+	jsr	PlayFMSound
 
 .NotJumping:
 	move.b	#0,oPlayerJump(a0)		; Clear jumping flag
@@ -2847,6 +2832,14 @@ ObjSonic_Restart:
 
 .End:
 	rts
+
+; -------------------------------------------------------------------------
+; Handle special chunks for Sonic
+; Dummied out in Wacky Workbench
+; -------------------------------------------------------------------------
+
+;ObjSonic_SpecialChunks:
+;	rts
 
 ; -------------------------------------------------------------------------
 
@@ -3377,6 +3370,8 @@ ObjSonic_ChkFlipper:
 	cmpi.b	#$1E,oID(a1)			; Is it a pinball flipper from CCZ?
 	bne.s	.End				; If not, branch
 
+	move.w	#$98,d0				; Play spring sound
+	jsr	PlayFMSound
 	move.b	#1,oAnim(a1)			; Set flipper animation to move
 
 	move.w	oX(a1),d1			; Get angle in which to launch at

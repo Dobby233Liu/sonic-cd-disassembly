@@ -327,7 +327,7 @@ ObjSonic_Main:
 	bsr.w	ObjSonic_RecordPos		; Save current position into the position buffer
 	bsr.w	ObjSonic_Water			; Handle water
 
-						; Update our angle buffers
+	; Update our angle buffers
 	move.b	primaryAngle.w,oPlayerPriAngle(a0)
 	move.b	secondaryAngle.w,oPlayerSecAngle(a0)
 
@@ -734,6 +734,8 @@ ObjSonic_MdAir:
 
 .NoWater:
 	bsr.w	ObjSonic_JumpAngle		; Reset angle
+
+.Collision:
 	bsr.w	Player_LevelColInAir		; Handle level collision
 	rts
 
