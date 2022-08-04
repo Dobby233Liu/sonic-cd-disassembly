@@ -291,40 +291,6 @@ SCMD_UNPAUSEPCM	rs.b	1			; Unpause PCM
 SCMD_BREAKSFX	rs.b	1			; Play glass break sound
 SCMD_BADEND	rs.b	1			; Load bad ending FMV
 SCMD_GOODEND	rs.b	1			; Load good ending FMV
-SCMD_R1AMUST	rs.b	1			; Play Palmtree Panic Present music (sound test)
-SCMD_R1CMUST	rs.b	1			; Play Palmtree Panic Good Future music (sound test)
-SCMD_R1DMUST	rs.b	1			; Play Palmtree Panic Bad Future music (sound test)
-SCMD_R3AMUST	rs.b	1			; Play Collision Chaos Present music (sound test)
-SCMD_R3CMUST	rs.b	1			; Play Collision Chaos Good Future music (sound test)
-SCMD_R3DMUST	rs.b	1			; Play Collision Chaos Bad Future music (sound test)
-SCMD_R4AMUST	rs.b	1			; Play Tidal Tempest Present music (sound test)
-SCMD_R4CMUST	rs.b	1			; Play Tidal Tempest Good Future music (sound test)
-SCMD_R4DMUST	rs.b	1			; Play Tidal Tempest Bad Future music (sound test)
-SCMD_R5AMUST	rs.b	1			; Play Quartz Quadrant Present music (sound test)
-SCMD_R5CMUST	rs.b	1			; Play Quartz Quadrant Good Future music (sound test)
-SCMD_R5DMUST	rs.b	1			; Play Quartz Quadrant Bad Future music (sound test)
-SCMD_R6AMUST	rs.b	1			; Play Wacky Workbench Present music (sound test)
-SCMD_R6CMUST	rs.b	1			; Play Wacky Workbench Good Future music (sound test)
-SCMD_R6DMUST	rs.b	1			; Play Wacky Workbench Bad Future music (sound test)
-SCMD_R7AMUST	rs.b	1			; Play Stardust Speedway Present music (sound test)
-SCMD_R7CMUST	rs.b	1			; Play Stardust Speedway Good Future music (sound test)
-SCMD_R7DMUST	rs.b	1			; Play Stardust Speedway Bad Future music (sound test)
-SCMD_R8AMUST	rs.b	1			; Play Metallic Madness Present music (sound test)
-SCMD_R8CMUST	rs.b	1			; Play Metallic Madness Good Future music (sound test)
-SCMD_R8DMUST	rs.b	1			; Play Metallic Madness Bad Future music (sound test)
-SCMD_BOSSMUST	rs.b	1			; Play boss music (sound test)
-SCMD_FINALMUST	rs.b	1			; Play final boss music (sound test)
-SCMD_TITLEMUST	rs.b	1			; Play title screen music (sound test)
-SCMD_TMATKMUST	rs.b	1			; Play time attack music (sound test)
-SCMD_LVLENDMUST	rs.b	1			; Play level end music (sound test)
-SCMD_SHOESMUST	rs.b	1			; Play speed shoes music (sound test)
-SCMD_INVINCMUST	rs.b	1			; Play invincibility music (sound test)
-SCMD_GMOVERMUST	rs.b	1			; Play game over music (sound test)
-SCMD_SPECMUST	rs.b	1			; Play special stage music (sound test)
-SCMD_DAGRDNMUST	rs.b	1			; Play D.A. Garden music (sound test)
-SCMD_PROTOWARPT	rs.b	1			; Play prototype warp sound (sound test)
-SCMD_INTROMUST	rs.b	1			; Play opening music (sound test)
-SCMD_ENDINGMUST	rs.b	1			; Play ending music (sound test)
 SCMD_FUTURESFXT	rs.b	1			; Play "Future" voice clip (sound test)
 SCMD_PASTSFXT	rs.b	1			; Play "Past" voice clip (sound test)
 SCMD_ALRGHTSFXT	rs.b	1			; Play "Alright" voice clip (sound test)
@@ -349,11 +315,6 @@ SCMD_TAILS	rs.b	1			; Load Tails screen
 SCMD_BATMAN	rs.b	1			; Load Batman Sonic screen
 SCMD_CUTESONIC	rs.b	1			; Load cute Sonic screen
 SCMD_STAFFTIMES	rs.b	1			; Load best staff times screen
-SCMD_DUMMY1	rs.b	1			; Load dummy file (unused)
-SCMD_DUMMY2	rs.b	1			; Load dummy file (unused)
-SCMD_DUMMY3	rs.b	1			; Load dummy file (unused)
-SCMD_DUMMY4	rs.b	1			; Load dummy file (unused)
-SCMD_DUMMY5	rs.b	1			; Load dummy file (unused)
 SCMD_PENCILTEST	rs.b	1			; Load pencil test FMV
 SCMD_PAUSECDA	rs.b	1			; Pause CDDA music
 SCMD_UNPAUSECDA	rs.b	1			; Unpause CDDA music

@@ -338,7 +338,7 @@ SelectFM:
 	dc.b	FM_AA				; AA
 	dc.b	FM_AC				; AC
 	dc.b	FM_AD				; AD
-	dc.b	FM_CHECKPOINT			; Checkpoint
+	dc.b	FM_CHECKPOINT		; Checkpoint
 	dc.b	FM_AF				; AF
 	dc.b	FM_B0				; B0
 	dc.b	FM_B1				; B1
@@ -424,6 +424,13 @@ SelectPCM:
 ; -------------------------------------------------------------------------
 
 .IDs:
+	dc.b	SCMD_R1BMUST			; Palmtree Panic past music
+	dc.b	SCMD_R3BMUST			; Collision Chaos past music
+	dc.b	SCMD_R4BMUST			; Tidal Tempest past music
+	dc.b	SCMD_R5BMUST			; Quartz Quadrant past music
+	dc.b	SCMD_R6BMUST			; Wacky Workbench past music
+	dc.b	SCMD_R7BMUST			; Stardust Speedway past music
+	dc.b	SCMD_R8BMUST			; Metallic Madness past music
 	dc.b	SCMD_FUTURESFXT			; "Future"
 	dc.b	SCMD_PASTSFXT			; "Past"
 	dc.b	SCMD_ALRGHTSFXT			; "Alright"
@@ -434,13 +441,6 @@ SelectPCM:
 	dc.b	SCMD_YELPSFXT			; Amy yelp
 	dc.b	SCMD_STOMPSFXT			; Boss stomp
 	dc.b	SCMD_BUMPERSFXT			; Bumper
-	dc.b	SCMD_R1BMUST			; Palmtree Panic past music
-	dc.b	SCMD_R3BMUST			; Collision Chaos past music
-	dc.b	SCMD_R4BMUST			; Tidal Tempest past music
-	dc.b	SCMD_R5BMUST			; Quartz Quadrant past music
-	dc.b	SCMD_R6BMUST			; Wacky Workbench past music
-	dc.b	SCMD_R7BMUST			; Stardust Speedway past music
-	dc.b	SCMD_R8BMUST			; Metallic Madness past music
 .IDsEnd:
 	even
 
@@ -474,40 +474,40 @@ SelectCDDA:
 ; -------------------------------------------------------------------------
 
 .IDs:
-	dc.b	SCMD_R1AMUST			; Palmtree Panic present music
-	dc.b	SCMD_R1CMUST			; Palmtree Panic good future music
-	dc.b	SCMD_R1DMUST			; Palmtree Panic bad future music
-	dc.b	SCMD_R3AMUST			; Collision Chaos present music
-	dc.b	SCMD_R3CMUST			; Collision Chaos good future music
-	dc.b	SCMD_R3DMUST			; Collision Chaos bad future music
-	dc.b	SCMD_R4AMUST			; Tidal Tempest present music
-	dc.b	SCMD_R4CMUST			; Tidal Tempest good future music
-	dc.b	SCMD_R4DMUST			; Tidal Tempest bad future music
-	dc.b	SCMD_R5AMUST			; Quartz Quadrant present music
-	dc.b	SCMD_R5CMUST			; Quartz Quadrant good future music
-	dc.b	SCMD_R5DMUST			; Quartz Quadrant bad future music
-	dc.b	SCMD_R6AMUST			; Wacky Workbench present music
-	dc.b	SCMD_R6CMUST			; Wacky Workbench good future music
-	dc.b	SCMD_R6DMUST			; Wacky Workbench bad future music
-	dc.b	SCMD_R7AMUST			; Stardust Speedway present music
-	dc.b	SCMD_R7CMUST			; Stardust Speedway good future music
-	dc.b	SCMD_R7DMUST			; Stardust Speedway bad future music
-	dc.b	SCMD_R8AMUST			; Metallic Madness present music
-	dc.b	SCMD_R8CMUST			; Metallic Madness good future music
-	dc.b	SCMD_R8DMUST			; Metallic Madness bad future music
-	dc.b	SCMD_BOSSMUST			; Boss music
-	dc.b	SCMD_FINALMUST			; Final boss music
-	dc.b	SCMD_TITLEMUST			; Title screen music
-	dc.b	SCMD_TMATKMUST			; Time attack music
-	dc.b	SCMD_LVLENDMUST			; Level end music
-	dc.b	SCMD_SHOESMUST			; Speed shoes music
-	dc.b	SCMD_INVINCMUST			; Invincibility music
-	dc.b	SCMD_GMOVERMUST			; Game over music
-	dc.b	SCMD_SPECMUST			; Special stage music
-	dc.b	SCMD_DAGRDNMUST			; D.A. Garden music
-	dc.b	SCMD_PROTOWARPT			; Prototype warp sound
-	dc.b	SCMD_INTROMUST			; Opening music
-	dc.b	SCMD_ENDINGMUST			; Ending music
+	dc.b	SCMD_R1AMUS			; Palmtree Panic present music
+	dc.b	SCMD_R1CMUS			; Palmtree Panic good future music
+	dc.b	SCMD_R1DMUS			; Palmtree Panic bad future music
+	dc.b	SCMD_R3AMUS			; Collision Chaos present music
+	dc.b	SCMD_R3CMUS			; Collision Chaos good future music
+	dc.b	SCMD_R3DMUS			; Collision Chaos bad future music
+	dc.b	SCMD_R4AMUS			; Tidal Tempest present music
+	dc.b	SCMD_R4CMUS			; Tidal Tempest good future music
+	dc.b	SCMD_R4DMUS			; Tidal Tempest bad future music
+	dc.b	SCMD_R5AMUS			; Quartz Quadrant present music
+	dc.b	SCMD_R5CMUS			; Quartz Quadrant good future music
+	dc.b	SCMD_R5DMUS			; Quartz Quadrant bad future music
+	dc.b	SCMD_R6AMUS			; Wacky Workbench present music
+	dc.b	SCMD_R6CMUS			; Wacky Workbench good future music
+	dc.b	SCMD_R6DMUS			; Wacky Workbench bad future music
+	dc.b	SCMD_R7AMUS			; Stardust Speedway present music
+	dc.b	SCMD_R7CMUS			; Stardust Speedway good future music
+	dc.b	SCMD_R7DMUS			; Stardust Speedway bad future music
+	dc.b	SCMD_R8AMUS			; Metallic Madness present music
+	dc.b	SCMD_R8CMUS			; Metallic Madness good future music
+	dc.b	SCMD_R8DMUS			; Metallic Madness bad future music
+	dc.b	SCMD_BOSSMUS		; Boss music
+	dc.b	SCMD_FINALMUS		; Final boss music
+	dc.b	SCMD_TITLEMUS		; Title screen music
+	dc.b	SCMD_TMATKMUS		; Time attack music
+	dc.b	SCMD_LVLENDMUS		; Level end music
+	dc.b	SCMD_SHOESMUS		; Speed shoes music
+	dc.b	SCMD_INVINCMUS		; Invincibility music
+	dc.b	SCMD_GMOVERMUS		; Game over music
+	dc.b	SCMD_SPECMUS		; Special stage music
+	dc.b	SCMD_DAGRDNMUS		; D.A. Garden music
+	dc.b	SCMD_PROTOWARP		; Prototype warp sound
+	dc.b	SCMD_INTROMUS		; Opening music
+	dc.b	SCMD_ENDINGMUS		; Ending music
 .IDsEnd:
 	even
 
