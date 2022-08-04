@@ -2599,9 +2599,8 @@ ObjSonic_SpecialChunks:
 		bne.s	.Roll			; If so, branch
 		move.w	#$9C,d0			; Play roll sound
 		jsr	PlayFMSound
-		
-.Roll:
 	endif
+.Roll:
 	jmp	ObjSonic_StartRoll		; Start rolling
 
 ; -------------------------------------------------------------------------
