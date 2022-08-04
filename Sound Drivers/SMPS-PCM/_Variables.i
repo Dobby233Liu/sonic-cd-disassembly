@@ -22,7 +22,6 @@ PCMM_END	EQU	__rs-1			; Ending ID
 ; PCM sound effects
 	rsset	$B0
 PCMS_START	rs.b	0			; Starting ID
-PCMS_MUSLOOP	rs.b	1			; Music loop (unused)
 PCMS_FUTURE	rs.b	1			; "Future"
 PCMS_PAST	rs.b	1			; "Past"
 PCMS_ALRIGHT	rs.b	1			; "Alright"

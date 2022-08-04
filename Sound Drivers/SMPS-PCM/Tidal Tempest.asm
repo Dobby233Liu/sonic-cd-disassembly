@@ -22,7 +22,6 @@
 ; -------------------------------------------------------------------------
 
 SFXIndex:
-	dc.l	SFX_Unknown
 	dc.l	SFX_Future
 	dc.l	SFX_Past
 	dc.l	SFX_Alright
@@ -91,9 +90,6 @@ Song_TTZPast:
 ; Sound effects
 ; -------------------------------------------------------------------------
 
-SFX_Unknown:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Unknown.bin"
-	even
 SFX_Future:
 	incbin	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Future.bin"
 	even

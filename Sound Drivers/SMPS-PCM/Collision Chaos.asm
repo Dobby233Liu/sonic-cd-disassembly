@@ -22,7 +22,6 @@
 ; -------------------------------------------------------------------------
 
 SFXIndex:
-	dc.l	SFX_Unknown
 	dc.l	SFX_Future
 	dc.l	SFX_Past
 	dc.l	SFX_Alright
@@ -107,9 +106,6 @@ Song_CCZPast:
 ; Sound effects
 ; -------------------------------------------------------------------------
 
-SFX_Unknown:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Unknown.bin"
-	even
 SFX_Future:
 	incbin	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Future.bin"
 	even

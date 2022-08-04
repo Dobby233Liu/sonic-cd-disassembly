@@ -1108,7 +1108,7 @@ TrackCommand:
 	jmp	TrkCmd_Panning(pc)		; Set panning
 	jmp	TrkCmd_Detune(pc)		; Set detune
 	jmp	TrkCmd_CommFlag(pc)		; Set communication flag
-	jmp	TrkCmd_SetCDDALoop(pc)		; Set CDDA loop flag
+	jmp	TrkCmd_Null(pc)		; Set CDDA loop flag
 	jmp	TrkCmd_Null(pc)			; Null
 	jmp	TrkCmd_Null(pc)			; Null
 	jmp	TrkCmd_Volume(pc)		; Add volume
@@ -1135,7 +1135,7 @@ TrackCommand:
 	jmp	TrkCmd_Transpose(pc)		; Transpose
 	jmp	TrkCmd_GlobalTickMult(pc)	; Set global tick multiplier
 	jmp	TrkCmd_Null(pc)			; Null
-	jmp	TrkCmd_Invalid(pc)		; Invalid
+	jmp	TrkCmd_Null(pc)		; Invalid
 
 ; -------------------------------------------------------------------------
 ; Null track command
@@ -1196,9 +1196,8 @@ TrkCmd_CommFlag:
 ;	a5.l - Pointer to driver variables
 ; -------------------------------------------------------------------------
 
-TrkCmd_SetCDDALoop:
-	;move.b	#1,pdrvCDDALoop(a5)		; Set CDDA loop flag
-	rts
+;TrkCmd_SetCDDALoop:
+;	rts
 
 ; -------------------------------------------------------------------------
 ; Volume track command
@@ -1477,12 +1476,6 @@ TrkCmd_GlobalTickMult:
 	adda.w	d1,a0				; Next track
 	dbf	d2,.SetTickMult			; Loop until all tracks are updated
 	rts
-
-; -------------------------------------------------------------------------
-; Invalid track command
-; -------------------------------------------------------------------------
-
-TrkCmd_Invalid:
 
 ; -------------------------------------------------------------------------
 ; Driver info

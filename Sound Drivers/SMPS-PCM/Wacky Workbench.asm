@@ -22,7 +22,6 @@
 ; -------------------------------------------------------------------------
 
 SFXIndex:
-	dc.l	SFX_Unknown
 	dc.l	SFX_Future
 	dc.l	SFX_Past
 	dc.l	SFX_Alright
@@ -93,9 +92,6 @@ Song_WWZPast:
 ; Sound effects
 ; -------------------------------------------------------------------------
 
-SFX_Unknown:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Unknown.bin"
-	even
 SFX_Future:
 	incbin	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Future.bin"
 	even
