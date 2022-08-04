@@ -226,6 +226,18 @@ UpdateHUD:
 	tst.b	ctrlLocked.w
 	bne.s	.UpdateTimer
 	addq.b	#1,-(a1)
+
+.RunBoredTimer:
+	tst.w	boredTimer.w			; Is the bored timer active?
+	beq.s	.CheckP2Timer			; If not, branch
+	addq.w	#1,boredTimer.w			; Increment bored timer
+
+.CheckP2Timer:
+	tst.w	boredTimerP2.w			; Is the player 2 bored timer active?
+	beq.s	.Cont				; If not, branch
+	addq.w	#1,boredTimerP2.w		; Increment player 2 bored timer
+
+.Cont:
 	cmpi.b	#60,(a1)
 	bcs.s	.UpdateTimer
 	move.b	#0,(a1)

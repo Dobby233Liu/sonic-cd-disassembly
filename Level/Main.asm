@@ -704,12 +704,7 @@ VInterrupt:
 
 VInt_Finish:
 	jsr	UpdateFMQueues			; Update FM driver queues
-	tst.b	paused.w			; Is the game paused?
-	bne.s	VInt_Done			; If so, branch
-	bsr.w	RunBoredTimer			; Run boredom timer
-	bsr.w	RunTimeWarp			; Run time warp timer
 
-VInt_Done:
 	addq.l	#1,lvlFrameCount		; Increment frame counter
 
 	movem.l	(sp)+,d0-a6			; Restore registers
@@ -964,36 +959,5 @@ DoVIntUpdates:
 
 HInterrupt:
 	rte
-
-; -------------------------------------------------------------------------
-; Run time warp timer
-; -------------------------------------------------------------------------
-
-RunTimeWarp:
-	tst.b	objPlayerSlot+oPlayerCharge.w	; Is the player charging?
-	bne.s	.End				; If so, branch
-	tst.w	timeWarpTimer.w			; Is the time warp timer active?
-	beq.s	.End				; If not, branch	
-	addq.w	#1,timeWarpTimer.w		; Increment time warp timer
-
-.End:
-	rts
-
-; -------------------------------------------------------------------------
-; Run boredom timer
-; -------------------------------------------------------------------------
-
-RunBoredTimer:
-	tst.w	boredTimer.w			; Is the bored timer active?
-	beq.s	.CheckP2Timer			; If not, branch
-	addq.w	#1,boredTimer.w			; Increment bored timer
-
-.CheckP2Timer:
-	tst.w	boredTimerP2.w			; Is the player 2 bored timer active?
-	beq.s	.End				; If not, branch
-	addq.w	#1,boredTimerP2.w		; Increment player 2 bored timer
-
-.End:
-	rts
 
 ; -------------------------------------------------------------------------
