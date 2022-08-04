@@ -109,9 +109,9 @@ Start:
 
 ; -------------------------------------------------------------------------
 
-	if REGION=USA
+	;if REGION=USA
 		include	"Backup RAM/Initialization/V-BLANK Interrupt.asm"
-	endif
+	;endif
 
 ; -------------------------------------------------------------------------
 ; Backup RAM corrupted error
@@ -232,9 +232,9 @@ Finish:
 
 ; -------------------------------------------------------------------------
 
-	if REGION<>USA
-		include	"Backup RAM/Initialization/V-BLANK Interrupt.asm"
-	endif
+	;if REGION<>USA
+	;	include	"Backup RAM/Initialization/V-BLANK Interrupt.asm"
+	;endif
 
 ; -------------------------------------------------------------------------
 ; Unused function to send some kind of command ID to the Sub CPU

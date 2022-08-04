@@ -194,15 +194,15 @@ LevelScroll:
 	clr.w	scrollFlagsBg2.w
 	clr.w	scrollFlagsBg3.w
 
-	if REGION=USA
+	;if REGION=USA
 		bsr.w	RunLevelEvents		; Run level events
 		bsr.w	ScrollCamX		; Scroll camera horizontally
 		bsr.w	ScrollCamY		; Scroll camera vertically
-	else
-		bsr.w	ScrollCamX		; Scroll camera horizontally
-		bsr.w	ScrollCamY		; Scroll camera vertically
-		bsr.w	RunLevelEvents		; Run level events
-	endif
+	;else
+	;	bsr.w	ScrollCamX		; Scroll camera horizontally
+	;	bsr.w	ScrollCamY		; Scroll camera vertically
+	;	bsr.w	RunLevelEvents		; Run level events
+	;endif
 
 	move.w	cameraY.w,vscrollScreen.w	; Update VScroll values
 	move.w	cameraBgY.w,vscrollScreen+2.w

@@ -51,18 +51,18 @@ object4		rs.b	oSize			; Object 4
 object5		rs.b	oSize			; Object 5
 object6		rs.b	oSize			; Object 6
 object7		rs.b	oSize			; Object 7
-	if REGION<>JAPAN
+	;if REGION<>JAPAN
 object8		rs.b	oSize			; Object 8
 object9		rs.b	oSize			; Object 9
-	endif
+	;endif
 objectsEnd	rs.b	0			; End of object pool
 OBJCOUNT	EQU	(objectsEnd-objects)/oSize
 
-	if REGION=JAPAN
-		rs.b	$1200
-	else
+	;if REGION=JAPAN
+	;	rs.b	$1200
+	;else
 		rs.b	$1180
-	endif
+	;endif
 
 nemBuffer	rs.b	$200			; Nemesis decompression buffer
 palette		rs.w	$40			; Palette buffer
@@ -304,10 +304,10 @@ MainLoop:
 	bra.w	MainLoop			; Loop
 
 .Exit:
-	if REGION=USA
+	;if REGION=USA
 		cmpi.b	#4,subFailCount.w	; Is the Sub CPU deemed unreliable?
 		bcc.s	.FadeOut		; If so, branch
-	endif
+	;endif
 	bset	#0,GAMAINFLAG			; Tell Sub CPU we are finished
 
 .WaitSubCPU:

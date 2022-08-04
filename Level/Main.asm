@@ -335,10 +335,10 @@ Level_MainLoop:
 	move.b	#8,vintRoutine.w		; VSync
 	bsr.w	VSync
 
-	if REGION=USA				; Did the player die?
+	;if REGION=USA				; Did the player die?
 		cmpi.b	#6,objPlayerSlot+oRoutine.w	
 		bcc.s	.CheckPaused		; If so, branch
-	endif
+	;endif
 	tst.b	ctrlLocked.w			; Are controls locked?
 	bne.s	.CheckPaused			; If so, branch
 	btst	#7,p1CtrlTap.w			; Was the start button pressed?
@@ -360,12 +360,12 @@ Level_MainLoop:
 	bne.s	.CheckReset			; If so, branch
 
 	andi.b	#$70,d0				; Get A, B, or C
-	if REGION=USA
+	;if REGION=USA
 		beq.s	Level_MainLoop		; If none of them were pressed, branch
-	else
-		cmpi.b	#$70,d0			; Were A, B, and C pressed?
-		bne.s	Level_MainLoop		; If not, branch
-	endif
+	;else
+	;	cmpi.b	#$70,d0			; Were A, B, and C pressed?
+	;	bne.s	Level_MainLoop		; If not, branch
+	;endif
 	subq.b	#1,lifeCount			; Take away a life
 	bpl.s	.GotLives			; If we haven't run out, branch
 	clr.b	lifeCount			; Cap lives at 0

@@ -277,24 +277,24 @@ InitZ80Dummy:
 ; -------------------------------------------------------------------------
 
 PlayFMSound:
-	if (REGION=USA)|((REGION<>USA)&(DEMO=0))
+	;if (REGION=USA)|((REGION<>USA)&(DEMO=0))
 		tst.b	fmSndQueue1.w		; Is queue 1 full?
 		bne.s	.CheckQueue2		; If so, branch
 		move.b	d0,fmSndQueue1.w	; Set ID in queue 1
 		rts
 
 .CheckQueue2:
-	endif
+	;endif
 	tst.b	fmSndQueue2.w			; Is queue 2 full?
 	bne.s	.CheckQueue3			; If so, branch
 	move.b	d0,fmSndQueue2.w		; Set ID in queue 2
 	rts
 
 .CheckQueue3:
-	if (REGION=USA)|((REGION<>USA)&(DEMO=0))
+	;if (REGION=USA)|((REGION<>USA)&(DEMO=0))
 		tst.b	fmSndQueue3.w		; Is queue 3 full?
 		bne.s	.End			; If so, branch
-	endif
+	;endif
 	move.b	d0,fmSndQueue3.w		; Set ID in queue 3
 
 .End:
@@ -307,7 +307,7 @@ PlayFMSound:
 UpdateFMQueues:
 	jsr	StopZ80				; Stop the Z80
 
-	if (REGION=USA)|((REGION<>USA)&(DEMO=0))
+	;if (REGION=USA)|((REGION<>USA)&(DEMO=0))
 		tst.b	fmSndQueue1.w		; Update queue 1
 		beq.s	.CheckQueue2
 		move.b	fmSndQueue1.w,FMDrvQueue1
@@ -326,13 +326,13 @@ UpdateFMQueues:
 		move.b	#0,fmSndQueue3.w
 		
 .End:
-	else
-		tst.b	fmSndQueue2.w		; Update queues
-		beq.w	StartZ80
-		move.b	fmSndQueue2.w,FMDrvQueue1
-		move.b	fmSndQueue3.w,fmSndQueue2.w
-		move.b	#0,fmSndQueue3.w
-	endif
+	;else
+	;	tst.b	fmSndQueue2.w		; Update queues
+	;	beq.w	StartZ80
+	;	move.b	fmSndQueue2.w,FMDrvQueue1
+	;	move.b	fmSndQueue3.w,fmSndQueue2.w
+	;	move.b	#0,fmSndQueue3.w
+	;endif
 	bra.w	StartZ80			; Start the Z80
 
 ; -------------------------------------------------------------------------

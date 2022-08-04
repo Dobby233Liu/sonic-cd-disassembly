@@ -163,18 +163,18 @@ ObjResults_BonusCountdown:
 	tst.w	bonusCount2.w
 	bne.s	.GiveBonus2
 	subq.w	#1,oVar32(a0)
-	if (REGION=USA)|((REGION<>USA)&(DEMO=0))
+	;if (REGION=USA)|((REGION<>USA)&(DEMO=0))
 		bpl.s	.KeepRout
-	else
-		bpl.s	.Display
-	endif
+	;else
+	;	bpl.s	.Display
+	;endif
 	addq.b	#2,oRoutine(a0)
 
 .KeepRout:
-	if (REGION=USA)|((REGION<>USA)&(DEMO=0))
+	;if (REGION=USA)|((REGION<>USA)&(DEMO=0))
 		cmpi.w	#$1E,oVar32(a0)
 		bne.s	.Display
-	endif
+	;endif
 	tst.b	enteredBigRing
 	beq.s	.Display
 	move.w	#$C8,d0
@@ -201,7 +201,7 @@ ObjResults_BonusCountdown:
 	bne.s	.HaveBonus
 	tst.w	bonusCount2.w
 	bne.s	.HaveBonus
-	if (REGION=USA)|((REGION<>USA)&(DEMO=0))
+	;if (REGION=USA)|((REGION<>USA)&(DEMO=0))
 		jsr	StopZ80
 		move.b	#$9A,FMDrvQueue1
 		jsr	StartZ80
@@ -209,11 +209,11 @@ ObjResults_BonusCountdown:
 		bcc.s	.NoSFX
 		move.w	#$2D,oVar32(a0)
 		bra.s	.NoSFX
-	else
-		move.w	#$9A,d0
-		jsr	PlayFMSound
-		bra.s	.NoSFX
-	endif
+	;else
+	;	move.w	#$9A,d0
+	;	jsr	PlayFMSound
+	;	bra.s	.NoSFX
+	;endif
 
 ; -------------------------------------------------------------------------
 
@@ -278,12 +278,12 @@ ObjResults_NextLevel:
 ; -------------------------------------------------------------------------
 
 .NotAct1:
-	if (REGION=USA)|((REGION<>USA)&(DEMO=0))
+	;if (REGION=USA)|((REGION<>USA)&(DEMO=0))
 		tst.b	timeAttackMode
 		bne.s	.End
 		cmpi.b	#$7F,timeStones
 		beq.s	.SetGoodFuture
-	endif
+	;endif
 	tst.b	goodFuture
 	beq.s	.End
 	clr.b	goodFuture

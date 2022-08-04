@@ -155,10 +155,10 @@ Obj3DFall_Init:
 ; -------------------------------------------------------------------------
 
 Obj3DFall_Main:
-	if (REGION=USA)|((REGION<>USA)&(DEMO=0))
+	;if (REGION=USA)|((REGION<>USA)&(DEMO=0))
 		cmpi.b	#$2B,oAnim(a6)
 		beq.w	.End
-	endif
+	;endif
 	move.w	oY(a0),d0
 	sub.w	oY(a6),d0
 	addi.w	#$40,d0

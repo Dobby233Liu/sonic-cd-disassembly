@@ -280,11 +280,11 @@ ObjBigRing:
 	bne.s	ObjBigRingFlash
 	cmpi.w	#50,levelRings
 	bcc.s	.Proceed
-	if (REGION=USA)|((REGION<>USA)&(DEMO=0))
+	;if (REGION=USA)|((REGION<>USA)&(DEMO=0))
 		jmp	CheckObjDespawnTime
-	else
-		jmp	DeleteObject
-	endif
+	;else
+	;	jmp	DeleteObject
+	;endif
 
 ; -------------------------------------------------------------------------
 

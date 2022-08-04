@@ -55,7 +55,7 @@ ObjSonic_ChkBoredom:
 ; -------------------------------------------------------------------------
 
 ObjSonic:
-	if (REGION<>USA)|((REGION=USA)&(DEMO=0))
+	;if (REGION<>USA)|((REGION=USA)&(DEMO=0))
 		tst.b	timeAttackMode		; Are we in time attack mode?
 		bne.s	.NormalMode		; If so, branch
 		cmpa.w	#objPlayerSlot2,a0	; Are we the second player?
@@ -64,15 +64,15 @@ ObjSonic:
 			btst	#7,p2CtrlTap.w	; Did player 2 press the start button?
 			beq.s	.CheckDebug	; If not, branch
 			eori.b	#1,debugCheat	; Swap debug cheat flag
+		endif
 			
 .CheckDebug:
-		endif
 		tst.b	lvlDebugMode		; Are we in debug mode?
 		beq.s	.NormalMode		; If not, branch
 		jmp	DebugMode		; Handle debug mode
 
 .NormalMode:
-	endif
+	;endif
 	move.b	oPlayerCharge(a0),d0		; Get charge time
 	beq.s	.RunRoutines			; If it's 0, branch
 	addq.b	#1,d0				; Increment the charge time
@@ -2979,9 +2979,12 @@ ObjSonic_SpecialChunks:
 
 .RollTunnel:
 	if REGION<>USA
+		btst	#2,oStatus(a0)		; Are we already rolling?
+		bne.s	.Roll			; If so, branch
 		move.w	#$9C,d0			; Play roll sound
 		jsr	PlayFMSound
 	endif
+.Roll:
 	jmp	ObjSonic_StartRoll		; Start rolling
 
 ; -------------------------------------------------------------------------
