@@ -106,9 +106,10 @@ UpdateTrack:
 .Update:
 	jsr	UpdateSample(pC)		; Update sample
 
-	; BUG: The developerss removed modulation support and optimized
+	; BUG: The developers removed modulation support and optimized
 	; this call, but they accidentally left in the stack pointer shift
 	; in the routine. See the routine for more information.
+	; Dobby: fixed.
 
 	bra.w	HandleStaccato			; Handle staccato
 
@@ -240,8 +241,9 @@ HandleStaccato:
 	; so instead of skipping to the next track, it just outright exits the driver. As a result,
 	; the tracks after the current one don't get updated for the current frame, causing them
 	; to desync a frame.
+	; Dobby: commented out.
 
-	addq.w	#4,sp				; Supposed to skip right to the next track, but actually exits the driver
+	;addq.w	#4,sp				; Supposed to skip right to the next track, but actually exits the driver
 
 .End:
 	rts

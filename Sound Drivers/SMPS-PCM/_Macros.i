@@ -11,7 +11,7 @@
 
 SAMPTBLSTART macro
 SampleTable:
-	dc.l	(SampleTable_End-SampleTable)/4-1	; BUG: that "-1" shouldn't be there
+	dc.l	(SampleTable_End-SampleTable)/4
 	endm
 
 ; -------------------------------------------------------------------------
