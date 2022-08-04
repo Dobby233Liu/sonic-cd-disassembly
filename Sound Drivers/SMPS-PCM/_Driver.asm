@@ -58,7 +58,7 @@ UpdateDriver:
 UpdateTracks:
 	clr.b	pdrvSFXMode(a5)			; Song mode
 
-	lea	pdrvRhythm(a5),a3		; Update song PCM tracks
+	lea	pdrvPCM1(a5),a3		; Update song PCM tracks
 	moveq	#PCM_TRACK_CNT-1,d7
 
 .SongTracks:
@@ -618,7 +618,7 @@ PlaySong:
 	move.b	5(a2),pdrvTempoCnt(a5)
 	addq.w	#6,a2
 
-	lea	pdrvRhythm(a5),a3		; Start with the rhythm track
+	lea	pdrvPCM1(a5),a3		; Start with PCM1
 	lea	ChannelIDs(pc),a1		; Channel ID array
 	move.b	#ptrkStackBase,d2		; Call stack base
 	subq.w	#1,d7				; Subtract 1 from track count for dbf
@@ -651,7 +651,7 @@ PlaySong:
 	adda.w	#ptrkSize,a3			; Next track
 	dbf	d7,.InitTracks			; Loop until all tracks are set up
 	
-	clr.b	pdrvRhythm+ptrkFlags(a5)	; Disable rhythm track
+	;clr.b	pdrvPCM1+ptrkFlags(a5)	; Disable rhythm track
 	move.b	#$FF,pdrvOn(a5)			; Silence all channels
 	rts
 
@@ -660,7 +660,7 @@ PlaySong:
 ; -------------------------------------------------------------------------
 
 ChannelIDs:
-	dc.b	7				; Rhythm
+	;dc.b	7				; Rhythm
 	dc.b	0				; PCM1
 	dc.b	1				; PCM2
 	dc.b	2				; PCM3
@@ -694,7 +694,6 @@ PlaySFX:
 	move.b	2(a2),d1			; Get tick multiplier
 	addq.w	#4,a2
 
-	lea	ChannelIDs(pc),a1		; Channel ID array (unused here)
 	move.b	#ptrkStackBase,d2		; Call stack base
 	subq.w	#1,d7				; Subtract 1 from track count for dbf
 
@@ -774,7 +773,7 @@ HandleFadeOut:
 	beq.w	ResetDriver			; If it has run out, branch
 	move.b	pdrvFadeDelay(a5),pdrvFadeCnt(a5)
 
-	lea	pdrvRhythm(a5),a3		; Fade out song tracks
+	lea	pdrvPCM1(a5),a3		; Fade out song tracks
 	moveq	#RHY_TRACK_CNT+PCM_TRACK_CNT-1,d7
 	move.b	pdrvFadeSpeed(a5),d6		; Get fade speed
 	add.b	d6,pdrvUnkFadeVol(a5)		; Add to unknown fade volume
@@ -841,7 +840,7 @@ HandleTempo:
 	bne.s	.End				; If it hasn't run out, branch
 	move.b	pdrvTempo(a5),pdrvTempoCnt(a5)	; Reset counter
 
-	lea	pdrvRhythm(a5),a0		; Delay tracks by 1 tick
+	lea	pdrvPCM1(a5),a0		; Delay tracks by 1 tick
 	move.w	#ptrkSize,d1
 	moveq	#RHY_TRACK_CNT+PCM_TRACK_CNT-1,d0
 
@@ -1466,7 +1465,7 @@ TrkCmd_Transpose:
 ; -------------------------------------------------------------------------
 
 TrkCmd_GlobalTickMult:
-	lea	pdrvRhythm(a5),a0		; Update song tracks
+	lea	pdrvPCM1(a5),a0		; Update song tracks
 	move.b	(a2)+,d0
 	move.w	#ptrkSize,d1
 	moveq	#RHY_TRACK_CNT+PCM_TRACK_CNT-1,d2

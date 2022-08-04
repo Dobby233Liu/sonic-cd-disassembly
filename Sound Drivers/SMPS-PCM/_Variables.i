@@ -120,7 +120,6 @@ pdrvFadeDelay	rs.b	1			; Fade out delay value
 pdrvFadeCnt	rs.b	1			; Fade out delay counter
 pdrvUnkFadeVol	rs.b	1			; Unknown fade out volume
 		rs.b	$80-__rs
-pdrvRhythm	rs.b	ptrkSize		; Rhythm track (unused)
 pdrvPCM1	rs.b	ptrkSize		; Music PCM1 track
 pdrvPCM2	rs.b	ptrkSize		; Music PCM2 track
 pdrvPCM3	rs.b	ptrkSize		; Music PCM3 track
