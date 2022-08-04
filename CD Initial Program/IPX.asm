@@ -708,6 +708,10 @@ R83SubCmds:
 ; -------------------------------------------------------------------------
 
 StageSelect:
+	; DOBBY HACK: Uncomment to see Bad Ending
+	; when the stage select cheat is activated
+	;bra.w	GameDone
+
 	moveq	#SCMD_STAGESEL,d0		; Run stage select file
 	bsr.w	RunMMD
 
