@@ -303,7 +303,9 @@ GameDone:
 	move.b	timeStones,gameTimeStones	; Save time stones retrieved
 
 	bsr.w	WriteSaveData			; Write save data
-	
+
+	; DOBBY HACK: Uncomment to force good ending
+	;bra.s	GoodEnding
 	cmpi.b	#%01111111,gameGoodFutures	; Were all of the good futures achievd?
 	beq.s	GoodEnding			; If so, branch
 	cmpi.b	#%01111111,gameTimeStones	; Were all of the time stones retrieved?

@@ -29,8 +29,8 @@ FID_TIMEATKSUB	rs.b	1			; Time attack menu (Sub CPU)
 FID_IPX		rs.b	1			; Main program
 FID_PENCILSTM	rs.b	1			; Pencil test FMV data
 FID_OPENSTM	rs.b	1			; Opening FMV data
-FID_BADENDSTM	rs.b	1			; Bad ending FMV data
-FID_GOODENDSTM	rs.b	1			; Good ending FMV data
+FID_GOODENDSTM	rs.b	1			; Bad ending FMV data
+FID_BADENDSTM	rs.b	1			; Good ending FMV data
 FID_OPENMAIN	rs.b	1			; Opening FMV (Main CPU)
 FID_OPENSUB	rs.b	1			; Opening FMV (Sub CPU)
 FID_COMINSOON	rs.b	1			; "Comin' Soon" screen

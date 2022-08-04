@@ -476,8 +476,8 @@ BuRAMWriteParams:
 	dc.w	SPCmd_PausePCM-.SPCmds		; Pause PCM
 	dc.w	SPCmd_UnpausePCM-.SPCmds	; Unpause PCM
 	dc.w	SPCmd_PlayBreakSFX-.SPCmds	; Play glass break sound
-	dc.w	SPCmd_LoadBadEnd-.SPCmds	; Load bad ending FMV
-	dc.w	SPCmd_LoadGoodEnd-.SPCmds	; Load good ending FMV
+	dc.w	SPCmd_LoadGoodEnd-.SPCmds	; Load bad ending FMV
+	dc.w	SPCmd_LoadBadEnd-.SPCmds	; Load good ending FMV
 	dc.w	SPCmd_TestR1AMus-.SPCmds	; Play Palmtree Panic present music (sound test)
 	dc.w	SPCmd_TestR1CMus-.SPCmds	; Play Palmtree Panic good future music (sound test)
 	dc.w	SPCmd_TestR1DMus-.SPCmds	; Play Palmtree Panic bad future music (sound test)
@@ -1425,7 +1425,7 @@ SPCmd_LoadBadEnd:
 	bsr.w	GiveWordRAMAccess
 
 	lea	File_BadEndSub(pc),a0		; Load Sub CPU file
-	lea	PRGRAM+$30000,a1		; GOODEND.BIN loads BADEND.STM. Seriously.
+	lea	PRGRAM+$30000,a1
 	jsr	LoadFile.w
 
 	jsr	PRGRAM+$30000			; Run Sub CPU file code
@@ -1450,7 +1450,7 @@ SPCmd_LoadGoodEnd:
 	bsr.w	GiveWordRAMAccess
 
 	lea	File_GoodEndSub(pc),a0		; Load Sub CPU file
-	lea	PRGRAM+$30000,a1		; BADEND.BIN loads GOODEND.STM. Seriously.
+	lea	PRGRAM+$30000,a1
 	jsr	LoadFile.w
 
 	jsr	PRGRAM+$30000			; Run Sub CPU file code
