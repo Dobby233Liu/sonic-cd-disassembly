@@ -161,11 +161,11 @@ ObjSonic_Init:
 
 ObjSonic_MakeWaterfallSplash:
 	tst.b	levelZone			; Are we in Palmtree Panic zone?
-	bne.s	ObjSonic_SplashEnd		; If not, branch
+	bne.s	.End				; If not, branch
 
-	move.b	lvlFrameTimer+1,d0		; Only spawn a splash every 4 frames
-	andi.b	#3,d0
-	bne.s	ObjSonic_SplashEnd
+	move.b	lvlFrameTimer+1,d0
+	andi.b	#3,d0		; Only spawn a splash every 4 frames
+	bne.s	.End
 
 	move.b	oYRadius(a0),d2			; Are we behind a waterfall?
 	ext.w	d2
@@ -173,15 +173,15 @@ ObjSonic_MakeWaterfallSplash:
 	move.w	oX(a0),d3
 	bsr.w	ObjSonic_GetChunkAtPos
 	cmpi.b	#$2F,d1
-	bne.s	ObjSonic_SplashEnd2		; If not, branch
+	bne.s	.End2				; If not, branch
 
 	cmpi.w	#$15C0,oX(a0)			; Are we too far into the level?
-	bcc.s	ObjSonic_SplashEnd		; If so, branch
+	bcc.s	.End				; If so, branch
 	tst.b	oPlayerCtrl(a0)			; Are we in a spin tunnel?
-	beq.s	ObjSonic_SplashEnd		; If not, branch
+	beq.s	.End				; If not, branch
 
 	jsr	FindObjSlot			; Create a waterfall splash at our position
-	bne.s	ObjSonic_SplashEnd
+	bne.s	.End
 	move.b	#$E,oID(a1)
 	move.w	oX(a0),oX(a1)
 	move.w	oY(a0),oY(a1)
@@ -195,10 +195,10 @@ ObjSonic_MakeWaterfallSplash:
 	move.b	d0,oRender(a1)
 	move.b	d0,oStatus(a1)
 
-ObjSonic_SplashEnd:
+.End:
 	rts
 
-ObjSonic_SplashEnd2:
+.End2:
 	rts
 
 ; -------------------------------------------------------------------------
@@ -586,63 +586,10 @@ ObjSonic_CheckBouncyFloor:
 	rts
 
 ; -------------------------------------------------------------------------
-; Handle the extended camera
-; -------------------------------------------------------------------------
-
-ObjSonic_ExtCamera:
-	rts					; Extended camera is disabled in Wacky Workbench
-
-	move.w	camXCenter.w,d1			; Get camera X center position
-
-	move.w	oPlayerGVel(a0),d0		; Get how fast we are moving
-	bpl.s	.PosInertia
-	neg.w	d0
-
-.PosInertia:
-	btst	#1,oPlayerCtrl(a0)		; Are we on a 3D ramp?
-	bne.s	.ResetPan			; If so, branch
-	cmpi.w	#$600,d0			; Are we going at max regular speed?
-	bcs.s	.ResetPan			; If not, branch
-
-	tst.w	oPlayerGVel(a0)			; Are we moving right?
-	bpl.s	.MovingRight			; If so, branch
-
-.MovingLeft:
-	addq.w	#2,d1				; Pan the camera to the right
-	cmpi.w	#(320/2)+64,d1			; Has it panned far enough?
-	bcs.s	.SetPanVal			; If not, branch
-	move.w	#(320/2)+64,d1			; Cap the camera's position
-	bra.s	.SetPanVal
-
-.MovingRight:
-	subq.w	#2,d1				; Pan the camera to the left
-	cmpi.w	#(320/2)-64,d1			; Has it panned far enough
-	bcc.s	.SetPanVal			; If not, branch
-	move.w	#(320/2)-64,d1			; Cap the camera's position
-	bra.s	.SetPanVal
-
-.ResetPan:
-	cmpi.w	#320/2,d1			; Has the camera panned back to the middle?
-	beq.s	.SetPanVal			; If so, branch
-	bcc.s	.ResetLeft			; If it's panning back left
-
-.ResetRight:
-	addq.w	#2,d1				; Pan back to the right
-	bra.s	.SetPanVal
-
-.ResetLeft:
-	subq.w	#2,d1				; Pan back to the left
-
-.SetPanVal:
-	move.w	d1,camXCenter.w			; Update camera X center position
-	rts
-
-; -------------------------------------------------------------------------
 ; Sonic's main routine
 ; -------------------------------------------------------------------------
 
 ObjSonic_Main:
-	bsr.s	ObjSonic_ExtCamera		; Handle extended camera
 	bsr.w	ObjSonic_MakeWaterfallSplash	; Handle waterfall splash creation
 
 	tst.w	debugCheat			; Is debug mode enabled?
@@ -660,7 +607,14 @@ ObjSonic_Main:
 .CtrlLock:
 	btst	#0,oPlayerCtrl(a0)		; Are we being controlled by another object?
 	beq.s	.NormalCtrl			; If not, branch
-	
+	cmpi.b	#6,levelZone			; Are we in Metallic Madness?
+	bne.s	.NotMMZ				; If not, branch
+
+	clr.w	timeWarpTimer.w			; Disable time warping
+	clr.b	timeWarpFlag
+	bra.s	.SkipControl
+
+.NotMMZ:
 	bsr.w	ObjSonic_TimeWarp		; Handle time warping
 	bra.s	.SkipControl
 
@@ -685,6 +639,13 @@ ObjSonic_Main:
 	move.b	primaryAngle.w,oPlayerPriAngle(a0)
 	move.b	secondaryAngle.w,oPlayerSecAngle(a0)
 
+	tst.b	windTunnelFlag.w		; Are we in a wind tunnel?
+	beq.s	.NoWindTunnel			; If not, branch
+	tst.b	oAnim(a0)			; Are we in the walking animation?
+	bne.s	.NoWindTunnel			; If not, branch
+	move.b	oPrevAnim(a0),oAnim(a0)		; Set animation to the previously saved animation ID
+
+.NoWindTunnel:
 	bsr.w	ObjSonic_Animate		; Animate sprite
 
 	tst.b	oPlayerCtrl(a0)			; Has object collision been disabled?
@@ -695,7 +656,6 @@ ObjSonic_Main:
 	jsr	Player_ObjCollide		; Handle object collision
 
 .NoObjCol:
-	bsr.w	ObjSonic_SpecialChunks		; Handle special chunks
 	rts
 
 ; -------------------------------------------------------------------------
@@ -804,13 +764,6 @@ ObjSonic_RecordPos:
 	rts
 
 ; -------------------------------------------------------------------------
-; Handle Sonic underwater
-; -------------------------------------------------------------------------
-
-ObjSonic_Water:
-	rts
-
-; -------------------------------------------------------------------------
 ; Save various variables for time travel
 ; -------------------------------------------------------------------------
 
@@ -823,6 +776,7 @@ TimeTravel_SaveData:				; Save some values
 	move.w	oYVel(a0),travelYVel
 	move.b	oStatus(a0),travelStatus
 	bclr	#3,travelStatus			; Don't be marked as standing on an object
+	bclr	#6,travelStatus			; Don't be marked as being underwater
 	move.b	waterRoutine.w,travelWaterRout
 	move.w	bottomBound.w,travelBtmBound
 	move.w	cameraX.w,travelCamX
@@ -846,6 +800,8 @@ TimeTravel_SaveData:				; Save some values
 
 .CapTime:
 	move.l	d0,travelTime
+
+	move.b	miniSonic,travelMiniSonic
 	rts
 
 ; -------------------------------------------------------------------------
@@ -853,6 +809,18 @@ TimeTravel_SaveData:				; Save some values
 ; -------------------------------------------------------------------------
 
 ObjSonic_TimeWarp:
+	cmpi.w	#0,levelZone			; Are we in Palmtree Panic act 1?
+	bne.s	.NotPPZ1			; If not, branch
+	tst.b	timeZone			; Are we in the past?
+	beq.s	.Past				; If so, branch
+	cmpi.b	#2,timeZone			; Are we in the future?
+	bne.s	.NotPPZ1			; If not, branch
+
+.Past:
+	cmpi.w	#$900,oX(a0)			; Are we in the first 3D ramp section?
+	bcs.w	.StopTimeWarp			; If so, branch
+
+.NotPPZ1:
 	tst.b	oPlayerCharge(a0)		; Are we charging a peelout or spindash?
 	bne.w	.End2				; If so, branch
 	tst.b	timeWarpDir.w			; Have we touched a time post?
@@ -944,13 +912,6 @@ ObjSonic_TimeWarp:
 ; -------------------------------------------------------------------------
 
 ObjSonic_MdGround:
-	tst.b	sneezeFlag.w			; Is Sonic sneezing?
-	beq.s	.NoSneeze			; If not, branch
-	cmpi.b	#5,oAnim(a0)			; Has Sonic stopped sneezing?
-	bne.s	.End				; If not, branch
-	clr.b	sneezeFlag.w			; Clear sneeze flag
-
-.NoSneeze:
 	bsr.w	ObjSonic_ChkBoredom		; Check boredom timer
 
 	cmpi.b	#$2B,oAnim(a0)			; Are we giving up from boredom?
@@ -1972,7 +1933,7 @@ ObjSonic_MoveAir:
 
 	move.w	oXVel(a0),d0			; Get current X velocity
 
-	tst.w	levelZone			; Are we in Palmtree Panic?
+	tst.w	level				; Are we in Palmtree Panic act 1?
 	bne.s	.CheckLeft			; If not, branch
 
 	cmpi.w	#$6C8,oX(a0)			; Are we left of the first 3D ramp launch area?
@@ -2156,7 +2117,7 @@ ObjSonic_StartRoll:
 	bset	#2,oStatus(a0)			; Mark as rolling
 	tst.b	miniSonic			; Are we miniature?
 	beq.s	.NotMini			; If not, branch
-	move.b	#$A,oYRadius(a0)		; Set miniature rolling hitbox size
+	move.b	#$A,oYRadius(a0)			; Set miniature rolling hitbox size
 	move.b	#5,oXRadius(a0)
 	bra.s	.SetRollAnim			; Set animatiion
 
@@ -2242,7 +2203,7 @@ ObjSonic_CheckJump:
 	bne.s	.RollJump			; If so, branch
 	tst.b	miniSonic			; Are we miniature?
 	beq.s	.SetJumpSize			; If not, branch
-	move.b	#$A,oYRadius(a0)		; Set miniature jumping hitbox size
+	move.b	#$A,oYRadius(a0)			; Set miniature jumping hitbox size
 	move.b	#5,oXRadius(a0)
 	bra.s	.StartJump			; Mark as jumping
 
@@ -2389,6 +2350,10 @@ ObjSonic_CheckFallOff:
 	bcc.s	.End				; If not, branch
 
 	clr.w	oPlayerGVel(a0)			; Set ground velocity to 0
+	nop
+	nop
+	nop
+	nop
 	bset	#1,oStatus(a0)			; Mark as in air
 	move.w	#30,oPlayerMoveLock(a0)		; Set movement lock timer
 
@@ -2847,6 +2812,10 @@ ObjSonic_Restart:
 
 	move.w	#1,levelRestart			; Set to restart the level
 
+	jsr	StopZ80				; Allow conditional jumps to jump in FM sound effects
+	move.b	#1,Z80RAM+$1C3E
+	jsr	StartZ80
+
 	bsr.w	ResetRespawnTable		; Reset the respawn table
 	clr.l	flowerCount			; Reset flower count
 
@@ -2874,104 +2843,6 @@ ObjSonic_Restart:
 
 .SendCmd:
 	bra.w	SubCPUCmd			; Set the fade out command
-
-.End:
-	rts
-
-; -------------------------------------------------------------------------
-; Handle special chunks for Sonic
-; -------------------------------------------------------------------------
-
-ObjSonic_SpecialChunks:
-	rts					; This is dummied out in Wacky Workbench
-
-	cmpi.b	#5,levelZone			; Are we in Stardust Speedway?
-	beq.s	.HasSpecChunks			; If so, branch
-	cmpi.b	#2,levelZone			; Are we in Tidal Tempest?
-	beq.s	.HasSpecChunks			; If so, branch
-	tst.b	levelZone			; Are we in Palmtree Panic?
-	bne.w	.End				; If not, branch
-
-.HasSpecChunks:
-	move.w	oY(a0),d0			; Get current chunk that we are in
-	lsr.w	#1,d0
-	andi.w	#$380,d0
-	move.b	oX(a0),d1
-	andi.w	#$7F,d1
-	add.w	d1,d0
-	lea	levelLayout.w,a1
-	move.b	(a1,d0.w),d1
-
-; -------------------------------------------------------------------------
-
-	cmp.b	specialChunks+2.w,d1		; Are we in a special roll tunnel?
-	bne.s	.NotRoll			; If not, branch
-	tst.b	levelZone			; Are we in Palmtree Panic?
-	bne.w	.RollTunnel			; If not, branch
-
-	move.w	oY(a0),d0			; Is our Y position greater than or equal to $90?
-	andi.w	#$FF,d0
-	cmpi.w	#$90,d0
-	bcc.w	.RollTunnel			; If so, branch
-
-	bra.s	.CheckIfLoop			; Continue checking other chunks
-
-.NotRoll:
-	cmp.b	specialChunks+3.w,d1		; Are we in a regular roll tunnel?
-	beq.w	.RollTunnel			; If so, branch
-
-; -------------------------------------------------------------------------
-
-.CheckIfLoop:
-	cmp.b	specialChunks.w,d1		; Are we on a loop?
-	beq.s	.CheckIfLeft			; If so, branch
-	cmp.b	specialChunks+1.w,d1		; Are we on a special loop?
-	beq.s	.CheckIfInAir			; If so, branch
-
-	bclr	#6,oRender(a0)			; Set to lower path layer
-	rts
-
-.CheckIfInAir:
-	cmpi.b	#5,levelZone			; Are we in Stardust Speedway?
-	beq.w	.SSZ				; If so, branch
-
-	btst	#1,oStatus(a0)			; Are we in the air?
-	beq.s	.CheckIfLeft			; If not, branch
-	bclr	#6,oRender(a0)			; Set to lower path layer
-	rts
-
-.CheckIfLeft:
-	rts					; This code is dummied out
-
-	move.w	oX(a0),d2			; Are we left of the loop check section?
-	cmpi.b	#$2C,d2
-	bcc.s	.CheckIfRight			; If not, branch
-	bclr	#6,oRender(a0)			; Set to lower path layer
-	rts
-
-.CheckIfRight:
-	cmpi.b	#$E0,d2				; Are we right of the loop check section?
-	bcs.s	.CheckAngle			; If not, branch
-	bset	#6,oRender(a0)			; Set to higher path layer
-	rts
-
-.CheckAngle:
-	btst	#6,oRender(a0)			; Are we on the higher path layer?
-	bne.s	.HighPath			; If so, branch
-
-	move.b	oAngle(a0),d1			; Get angle
-	beq.s	.End				; If we are flat on the floor, branch
-
-	cmpi.b	#$80,d1				; Are right of the path swap position?
-	bhi.s	.End				; If so, branch
-	bset	#6,oRender(a0)			; Set to higher path layer
-	rts
-
-.HighPath:
-	move.b	oAngle(a0),d1			; Are left of the path swap position?
-	cmpi.b	#$80,d1
-	bls.s	.End				; If so, branch
-	bclr	#6,oRender(a0)			; Set to lower path layer
 
 .End:
 	rts

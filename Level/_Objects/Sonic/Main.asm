@@ -774,6 +774,8 @@ ObjSonic_MdJump:
 
 .NoWater:
 	bsr.w	ObjSonic_JumpAngle		; Reset angle
+
+.Collision:
 	bsr.w	Player_LevelColInAir		; Handle level collision
 	rts
 
