@@ -774,7 +774,7 @@ HandleFadeOut:
 	move.b	pdrvFadeDelay(a5),pdrvFadeCnt(a5)
 
 	lea	pdrvPCM1(a5),a3		; Fade out song tracks
-	moveq	#RHY_TRACK_CNT+PCM_TRACK_CNT-1,d7
+	moveq	#PCM_TRACK_CNT-1,d7
 	move.b	pdrvFadeSpeed(a5),d6		; Get fade speed
 	add.b	d6,pdrvUnkFadeVol(a5)		; Add to unknown fade volume
 
@@ -842,7 +842,7 @@ HandleTempo:
 
 	lea	pdrvPCM1(a5),a0		; Delay tracks by 1 tick
 	move.w	#ptrkSize,d1
-	moveq	#RHY_TRACK_CNT+PCM_TRACK_CNT-1,d0
+	moveq	#PCM_TRACK_CNT-1,d0
 
 .DelayTracks:
 	addq.b	#1,ptrkDurCnt(a0)
@@ -1468,7 +1468,7 @@ TrkCmd_GlobalTickMult:
 	lea	pdrvPCM1(a5),a0		; Update song tracks
 	move.b	(a2)+,d0
 	move.w	#ptrkSize,d1
-	moveq	#RHY_TRACK_CNT+PCM_TRACK_CNT-1,d2
+	moveq	#PCM_TRACK_CNT-1,d2
 
 .SetTickMult:
 	move.b	d0,ptrkTickMult(a0)		; Set tick multiplier
