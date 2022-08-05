@@ -144,7 +144,7 @@ songStart set *
 ; Header - Set up Channel count
 smpsHeaderChan macro val
 	if songStart<>*
-		fatal "Missing smpsHeaderStartSong or smpsHeaderStartSongConvert"
+		fatal "Missing smpsHeaderStartSong"
 	endif
 	dc.b	val
 	endm
