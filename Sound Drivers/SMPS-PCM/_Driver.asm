@@ -499,11 +499,11 @@ LoadSamples:
 ; -------------------------------------------------------------------------
 
 ProcSoundQueue:
-	tst.l	pdrvQueue(a5)			; Are any of the queue slots filled up?
+	tst.l	pdrvQueue(a5)		; Are any of the queue slots filled up?
 	beq.s	.End				; If not, branch
 
 	lea	pdrvQueue(a5),a1		; Get queue
-	move.b	pdrvSFXPrio(a5),d3		; Get saved SFX priority level
+	move.b	pdrvSFXPrio(a5),d3	; Get saved SFX priority level
 	moveq	#4-1,d4				; Number of queue slots
 
 .QueueLoop:
@@ -512,17 +512,17 @@ ProcSoundQueue:
 	move.b	d0,d1
 	clr.b	(a1)+				; Clear slot
 
-	cmpi.b	#PCMM_START,d0			; Is a song queued?
+	cmpi.b	#PCMM_START,d0		; Is a song queued?
 	bcs.s	.NextSlot			; If not, branch
 	cmpi.b	#PCMM_END,d0
 	bls.w	.SongID				; If so, branch
 
-	cmpi.b	#PCMS_START,d0			; Is a sound effect queued?
+	cmpi.b	#PCMS_START,d0		; Is a sound effect queued?
 	bcs.s	.NextSlot			; If not, branch
 	cmpi.b	#PCMS_END,d0
 	bls.w	.SFXID				; If so, branch
 
-	cmpi.b	#PCMC_START,d0			; Is a song queued?
+	cmpi.b	#PCMC_START,d0		; Is a song queued?
 	bcs.s	.NextSlot			; If not, branch
 	cmpi.b	#PCMC_END,d0
 	bls.w	.CmdID				; If so, branch
@@ -530,35 +530,35 @@ ProcSoundQueue:
 	bra.s	.NextSlot			; Go to next slot
 
 .CheckPriority:
-	move.b	(a0,d0.w),d2			; Get priority level
+	move.b	(a0,d0.w),d2		; Get priority level
 	cmp.b	d3,d2				; Does this sound have a higher priority?
 	bcs.s	.NextSlot			; If not, branch
 	move.b	d2,d3				; Move up to the new priority level
-	move.b	d1,pdrvSoundID(a5)		; Set sound to play
+	move.b	d1,pdrvSoundID(a5)	; Set sound to play
 
 .NextSlot:
 	dbf	d4,.QueueLoop			; Loop until all slots are checked
-	tst.b	d3				; Is this a SFX priority level?
+	tst.b	d3					; Is this a SFX priority level?
 	bmi.s	.End				; If not, branch
-	move.b	d3,pdrvSFXPrio(a5)		; If so, save it
+	move.b	d3,pdrvSFXPrio(a5)	; If so, save it
 
 .End:
 	rts
 
 .SongID:
-	subi.b	#PCMM_START,d0			; Get priority level
+	subi.b	#PCMM_START,d0		; Get priority level
 	lea	SongPriorities(pc),a0
-	bra.s	.CheckPriority			; Check it
+	bra.s	.CheckPriority		; Check it
 
 .SFXID:
-	subi.b	#PCMS_START,d0			; Get priority level
+	subi.b	#PCMS_START,d0		; Get priority level
 	lea	SFXPriorities(pc),a0
-	bra.s	.CheckPriority			; Check it
+	bra.s	.CheckPriority		; Check it
 
 .CmdID:
-	subi.b	#PCMC_START,d0			; Get priority level
+	subi.b	#PCMC_START,d0		; Get priority level
 	lea	CmdPriorities(pc),a0
-	bra.s	.CheckPriority			; Check it
+	bra.s	.CheckPriority		; Check it
 
 ; -------------------------------------------------------------------------
 ; Play a sound from the queue
@@ -652,8 +652,7 @@ PlaySong:
 
 	adda.w	#ptrkSize,a3			; Next track
 	dbf	d7,.InitTracks			; Loop until all tracks are set up
-	
-	;clr.b	pdrvPCM1+ptrkFlags(a5)	; Disable rhythm track
+
 	move.b	#$FF,pdrvOn(a5)			; Silence all channels
 	rts
 
@@ -1105,37 +1104,37 @@ TrackCommand:
 ; -------------------------------------------------------------------------
 
 .Commands:
-	jmp	TrkCmd_Panning(pc)		; Set panning
-	jmp	TrkCmd_Detune(pc)		; Set detune
-	jmp	TrkCmd_CommFlag(pc)		; Set communication flag
-	jmp	TrkCmd_Null(pc)		; Set CDDA loop flag
-	jmp	TrkCmd_Null(pc)			; Null
-	jmp	TrkCmd_Null(pc)			; Null
-	jmp	TrkCmd_Volume(pc)		; Add volume
-	jmp	TrkCmd_Legato(pc)		; Set legato
-	jmp	TrkCmd_Staccato(pc)		; Set staccato
-	jmp	TrkCmd_Null(pc)			; Null
-	jmp	TrkCmd_Tempo(pc)		; Set tempo
+	jmp	TrkCmd_Panning(pc)			; Set panning
+	jmp	TrkCmd_Detune(pc)			; Set detune
+	jmp	TrkCmd_CommFlag(pc)			; Set communication flag
+	jmp	TrkCmd_Null(pc)				; Set CDDA loop flag
+	jmp	TrkCmd_Null(pc)				; Null
+	jmp	TrkCmd_Null(pc)				; Null
+	jmp	TrkCmd_Volume(pc)			; Add volume
+	jmp	TrkCmd_Legato(pc)			; Set legato
+	jmp	TrkCmd_Staccato(pc)			; Set staccato
+	jmp	TrkCmd_Null(pc)				; Null
+	jmp	TrkCmd_Tempo(pc)			; Set tempo
 	jmp	TrkCmd_PlaySound(pc)		; Play sound
-	jmp	TrkCmd_Null(pc)			; Null
-	jmp	TrkCmd_Null(pc)			; Null
-	jmp	TrkCmd_Null(pc)			; Null
+	jmp	TrkCmd_Null(pc)				; Null
+	jmp	TrkCmd_Null(pc)				; Null
+	jmp	TrkCmd_Null(pc)				; Null
 	jmp	TrkCmd_Instrument(pc)		; Set instrument
-	jmp	TrkCmd_Stop(pc)			; Stop
-	jmp	TrkCmd_Stop(pc)			; Stop
-	jmp	TrkCmd_Stop(pc)			; Stop
-	jmp	TrkCmd_Null(pc)			; Null
-	jmp	TrkCmd_Jump(pc)			; Jump
-	jmp	TrkCmd_Null(pc)			; Null
-	jmp	TrkCmd_Jump(pc)			; Jump
-	jmp	TrkCmd_Repeat(pc)		; Repeat
-	jmp	TrkCmd_Call(pc)			; Call
-	jmp	TrkCmd_Return(pc)		; Return
+	jmp	TrkCmd_Stop(pc)				; Stop
+	jmp	TrkCmd_Stop(pc)				; Stop
+	jmp	TrkCmd_Stop(pc)				; Stop
+	jmp	TrkCmd_Null(pc)				; Null
+	jmp	TrkCmd_Jump(pc)				; Jump
+	jmp	TrkCmd_Null(pc)				; Null
+	jmp	TrkCmd_Jump(pc)				; Jump
+	jmp	TrkCmd_Repeat(pc)			; Repeat
+	jmp	TrkCmd_Call(pc)				; Call
+	jmp	TrkCmd_Return(pc)			; Return
 	jmp	TrkCmd_TrackTickMult(pc)	; Set track tick multiplier
 	jmp	TrkCmd_Transpose(pc)		; Transpose
 	jmp	TrkCmd_GlobalTickMult(pc)	; Set global tick multiplier
-	jmp	TrkCmd_Null(pc)			; Null
-	jmp	TrkCmd_Null(pc)		; Invalid
+	jmp	TrkCmd_Null(pc)				; Null
+	jmp	TrkCmd_Null(pc)				; Invalid
 
 ; -------------------------------------------------------------------------
 ; Null track command
