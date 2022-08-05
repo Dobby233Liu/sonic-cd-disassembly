@@ -46,7 +46,6 @@ SongPriorities:
 ; -------------------------------------------------------------------------
 
 SFXPriorities:
-	dc.b	$70				; Unknown
 	dc.b	$70				; "Future"
 	dc.b	$70				; "Past"
 	dc.b	$70				; "Alright"
