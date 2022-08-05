@@ -1469,7 +1469,7 @@ SPCmd_PlayAlrightSFX:
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayGiveUpSFX:
-	move.b	#$B4,PCMDrvQueue
+	move.b	#PCMS_GIVEUP,PCMDrvQueue
 	bra.w	SPCmdFinish
 
 ; -------------------------------------------------------------------------
@@ -1541,7 +1541,7 @@ SPCmd_PlayPastMus:
 ; -------------------------------------------------------------------------
 
 SPCmd_FadeOutPCM:
-	move.b	#$E0,PCMDrvQueue
+	move.b	#PCMC_FADEOUT,PCMDrvQueue
 	bra.w	SPCmdFinish
 
 ; -------------------------------------------------------------------------
@@ -1549,7 +1549,7 @@ SPCmd_FadeOutPCM:
 ; -------------------------------------------------------------------------
 
 SPCmd_StopPCM:
-	move.b	#$E1,PCMDrvQueue
+	move.b	#PCMC_STOP,PCMDrvQueue
 	bra.w	SPCmdFinish
 
 ; -------------------------------------------------------------------------
@@ -1557,7 +1557,7 @@ SPCmd_StopPCM:
 ; -------------------------------------------------------------------------
 
 SPCmd_PausePCM:
-	move.b	#$E2,PCMDrvQueue
+	move.b	#PCMC_PAUSE,PCMDrvQueue
 	bra.w	SPCmdFinish
 
 ; -------------------------------------------------------------------------
@@ -1565,7 +1565,7 @@ SPCmd_PausePCM:
 ; -------------------------------------------------------------------------
 
 SPCmd_UnpausePCM:
-	move.b	#$E3,PCMDrvQueue
+	move.b	#PCMC_UNPAUSE,PCMDrvQueue
 	bra.w	SPCmdFinish
 
 ; -------------------------------------------------------------------------
