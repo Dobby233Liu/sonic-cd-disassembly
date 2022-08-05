@@ -193,7 +193,7 @@ panRight set $40
 panLeft set $80
 panCentre set $C0
 panCenter set $C0 ; silly Americans :U
-	dc.b $E0,direction
+	dc.b $E0, direction
 	endm
 
 ; E1xx - Set channel frequency displacement / detune to xx
@@ -250,7 +250,7 @@ smpsStop macro val
 	endm
 
 ; F4/F6xxxx - Jump to offset
-smpsJump macro val
+smpsJump macro loc
 	dc.b	$F4
 	dc.w	loc-*-1
 	endm
