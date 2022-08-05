@@ -135,18 +135,20 @@ cPCM7				EQU $0C
 cPCM8				EQU $0E
 ; ---------------------------------------------------------------------------------------------
 ; Header Macros
-smpsHeaderStartSong macro
-songStart set *
-	endm
 
 ; Header macros for music (not for SFX)
+
+smpsHeaderStartSong macro
+songStart set *
+dc.w	$0000 ; TODO: ??
+	endm
 
 ; Header - Set up Channel count
 smpsHeaderChan macro val
 	if songStart<>*
 		fatal "Missing smpsHeaderStartSong"
 	endif
-	dc.b	val
+	dc.b	val, $00 ; TODO: ??
 	endm
 
 ; Header - Set up Tempo
@@ -208,7 +210,7 @@ smpsCommFlag macro val
 	endm
 
 ; E3xx - Set CDDA loop flag (useless)
-smpsCommFlag macro val
+smpsCDDALoopFlag macro val
 	dc.b	$E3,val
 	endm
 
@@ -266,7 +268,7 @@ smpsCall macro loc
 	dc.w	loc-*-1
 	endm
 
-; Return (used after smpsCall)
+; F9 - Return (used after smpsCall)
 smpsReturn macro val
 	dc.b	$F9
 	endm
