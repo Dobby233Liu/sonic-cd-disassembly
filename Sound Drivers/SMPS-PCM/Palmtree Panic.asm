@@ -8,6 +8,7 @@
 	include	"_Include/Common.i"
 	include	"_Include/Sub CPU.i"
 	include	"_Include/Sound.i"
+	include "Sound Drivers/SMPS-PCM/_smps2asm_inc.asm"
 
 ; -------------------------------------------------------------------------
 ; Driver
@@ -39,8 +40,6 @@ SFXIndex:
 
 SongPriorities:
 	dc.b	$80				; Palmtree Panic Zone Past
-	dc.b	$80				; Invalid
-	dc.b	$80				; Invalid
 	even
 
 ; -------------------------------------------------------------------------
@@ -84,7 +83,8 @@ SongIndex:
 ; -------------------------------------------------------------------------
 
 Song_PPZPast:
-	incbin	"Sound Drivers/SMPS-PCM/Music/Palmtree Panic Past.bin"
+	;incbin	"Sound Drivers/SMPS-PCM/Music/Palmtree Panic Past.bin"
+	include "Sound Drivers/SMPS-PCM/Music/Palmtree Panic Past.asm"
 	even
 
 ; -------------------------------------------------------------------------

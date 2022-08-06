@@ -140,48 +140,45 @@ cPCM8				EQU $0E
 
 smpsHeaderStartSong macro
 songStart set *
-dc.w	$0000 ; TODO: ??
+	dc.w $0000
 	endm
 
 ; Header - Set up Channel count
 smpsHeaderChan macro val
-	if songStart<>*
-		fatal "Missing smpsHeaderStartSong"
-	endif
-	dc.b	val, $00 ; TODO: ??
+	dc.b	\val, $00 ; TODO: ??
 	endm
 
 ; Header - Set up Tempo
 smpsHeaderTempo macro div,mod
-	dc.b	div
+	dc.b	\div
 tempoDivider set div
-	dc.b    mod
+	dc.b    \mod
 	endm
 
 ; Header - Set up PCM Channel
 smpsHeaderPCM macro loc,pitch,vol
-	dc.w	loc-songStart
-	dc.b	pitch,vol
+	dc.w	\loc-songStart
+	dc.b	\pitch,\vol
 	endm
 
 ; Header macros for SFX (not for music)
 
 ; Header - Set up Channel Usage
 smpsHeaderChanSFX macro chan
-	dc.b	chan
+	dc.b	\chan
 	endm
 
 ; Header - Set up Tempo
 smpsHeaderTempoSFX macro div
-	dc.b	div
+	dc.b	\div
 	endm
 
 ; Header - Set up PCM Channel
 smpsHeaderSFXChannel macro chanid,loc,pitch,vol
-	dc.b	$80,chanid
-	dc.w	loc-songStart
-	dc.b	pitch
-	dc.b	vol
+	dc.b	$80,\chanid
+	dc.w	\loc-songStart
+	dc.b	\pitch
+	dc.b	\vol
 	endm
 ; ---------------------------------------------------------------------------------------------
 ; Co-ord Flag Macros and Equates
@@ -259,13 +256,13 @@ smpsJump macro loc
 smpsLoop macro index,loops,loc
 	dc.b	$F7
 	dc.b	index,loops
-	dc.w	loc-*-1
+	dc.w	\loc-*-1
 	endm
 
 ; F8xxxx - Call pattern at xxxx, saving return point
 smpsCall macro loc
 	dc.b	$F8
-	dc.w	loc-*-1
+	dc.w	\loc-*-1
 	endm
 
 ; F9 - Return (used after smpsCall)
