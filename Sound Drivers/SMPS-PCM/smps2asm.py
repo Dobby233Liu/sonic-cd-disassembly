@@ -32,9 +32,6 @@ Converts Sonic CD SMPS data to ASM.
 from io import StringIO
 import struct
 
-FILE = "D:\development\sonic-cd-disassembly\Sound Drivers\SMPS-PCM\Music\Palmtree Panic Past.bin"
-PROJ = "PPZPast"
-
 NOTES = {
     0x80: "nRst",
     0x81: "nC0", 0x82: "nCs0", 0x83: "nD0", 0x84: "nEb0",
@@ -254,15 +251,13 @@ def write_asm(proj, input, output):
         notes = []
 
 def main():
-    project_name = PROJ#input("name : ")
-    orig_bin = FILE#input("file : ")
+    project_name = input("name : ")
+    orig_bin = input("file : ")
+    out_file = input("out file : ")
 
-    with StringIO() as output:
+    with open(out_file, "w") as output:
         with open(orig_bin, "rb") as f:
             write_asm(project_name, f, output)
-
-        output.seek(0)
-        print(output.read(), end='')
 
 if __name__ == "__main__":
     main()
