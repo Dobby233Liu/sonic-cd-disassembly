@@ -210,7 +210,9 @@ smpsCommFlag macro val
 	endm
 
 ; E3xx - Set CDDA loop flag (useless)
-smpsCDDALoopFlag 	EQU $E3
+smpsCDDALoopFlag macro
+	dc.b	$E3
+	endm
 
 ; E6xx - Alter Volume by xx
 smpsAlterVol macro val
@@ -218,7 +220,9 @@ smpsAlterVol macro val
 	endm
 
 ; E7xx - Prevent attack of next note
-smpsNoAttack	EQU $E7
+smpsNoAttack macro
+	dc.b	$E7
+	endm
 
 ; E8xx - Set note fill to xx
 smpsNoteFill macro val
