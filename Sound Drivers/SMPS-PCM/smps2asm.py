@@ -264,8 +264,10 @@ def write_asm(proj, input, output, sfx=False):
         pos = input.tell()
         if this_short >= 0xe0:
             buffer, total_subrountines = write_command(this_short, total_subrountines, pos)
-            write_dcb(notes)
-            notes = []
+            if len(notes) > 0:
+                indent_level = indent_level < 2 and 2 or indent_level
+                write_dcb(notes)
+                notes = []
             write(buffer)
         else:
             notes.append(NOTES.get(this_short, None) or hex_asm68k(this_short))
