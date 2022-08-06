@@ -654,4 +654,3 @@ CCZPast_Sub24:
 	
 CCZPast_PCM1:
 	smpsStop
-	dc.b	$00

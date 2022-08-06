@@ -93,37 +93,37 @@ Song_WWZPast:
 ; -------------------------------------------------------------------------
 
 SFX_Future:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Future.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Future.asm"
 	even
 SFX_Past:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Past.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Past.asm"
 	even
 SFX_Alright:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Alright.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Alright.asm"
 	even
 SFX_OuttaHere:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Outta Here.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Outta Here.asm"
 	even
 SFX_Yes:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Yes.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Yes.asm"
 	even
 SFX_Yeah:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Yeah.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Yeah.asm"
 	even
 SFX_AmyGiggle:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Amy Giggle.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Amy Giggle.asm"
 	even
 SFX_AmyYelp:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Amy Yelp.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Amy Yelp.asm"
 	even
 SFX_BossStomp:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Boss Stomp.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Boss Stomp.asm"
 	even
 SFX_Bumper:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Bumper.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Bumper.asm"
 	even
 SFX_Shatter:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Shatter.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Wacky Workbench/Shatter.asm"
 	even
 
 ; -------------------------------------------------------------------------

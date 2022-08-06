@@ -29,7 +29,8 @@
 Converts Sonic CD SMPS data to ASM.
 """
 
-from io import StringIO
+from glob import glob
+from os import path
 import struct
 
 NOTES = {
@@ -273,14 +274,26 @@ def write_asm(proj, input, output, sfx=False):
         notes = []
 
 def main():
-    project_name = input("name : ")
     orig_bin = input("file : ")
-    out_file = input("out file : ")
-    sfx = input("sfx? (y/n) : ").lower() == "y"
+    if path.isdir(orig_bin):
+        sfx = input("sfx? (y/n) : ").lower() == "y"
 
-    with open(out_file, "w") as output:
-        with open(orig_bin, "rb") as f:
-            write_asm(project_name, f, output, sfx=sfx)
+        for i in glob(path.join(orig_bin, "*.bin")):
+            out_file = path.join(path.dirname(i), path.splitext(path.basename(i))[0] + ".asm")
+            project_name = path.splitext(path.basename(i))[0].replace(" ", "")
+            with open(out_file, "w") as output:
+                with open(i, "rb") as f:
+                    write_asm(project_name, f, output, sfx=sfx)
+    else:
+        out_file = input("out file : ") or (
+            path.join(path.dirname(orig_bin), path.splitext(path.basename(orig_bin))[0] + ".asm")
+        )
+        project_name = input("name : ") or (path.splitext(path.basename(orig_bin))[0].replace(" ", ""))
+        sfx = input("sfx? (y/n) : ").lower() == "y"
+
+        with open(out_file, "w") as output:
+            with open(orig_bin, "rb") as f:
+                write_asm(project_name, f, output, sfx=sfx)
 
 if __name__ == "__main__":
     main()

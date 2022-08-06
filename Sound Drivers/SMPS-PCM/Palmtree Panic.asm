@@ -91,34 +91,34 @@ Song_PPZPast:
 ; -------------------------------------------------------------------------
 
 SFX_Future:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Future.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Future.asm"
 	even
 SFX_Past:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Past.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Past.asm"
 	even
 SFX_Alright:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Alright.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Alright.asm"
 	even
 SFX_OuttaHere:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Outta Here.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Outta Here.asm"
 	even
 SFX_Yes:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Yes.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Yes.asm"
 	even
 SFX_Yeah:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Yeah.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Yeah.asm"
 	even
 SFX_AmyGiggle:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Amy Giggle.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Amy Giggle.asm"
 	even
 SFX_AmyYelp:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Amy Yelp.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Amy Yelp.asm"
 	even
 SFX_BossStomp:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Boss Stomp.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Boss Stomp.asm"
 	even
 SFX_Bumper:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Bumper.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Palmtree Panic/Bumper.asm"
 	even
 
 ; -------------------------------------------------------------------------

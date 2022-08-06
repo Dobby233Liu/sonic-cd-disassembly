@@ -107,37 +107,37 @@ Song_CCZPast:
 ; -------------------------------------------------------------------------
 
 SFX_Future:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Future.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Future.asm"
 	even
 SFX_Past:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Past.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Past.asm"
 	even
 SFX_Alright:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Alright.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Alright.asm"
 	even
 SFX_OuttaHere:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Outta Here.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Outta Here.asm"
 	even
 SFX_Yes:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Yes.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Yes.asm"
 	even
 SFX_Yeah:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Yeah.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Yeah.asm"
 	even
 SFX_AmyGiggle:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Amy Giggle.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Amy Giggle.asm"
 	even
 SFX_AmyYelp:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Amy Yelp.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Amy Yelp.asm"
 	even
 SFX_BossStomp:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Boss Stomp.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Boss Stomp.asm"
 	even
 SFX_Bumper:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Bumper.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Bumper.asm"
 	even
 SFX_Shatter:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Shatter.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Collision Chaos/Shatter.asm"
 	even
 
 ; -------------------------------------------------------------------------

@@ -6,6 +6,6 @@ AmyYelp_Header:
 	smpsHeaderSFXChannel	cPCM4, AmyYelp_PCM1, $05, $FF
 	
 AmyYelp_PCM1:
-	smpsSetvoice	$0C
+	smpsSetvoice	$18
 	dc.b	nBb1, $09
 	smpsStop

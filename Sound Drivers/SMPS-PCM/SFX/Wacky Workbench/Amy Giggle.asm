@@ -3,9 +3,7 @@ AmyGiggle_Header:
 	smpsHeaderTempoSFX	$01
 	smpsHeaderChanSFX	$01
 	
-	smpsHeaderSFXChannel	cPCM4, AmyGiggle_PCM1, $00, $FF
+	smpsHeaderSFXChannel	cPCM4, AmyGiggle_PCM1, $05, $FF
 	
 AmyGiggle_PCM1:
-	smpsSetvoice	$0B
-	dc.b	nB1, $18
 	smpsStop

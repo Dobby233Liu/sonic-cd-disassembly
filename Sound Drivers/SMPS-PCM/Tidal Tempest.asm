@@ -91,34 +91,34 @@ Song_TTZPast:
 ; -------------------------------------------------------------------------
 
 SFX_Future:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Future.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Future.asm"
 	even
 SFX_Past:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Past.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Past.asm"
 	even
 SFX_Alright:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Alright.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Alright.asm"
 	even
 SFX_OuttaHere:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Outta Here.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Outta Here.asm"
 	even
 SFX_Yes:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Yes.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Yes.asm"
 	even
 SFX_Yeah:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Yeah.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Yeah.asm"
 	even
 SFX_AmyGiggle:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Amy Giggle.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Amy Giggle.asm"
 	even
 SFX_AmyYelp:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Amy Yelp.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Amy Yelp.asm"
 	even
 SFX_BossStomp:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Boss Stomp.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Boss Stomp.asm"
 	even
 SFX_Bumper:
-	incbin	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Bumper.bin"
+	include	"Sound Drivers/SMPS-PCM/SFX/Tidal Tempest/Bumper.asm"
 	even
 
 ; -------------------------------------------------------------------------

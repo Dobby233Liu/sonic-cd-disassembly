@@ -6,7 +6,7 @@ Alright_Header:
 	smpsHeaderSFXChannel	cPCM4, Alright_PCM1, $05, $FF
 	
 Alright_PCM1:
-	smpsSetvoice	$0D
+	smpsSetvoice	$12
 	smpsAlterNote	$15
 	dc.b	nBb1, $2E
 	smpsStop
