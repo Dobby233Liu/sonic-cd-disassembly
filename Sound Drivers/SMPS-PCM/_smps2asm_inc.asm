@@ -208,6 +208,9 @@ smpsDetune macro val
 smpsCommFlag macro val
 	dc.b	$E2,val
 	endm
+smpsNop macro val
+	smpsCommFlag	val
+	endm
 
 ; E3xx - Set CDDA loop flag (useless)
 smpsCDDALoopFlag macro
