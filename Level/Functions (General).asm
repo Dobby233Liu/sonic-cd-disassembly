@@ -252,27 +252,6 @@ StartZ80:
 	rts
 
 ; -------------------------------------------------------------------------
-; Dead code to initialize the Z80 with dummy code
-; -------------------------------------------------------------------------
-
-InitZ80Dummy:
-	move.w	#$100,Z80RESET			; Stop Z80 reset
-	jsr	StopZ80(pc)			; Stop the Z80
-
-	lea	Z80RAM,a1			; Prepare Z80 RAM
-	move.b	#$F3,(a1)+			; di
-	move.b	#$F3,(a1)+			; di
-	move.b	#$C3,(a1)+			; jp $0000
-	move.b	#0,(a1)+
-	move.b	#0,(a1)+
-
-	move.w	#0,Z80RESET			; Reset the Z80
-	ror.b	#8,d0				; Wait
-	move.w	#$100,Z80RESET			; Stop Z80 reset
-	jmp	StartZ80(pc)			; Start the Z80
-	rts
-
-; -------------------------------------------------------------------------
 ; Play an FM sound
 ; -------------------------------------------------------------------------
 
