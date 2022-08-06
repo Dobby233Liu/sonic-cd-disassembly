@@ -8,6 +8,7 @@
 	include	"_Include/Common.i"
 	include	"_Include/Sub CPU.i"
 	include	"_Include/Sound.i"
+	include "Sound Drivers/SMPS-PCM/_smps2asm_inc.asm"
 
 ; -------------------------------------------------------------------------
 ; Driver
@@ -84,7 +85,7 @@ SongIndex:
 ; -------------------------------------------------------------------------
 
 Song_WWZPast:
-	incbin	"Sound Drivers/SMPS-PCM/Music/Wacky Workbench Past.bin"
+	include	"Sound Drivers/SMPS-PCM/Music/Wacky Workbench Past.asm"
 	even
 
 ; -------------------------------------------------------------------------
