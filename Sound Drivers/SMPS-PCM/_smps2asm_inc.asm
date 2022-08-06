@@ -248,7 +248,11 @@ smpsStop macro val
 
 ; F4/F6xxxx - Jump to offset
 smpsJump macro loc
-	dc.b	$F6 ; byte-accurate to PPZ
+	dc.b	$F4
+	dc.w	loc-*-1
+	endm
+smpsJumpF6 macro loc
+	dc.b	$F6
 	dc.w	loc-*-1
 	endm
 
