@@ -210,22 +210,18 @@ smpsCommFlag macro val
 	endm
 
 ; E3xx - Set CDDA loop flag (useless)
-smpsCDDALoopFlag macro val
-	dc.b	$E3,val
-	endm
+smpsCDDALoopFlag 	EQU $E3
 
 ; E6xx - Alter Volume by xx
 smpsAlterVol macro val
 	dc.b	$E6,val
 	endm
 
-; E7xx - Set Legato to xx
-smpsSetLegato macro val
-	dc.b	$E7,val
-	endm
+; E7xx - Prevent attack of next note
+smpsNoAttack	EQU $E7
 
-; E8xx - Set staccato to xx
-smpsSetStaccato macro val
+; E8xx - Set note fill to xx
+smpsNoteFill macro val
 	dc.b	$E8,val
 	endm
 
@@ -234,12 +230,12 @@ smpsSetTempoMod macro val
 	dc.b	$EA,val
 	endm
 
-; EBxx - Play a sound
+; EBxx - Play a PCM SFX
 smpsPlaySound macro val
 	dc.b	$EB,val
 	endm
 
-; EFxx - Set music instrument to xx
+; EFxx - Set voice of PCM channel to xx
 smpsSetvoice macro val
 	dc.b	$EF,val
 	endm

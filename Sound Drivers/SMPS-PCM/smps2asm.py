@@ -159,13 +159,13 @@ def write_asm(proj, input, output, sfx=False):
         elif this_short == 0xe2:
             buffer = write_instruction_buffer("smpsCommFlag", read_byte_s())
         elif this_short == 0xe3:
-            buffer = write_instruction_buffer("smpsCDDALoopFlag", read_byte())
+            buffer = write_instruction_buffer("smpsCDDALoopFlag")
         elif this_short == 0xe6:
             buffer = write_instruction_buffer("smpsAlterVol", read_byte_s())
         elif this_short == 0xe7:
-            buffer = write_instruction_buffer("smpsSetLegato", read_byte_s())
+            buffer = write_instruction_buffer("smpsNoAttack")
         elif this_short == 0xe8:
-            buffer = write_instruction_buffer("smpsSetStaccato", read_byte_s())
+            buffer = write_instruction_buffer("smpsNoteFill", read_byte_s())
         elif this_short == 0xea:
             buffer = write_instruction_buffer("smpsSetTempoMod", read_byte_s())
         elif this_short == 0xeb:

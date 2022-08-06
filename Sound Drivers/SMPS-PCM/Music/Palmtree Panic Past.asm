@@ -66,11 +66,11 @@ Song_PPZPast_Sub4:
 	dc.b	nRst, $0C, nE6, $06, nRst, $12, nD6, $06, nRst, $12
 	dc.b	nC6, $06, nRst, $12, nD6, $06, nRst, nC6, nRst, nB5
 	dc.b	$0C, nC6, $06, nG5, $3C, nE5, $06, nG5, nE5
-	smpsSetLegato	$60
-	dc.b	nRst, $4E, nG5, $06, nA5, nG5, nE6, nRst, $12, nD6
-	dc.b	$06, nRst, $12, nC6, $06, nRst, $12, nD6, $06, nRst
-	dc.b	nC6, nRst, nB5, $0C, nC6, $06, nG5, $4E, nRst, $06
-	dc.b	nB5, nC6, nG6, $30
+	smpsNoAttack
+	dc.b	$60, nRst, $4E, nG5, $06, nA5, nG5, nE6, nRst, $12
+	dc.b	nD6, $06, nRst, $12, nC6, $06, nRst, $12, nD6, $06
+	dc.b	nRst, nC6, nRst, nB5, $0C, nC6, $06, nG5, $4E, nRst
+	dc.b	$06, nB5, nC6, nG6, $30
 	smpsAlterVol	$45
 	smpsAlterVol	$80
 	smpsSetvoice	$04
@@ -109,20 +109,20 @@ Song_PPZPast_Sub4:
 	dc.b	nRst, $0C, nF4, $03, nA4, nC5, nE5, nF5, $06, nA5
 	dc.b	nC6, nD6, nE6, nF6, nA6, nC7, nE7, nEb7, nD7, nC7
 	dc.b	nA6, $03, nB6
-	smpsSetLegato	$06
-	dc.b	nD7, nG6, $12, $06, nG5, nA5, nB5, nC6, nD6, nE6
-	dc.b	nF6, nG6, nA6, nCs7, $03, nD7
-	smpsSetLegato	$06
-	dc.b	nF7, nCs7, $03, nD7
-	smpsSetLegato	$06
-	dc.b	nF7, nRst, nE7, nD7, nC7, nB6, nA6, nG6, nF6, nE6
-	dc.b	nD6, $03, nE6, nG6, $06, nG5, nRst, nG5, nG5, $03
-	dc.b	nA5
-	smpsSetLegato	$06
-	dc.b	nA5, nG5, nRst, nG4, nA4, nG4, nRst, nB4, nD5, $03
-	dc.b	nE5, nG5, nB5, nE6, $06, nF6, nA6, nC7, nE7, $0C
-	dc.b	nD7, $06, nC7, nRst, nC7, nD7, nC7, nE7, nF7, nRst
-	dc.b	nG7
+	smpsNoAttack
+	dc.b	$06, nD7, nG6, $12, $06, nG5, nA5, nB5, nC6, nD6
+	dc.b	nE6, nF6, nG6, nA6, nCs7, $03, nD7
+	smpsNoAttack
+	dc.b	$06, nF7, nCs7, $03, nD7
+	smpsNoAttack
+	dc.b	$06, nF7, nRst, nE7, nD7, nC7, nB6, nA6, nG6, nF6
+	dc.b	nE6, nD6, $03, nE6, nG6, $06, nG5, nRst, nG5, nG5
+	dc.b	$03, nA5
+	smpsNoAttack
+	dc.b	$06, nA5, nG5, nRst, nG4, nA4, nG4, nRst, nB4, nD5
+	dc.b	$03, nE5, nG5, nB5, nE6, $06, nF6, nA6, nC7, nE7
+	dc.b	$0C, nD7, $06, nC7, nRst, nC7, nD7, nC7, nE7, nF7
+	dc.b	nRst, nG7
 	smpsChangeTransposition	$0C
 	dc.b	nA6, $03, nB6
 	smpsChangeTransposition	$F4
@@ -147,23 +147,23 @@ Song_PPZPast_Sub4:
 	dc.b	nC5, nB4, nBb4, nB4, nG4, $3C, nRst, $18, nEb5, $06
 	dc.b	nE5, nG5, nRst, nG5, nRst, nE5, nRst, nG5, nRst, nA5
 	dc.b	nRst, nBb5
-	smpsSetLegato	$0C
-	dc.b	nA5, $06, nRst, $0C, nG5, $06, nRst, $12, nG5, $0C
-	dc.b	nF5, nE5, nD5, $06, nRst, $0C, nE5, $06, nRst, $0C
-	dc.b	nF5, $06, nRst, $12, nA4, $0C, nC5, nB4, nG4, $48
-	dc.b	nE5, $06, nRst, nF5, nRst, nG5, $3C, $06, nRst, nA5
-	dc.b	nRst, nB5, nRst, nD6, nRst, nC6, nRst, $12, nB5, $06
-	dc.b	nRst, $12, nA5, $06, nRst, $12, nG5, $18, nF5, $0C
-	dc.b	nE5, nF5, nRst, nE5, nD5, nC5, nB4, nBb4, nB4, nG4
-	dc.b	$3C, nRst, $18, nE5, $0C, nG5, nG5, nE5, nG5, nA5
-	dc.b	nBb5, $06
-	smpsSetLegato	$0C
-	dc.b	nA5, $06, nRst, $0C, nG5, $06, nRst, $12, nG5, $0C
-	dc.b	nF5, nE5, nD5, $06
-	smpsSetLegato	$0C
-	dc.b	nE5, $06, nRst, $0C, nF5, $06, nRst, $12, nD5, $0C
-	dc.b	nF5, nA5, nC6, $18, nB5, nE6, nE6, nC6, $42, nRst
-	dc.b	$06, nRst, nRst
+	smpsNoAttack
+	dc.b	$0C, nA5, $06, nRst, $0C, nG5, $06, nRst, $12, nG5
+	dc.b	$0C, nF5, nE5, nD5, $06, nRst, $0C, nE5, $06, nRst
+	dc.b	$0C, nF5, $06, nRst, $12, nA4, $0C, nC5, nB4, nG4
+	dc.b	$48, nE5, $06, nRst, nF5, nRst, nG5, $3C, $06, nRst
+	dc.b	nA5, nRst, nB5, nRst, nD6, nRst, nC6, nRst, $12, nB5
+	dc.b	$06, nRst, $12, nA5, $06, nRst, $12, nG5, $18, nF5
+	dc.b	$0C, nE5, nF5, nRst, nE5, nD5, nC5, nB4, nBb4, nB4
+	dc.b	nG4, $3C, nRst, $18, nE5, $0C, nG5, nG5, nE5, nG5
+	dc.b	nA5, nBb5, $06
+	smpsNoAttack
+	dc.b	$0C, nA5, $06, nRst, $0C, nG5, $06, nRst, $12, nG5
+	dc.b	$0C, nF5, nE5, nD5, $06
+	smpsNoAttack
+	dc.b	$0C, nE5, $06, nRst, $0C, nF5, $06, nRst, $12, nD5
+	dc.b	$0C, nF5, nA5, nC6, $18, nB5, nE6, nE6, nC6, $42
+	dc.b	nRst, $06, nRst, nRst
 	smpsAlterVol	$45
 	smpsChangeTransposition	$FE
 	smpsJumpF6	Song_PPZPast_Sub4
@@ -177,11 +177,11 @@ Song_PPZPast_Sub5:
 	dc.b	nE6, $06, nRst, $12, nD6, $06, nRst, $12, nC6, $06
 	dc.b	nRst, $12, nD6, $06, nRst, nC6, nRst, nB5, $0C, nC6
 	dc.b	$06, nG5, $3C, nE5, $06, nG5, nE5
-	smpsSetLegato	$60
-	dc.b	nRst, $4E, nG5, $06, nA5, nG5, nE6, nRst, $12, nD6
-	dc.b	$06, nRst, $12, nC6, $06, nRst, $12, nD6, $06, nRst
-	dc.b	nC6, nRst, nB5, $0C, nC6, $06, nG5, $4E, nRst, $06
-	dc.b	nB5, nC6, nG6, $4E
+	smpsNoAttack
+	dc.b	$60, nRst, $4E, nG5, $06, nA5, nG5, nE6, nRst, $12
+	dc.b	nD6, $06, nRst, $12, nC6, $06, nRst, $12, nD6, $06
+	dc.b	nRst, nC6, nRst, nB5, $0C, nC6, $06, nG5, $4E, nRst
+	dc.b	$06, nB5, nC6, nG6, $4E
 	smpsSetvoice	$03
 	dc.b	nRst, $18, nA5, $0C, nC6, nB5, $12, nG5, nG5, $0C
 	dc.b	nA5, nC6, nB5, nG5, nA5, $12, $12, nE5, $0C, nG5
@@ -198,9 +198,11 @@ Song_PPZPast_Sub5:
 	dc.b	nE6, nD6, nD6, $18, $06, nE6, $0C, nC6, $1E, nE6
 	dc.b	$18, nD6, $24, nB5, $0C, $0C, nC6, nD6, nE6, nD6
 	dc.b	$12, nC6, nA5, $3C
-	smpsSetLegato	$18
-	dc.b	nRst, nA5, $12, nB5, nC6, $0C, nA6, $24, nG6, $3C
-	smpsSetLegato	$48
+	smpsNoAttack
+	dc.b	$18, nRst, nA5, $12, nB5, nC6, $0C, nA6, $24, nG6
+	dc.b	$3C
+	smpsNoAttack
+	dc.b	$48
 	smpsChangeTransposition	$FB
 	smpsChangeTransposition	$0C
 	smpsSetvoice	$02
@@ -210,24 +212,24 @@ Song_PPZPast_Sub5:
 	dc.b	nE5, nF5, nRst, nE5, nD5, nC5, nB4, nBb4, nB4, nG4
 	dc.b	$3C, nRst, $18, nEb5, $06, nE5, nG5, nRst, nG5, nRst
 	dc.b	nE5, nRst, nG5, nRst, nA5, nRst, nBb5
-	smpsSetLegato	$0C
-	dc.b	nA5, $06, nRst, $0C, nG5, $06, nRst, $12, nG5, $0C
-	dc.b	nF5, nE5, nD5, $06
-	smpsSetLegato	$0C
-	dc.b	nE5, $06, nRst, $0C, nF5, $06, nRst, $12, nA4, $0C
-	dc.b	nC5, nB4, nG4, $48, nE5, $06, nRst, nF5, nRst, nG5
-	dc.b	$3C, $06, nRst, nA5, nRst, nB5, nRst, nD6, nRst, nC6
-	dc.b	nRst, $12, nB5, $06, nRst, $12, nA5, $06, nRst, $12
-	dc.b	nG5, $18, nF5, $0C, nE5, nF5, nRst, nE5, nD5, nC5
-	dc.b	nB4, nBb4, nB4, nG4, $3C, nRst, $18, nE5, $0C, nG5
-	dc.b	nG5, nE5, nG5, nA5, nBb5, $06
-	smpsSetLegato	$0C
-	dc.b	nA5, $06, nRst, $0C, nG5, $06, nRst, $12, nG5, $0C
-	dc.b	nF5, nE5, nD5, $06
-	smpsSetLegato	$0C
-	dc.b	nE5, $06, nRst, $0C, nF5, $06, nRst, $12, nD5, $0C
-	dc.b	nF5, nA5, nC6, $18, nB5, nE6, nE6, nC6, $4E, nG5
-	dc.b	$06, nA5, nG5
+	smpsNoAttack
+	dc.b	$0C, nA5, $06, nRst, $0C, nG5, $06, nRst, $12, nG5
+	dc.b	$0C, nF5, nE5, nD5, $06
+	smpsNoAttack
+	dc.b	$0C, nE5, $06, nRst, $0C, nF5, $06, nRst, $12, nA4
+	dc.b	$0C, nC5, nB4, nG4, $48, nE5, $06, nRst, nF5, nRst
+	dc.b	nG5, $3C, $06, nRst, nA5, nRst, nB5, nRst, nD6, nRst
+	dc.b	nC6, nRst, $12, nB5, $06, nRst, $12, nA5, $06, nRst
+	dc.b	$12, nG5, $18, nF5, $0C, nE5, nF5, nRst, nE5, nD5
+	dc.b	nC5, nB4, nBb4, nB4, nG4, $3C, nRst, $18, nE5, $0C
+	dc.b	nG5, nG5, nE5, nG5, nA5, nBb5, $06
+	smpsNoAttack
+	dc.b	$0C, nA5, $06, nRst, $0C, nG5, $06, nRst, $12, nG5
+	dc.b	$0C, nF5, nE5, nD5, $06
+	smpsNoAttack
+	dc.b	$0C, nE5, $06, nRst, $0C, nF5, $06, nRst, $12, nD5
+	dc.b	$0C, nF5, nA5, nC6, $18, nB5, nE6, nE6, nC6, $4E
+	dc.b	nG5, $06, nA5, nG5
 	smpsJumpF6	Song_PPZPast_Sub5
 	
 Song_PPZPast_PCM6:
@@ -246,20 +248,20 @@ Song_PPZPast_PCM6:
 	dc.b	nRst, $0A, nRst, $0C, nF4, $03, nA4, nC5, nE5, nF5
 	dc.b	$06, nA5, nC6, nD6, nE6, nF6, nA6, nC7, nE7, nEb7
 	dc.b	nD7, nC7, nA6, $03, nB6
-	smpsSetLegato	$06
-	dc.b	nD7, nG6, $12, $06, nG5, nA5, nB5, nC6, nD6, nE6
-	dc.b	nF6, nG6, nA6, nCs7, $03, nD7
-	smpsSetLegato	$06
-	dc.b	nF7, nCs7, $03, nD7
-	smpsSetLegato	$06
-	dc.b	nF7, nRst, nE7, nD7, nC7, nB6, nA6, nG6, nF6, nE6
-	dc.b	nD6, $03, nE6, nG6, $06, nG5, nRst, nG5, nG5, $03
-	dc.b	nA5
-	smpsSetLegato	$06
-	dc.b	nA5, nG5, nRst, nG4, nA4, nG4, nRst, nB4, nD5, $03
-	dc.b	nE5, nG5, nB5, nE6, $06, nF6, nA6, nC7, nE7, $0C
-	dc.b	nD7, $06, nC7, nRst, nC7, nD7, nC7, nE7, nF7, nRst
-	dc.b	nG7
+	smpsNoAttack
+	dc.b	$06, nD7, nG6, $12, $06, nG5, nA5, nB5, nC6, nD6
+	dc.b	nE6, nF6, nG6, nA6, nCs7, $03, nD7
+	smpsNoAttack
+	dc.b	$06, nF7, nCs7, $03, nD7
+	smpsNoAttack
+	dc.b	$06, nF7, nRst, nE7, nD7, nC7, nB6, nA6, nG6, nF6
+	dc.b	nE6, nD6, $03, nE6, nG6, $06, nG5, nRst, nG5, nG5
+	dc.b	$03, nA5
+	smpsNoAttack
+	dc.b	$06, nA5, nG5, nRst, nG4, nA4, nG4, nRst, nB4, nD5
+	dc.b	$03, nE5, nG5, nB5, nE6, $06, nF6, nA6, nC7, nE7
+	dc.b	$0C, nD7, $06, nC7, nRst, nC7, nD7, nC7, nE7, nF7
+	dc.b	nRst, nG7
 	smpsChangeTransposition	$0C
 	dc.b	nA6, $03, nB6
 	smpsChangeTransposition	$F4
