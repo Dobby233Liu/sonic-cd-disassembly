@@ -190,6 +190,8 @@ def write_asm(proj, input, output, sfx=False):
         elif this_short == 0xfa:
             buffer = write_instruction_buffer("smpsChanTempoDiv", read_byte_s())
         elif this_short == 0xfb:
+            buffer = write_instruction_buffer("smpsChangeTransposition", read_byte_s())
+        elif this_short == 0xfc:
             buffer = write_instruction_buffer("smpsSetTempoDiv", read_byte_s())
         else:
             buffer = write_instruction_buffer("dc.b", hex_asm68k(this_short), "; WARNING: unknown command")

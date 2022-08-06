@@ -282,7 +282,12 @@ smpsChanTempoDiv macro val
 	dc.b	$FA,val
 	endm
 
-; FBxx - Set music tick multiplier to xx
-smpsSetTempoDiv macro val
+; FBxx - Add xx to channel pitch
+smpsChangeTransposition macro val
 	dc.b	$FB,val
+	endm
+
+; FCxx - Set music tick multiplier to xx
+smpsSetTempoDiv macro val
+	dc.b	$FC,val
 	endm
