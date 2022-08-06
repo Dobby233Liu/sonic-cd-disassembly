@@ -248,7 +248,7 @@ smpsStop macro val
 
 ; F4/F6xxxx - Jump to offset
 smpsJump macro loc
-	dc.b	$F4
+	dc.b	$F6 ; byte-accurate to PPZ
 	dc.w	loc-*-1
 	endm
 
@@ -277,5 +277,5 @@ smpsChanTempoDiv macro val
 
 ; FBxx - Set music tick multiplier to xx
 smpsSetTempoDiv macro val
-	dc.b	$EB,val
+	dc.b	$FB,val
 	endm

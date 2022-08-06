@@ -15,20 +15,22 @@ PPZPast_Header:
 PPZPast_PCM2:
 	smpsSetvoice	$00
 	smpsAlterNote	$20
+	dc.b	nC2, $60
 	
 PPZPast_Sub1:
-	dc.b	nC2, $60
 	smpsJump	PPZPast_Sub1
 	
 PPZPast_PCM3:
 	smpsSetvoice	$01
 	
-PPZPast_Sub3:
-	dc.b	nD4, $12, nA4, nA3, nD4, nA4, $0C, nA3, nD4, $12
-	dc.b	nA4, nA3, nD4, nA4, $0C, nA3, nC4, $12, nG4, nG3
-	dc.b	nC4, nG4, $0C, nG3, nC4, $12, nG4, nG3, nC4, nG4
-	dc.b	$0C, nG3
-	smpsLoop	0, 4, PPZPast_PCM3
+PPZPast_Sub2:
+	dc.b	nD4, $12
+	
+PPZPast_Sub4:
+	dc.b	nA4, nA3, nD4, nA4, $0C, nA3, nD4, $12, nA4, nA3
+	dc.b	nD4, nA4, $0C, nA3, nC4, $12, nG4, nG3, nC4, nG4
+	dc.b	$0C, nG3, nC4, $12, nG4, nG3, nC4, nG4, $0C, nG3
+	smpsLoop	0, 4, PPZPast_Sub2
 	dc.b	nF4, $18, nC4, nF4, $12, $06, nC4, $0C, nF4, nE4
 	dc.b	$18, nB3, nE4, $12, nB3, $06, nE4, $0C, nEb4, nD4
 	dc.b	$18, nA3, nD4, $12, nA3, $06, nD4, $0C, nEb4, nE4
@@ -37,31 +39,31 @@ PPZPast_Sub3:
 	dc.b	$06, nE4, $0C, nEb4, nD4, $18, nA3, nD4, nA3, nD4
 	dc.b	nA3, nD4, $12, $06, nA3, $0C, nAb3, nG3, $18, nD4
 	dc.b	nG4, nD4, $0C, nG3, nG3, $12, $12, nD4, $0C, nG4
-	dc.b	$12, nD4
+	dc.b	$12, nD4, nG3, $0C
 	
-PPZPast_Sub2:
-	dc.b	nG3, $0C, nC4, $12, nG4, $06, $0C, nG3, nC4, $12
-	dc.b	nG4, $06, $06, nG3, nA3, nG3, nE4, $12, nB3, $06
-	dc.b	$18, nE4, $12, nB3, $06, $0C, nEb4, nD4, $12, nA4
-	dc.b	$06, $0C, nA3, nD4, $12, nA4, $06, $06, nA3, nD4
-	dc.b	nA3, nG3, $12, $06, nD4, $12, $06, nG3, $12, nD4
-	dc.b	$06, nG4, $0C, nD4, nE4, $12, nB3, $06, $0C, nE3
-	dc.b	nE4, $12, nB3, $06, $0C, nBb3, nA3, $12, $06, nE4
-	dc.b	$12, $06, nA3, $12, nE4, $06, nG4, nBb4, nCs5, nE5
-	dc.b	nD4, $12, $06, nA3, $18, nD4, $12, $06, nA3, $0C
-	dc.b	nAb3, nG3, $12, $06, nD4, $12, $06, nF4, nG4, nRst
-	dc.b	nF4, nD4, nG3, nD4, nG3
-	smpsLoop	0, 2, PPZPast_Sub2
-	smpsJump	PPZPast_Sub3
+PPZPast_Sub3:
+	dc.b	nC4, $12, nG4, $06, $0C, nG3, nC4, $12, nG4, $06
+	dc.b	$06, nG3, nA3, nG3, nE4, $12, nB3, $06, $18, nE4
+	dc.b	$12, nB3, $06, $0C, nEb4, nD4, $12, nA4, $06, $0C
+	dc.b	nA3, nD4, $12, nA4, $06, $06, nA3, nD4, nA3, nG3
+	dc.b	$12, $06, nD4, $12, $06, nG3, $12, nD4, $06, nG4
+	dc.b	$0C, nD4, nE4, $12, nB3, $06, $0C, nE3, nE4, $12
+	dc.b	nB3, $06, $0C, nBb3, nA3, $12, $06, nE4, $12, $06
+	dc.b	nA3, $12, nE4, $06, nG4, nBb4, nCs5, nE5, nD4, $12
+	dc.b	$06, nA3, $18, nD4, $12, $06, nA3, $0C, nAb3, nG3
+	dc.b	$12, $06, nD4, $12, $06, nF4, nG4, nRst, nF4, nD4
+	dc.b	nG3, nD4, nG3
+	smpsLoop	0, 2, PPZPast_Sub3
+	smpsJump	PPZPast_Sub4
 	
 PPZPast_PCM4:
 	smpsAlterVol	$BB
 	smpsSetvoice	$02
 	dc.b	nRst, $4E, nG5, $06, nA5, nG5
 	smpsAlterVol	$45
-	
-PPZPast_Sub4:
 	smpsAlterVol	$BB
+	
+PPZPast_Sub5:
 	smpsSetTempoDiv	$02
 	dc.b	nRst, $0C, nE6, $06, nRst, $12, nD6, $06, nRst, $12
 	dc.b	nC6, $06, nRst, $12, nD6, $06, nRst, nC6, nRst, nB5
@@ -166,17 +168,17 @@ PPZPast_Sub4:
 	dc.b	$06, nRst, nRst
 	smpsAlterVol	$45
 	smpsSetTempoDiv	$FE
-	smpsJump	PPZPast_Sub4
+	smpsJump	PPZPast_Sub5
 	
 PPZPast_PCM5:
 	smpsSetTempoDiv	$0C
 	smpsSetvoice	$02
-	dc.b	nRst, $4E, nG5, $06, nA5, nG5
+	dc.b	nRst, $4E, nG5, $06, nA5, nG5, nE6, $06
 	
-PPZPast_Sub5:
-	dc.b	nE6, $06, nRst, $12, nD6, $06, nRst, $12, nC6, $06
-	dc.b	nRst, $12, nD6, $06, nRst, nC6, nRst, nB5, $0C, nC6
-	dc.b	$06, nG5, $3C, nE5, $06, nG5, nE5
+PPZPast_Sub6:
+	dc.b	nRst, $12, nD6, $06, nRst, $12, nC6, $06, nRst, $12
+	dc.b	nD6, $06, nRst, nC6, nRst, nB5, $0C, nC6, $06, nG5
+	dc.b	$3C, nE5, $06, nG5, nE5
 	smpsSetLegato	$60
 	dc.b	nRst, $4E, nG5, $06, nA5, nG5, nE6, nRst, $12, nD6
 	dc.b	$06, nRst, $12, nC6, $06, nRst, $12, nD6, $06, nRst
@@ -228,10 +230,12 @@ PPZPast_Sub5:
 	dc.b	nE5, $06, nRst, $0C, nF5, $06, nRst, $12, nD5, $0C
 	dc.b	nF5, nA5, nC6, $18, nB5, nE6, nE6, nC6, $4E, nG5
 	dc.b	$06, nA5, nG5
-	smpsJump	PPZPast_Sub5
+	smpsJump	PPZPast_Sub6
 	
 PPZPast_PCM6:
 	smpsSetvoice	$05
+	
+PPZPast_Sub7:
 	dc.b	nD4, $0C, $0C, nRst, nD4, $06, nRst, nD4, nRst, nD4
 	dc.b	nRst, nD4, nRst, $12, nD4, $0C, nRst, nD4, $06, nRst
 	dc.b	nD4, nRst, $12, nD4, $06, nRst, nD4, nRst, $0C, nD4
@@ -239,7 +243,7 @@ PPZPast_PCM6:
 	dc.b	nRst, nC4, nRst, nC4, nRst, $12, nC4, $0C, nRst, nC4
 	dc.b	$06, nRst, nC4, nRst, nC4, nRst, $12, nC4, $06, nRst
 	dc.b	nC4, $0C
-	smpsLoop	0, 4, PPZPast_PCM6 - 2
+	smpsLoop	0, 4, PPZPast_PCM6
 	smpsSetvoice	$06
 	smpsAlterVol	$E0
 	smpsSetTempoDiv	$E8
@@ -293,23 +297,24 @@ PPZPast_PCM6:
 	dc.b	nE7, nE7
 	smpsSetTempoDiv	$16
 	smpsAlterVol	$B0
-	smpsJump	PPZPast_PCM6
+	smpsJump	PPZPast_Sub7
 	
 PPZPast_PCM7:
 	smpsPan	$FA
-	
-PPZPast_Sub7:
 	smpsSetvoice	$05
 	
-PPZPast_Sub9:
-	dc.b	nRst, $06, nA4, nRst, $0C, nA4, $06, $06, nRst, nA4
-	dc.b	nRst, nA4, nRst, nA4, nRst, nA4, nRst, $0C, $0C, nA4
-	dc.b	$06, $06, nRst, nA4, nRst, nA4, $0C, $06, nRst, nA4
-	dc.b	nRst, nA4, nRst, $0C, $0C, nG4, $06, $06, nRst, nG4
-	dc.b	nRst, nG4, nRst, nG4, nRst, nG4, nRst, nG4, $0C, nRst
-	dc.b	$06, $0C, nG4, $06, $06, nRst, nG4, nRst, nG4, nRst
-	dc.b	$12, nG4, $06, nRst, nG4, nRst, nG4
-	smpsLoop	0, 4, PPZPast_Sub7
+PPZPast_Sub8:
+	dc.b	nRst, $06
+	
+PPZPast_Sub10:
+	dc.b	nA4, nRst, $0C, nA4, $06, $06, nRst, nA4, nRst, nA4
+	dc.b	nRst, nA4, nRst, nA4, nRst, $0C, $0C, nA4, $06, $06
+	dc.b	nRst, nA4, nRst, nA4, $0C, $06, nRst, nA4, nRst, nA4
+	dc.b	nRst, $0C, $0C, nG4, $06, $06, nRst, nG4, nRst, nG4
+	dc.b	nRst, nG4, nRst, nG4, nRst, nG4, $0C, nRst, $06, $0C
+	dc.b	nG4, $06, $06, nRst, nG4, nRst, nG4, nRst, $12, nG4
+	dc.b	$06, nRst, nG4, nRst, nG4
+	smpsLoop	0, 4, PPZPast_Sub8
 	dc.b	nRst, $0C, nA4, $06, nRst, $0C, nA4, nRst, $06, nA4
 	dc.b	nRst, $0C, nA4, nRst, $06, nA4, nRst, nRst, $0C, nG4
 	dc.b	$06, nB4, nRst, $0C, nG4, nRst, $06, nG4, $0C, nRst
@@ -326,46 +331,45 @@ PPZPast_Sub9:
 	dc.b	nA4, nD4, nA4, nA4, nD4, nD4, nA4, nG4, nD4, nF4
 	dc.b	nD4, nG4, nG4, nD4, nG4, nF4, nG4, nD4, nG4, nD4
 	dc.b	nG4, nF4, nD4, nRst, nD4, nF4, nD4, nG4, nG4, nD4
-	dc.b	nG4, nF4, nG4, nD4, nG4, nD4, nG4
+	dc.b	nG4, nF4, nG4, nD4, nG4, nD4, nG4, nF4, nD4
 	
-PPZPast_Sub8:
-	dc.b	nF4, nD4, nRst, $0C, nG4, $06, nRst, $0C, nG4, $06
-	dc.b	nRst, nG4, nRst, nG4, nRst, nG4, nRst, nG4, nRst, nB4
-	dc.b	nRst, $0C, nG4, $06, nD5, nRst, nE5, nRst, nG4, nRst
-	dc.b	nE5, nRst, nB4, nRst, nE5, nG4, nRst, nRst, $0C, nA4
-	dc.b	$06, nD5, nRst, nA4, nRst, $0C, nA4, nRst, $06, nA4
-	dc.b	$0C, nRst, $06, nA4, nF5, nRst, $0C, nF4, $06, nB4
-	dc.b	nRst, nG4, nRst, nF4, nRst, nG3, nRst, nG3, nRst, $0C
-	dc.b	nG3, $06, nRst, nRst, nB4, nRst, nD5, nRst, nG4, nRst
-	dc.b	nB4, nRst, nD5, nRst, nB4, nRst, $0C, nB4, $06, nRst
-	dc.b	nBb4, $0C, nRst, $06, nBb4, nRst, $0C, nBb4, nRst, $06
-	dc.b	nCs5, $0C, nRst, $06, nCs5, nRst, nBb4, nRst, nRst, nC5
-	dc.b	nRst, nC5, $0C, nRst, $06, nC5, nRst, $0C, nA4, nRst
-	dc.b	$06, nF4, nRst, nFs4, nRst, nRst, nF4, nRst, nB4, nRst
-	dc.b	nB4, nRst, $0C, nF4, nRst, $06, nG4, $0C, nRst, $06
-	dc.b	nF4, $0C
-	smpsLoop	0, 2, PPZPast_Sub8
-	smpsJump	PPZPast_Sub9
+PPZPast_Sub9:
+	dc.b	nRst, $0C, nG4, $06, nRst, $0C, nG4, $06, nRst, nG4
+	dc.b	nRst, nG4, nRst, nG4, nRst, nG4, nRst, nB4, nRst, $0C
+	dc.b	nG4, $06, nD5, nRst, nE5, nRst, nG4, nRst, nE5, nRst
+	dc.b	nB4, nRst, nE5, nG4, nRst, nRst, $0C, nA4, $06, nD5
+	dc.b	nRst, nA4, nRst, $0C, nA4, nRst, $06, nA4, $0C, nRst
+	dc.b	$06, nA4, nF5, nRst, $0C, nF4, $06, nB4, nRst, nG4
+	dc.b	nRst, nF4, nRst, nG3, nRst, nG3, nRst, $0C, nG3, $06
+	dc.b	nRst, nRst, nB4, nRst, nD5, nRst, nG4, nRst, nB4, nRst
+	dc.b	nD5, nRst, nB4, nRst, $0C, nB4, $06, nRst, nBb4, $0C
+	dc.b	nRst, $06, nBb4, nRst, $0C, nBb4, nRst, $06, nCs5, $0C
+	dc.b	nRst, $06, nCs5, nRst, nBb4, nRst, nRst, nC5, nRst, nC5
+	dc.b	$0C, nRst, $06, nC5, nRst, $0C, nA4, nRst, $06, nF4
+	dc.b	nRst, nFs4, nRst, nRst, nF4, nRst, nB4, nRst, nB4, nRst
+	dc.b	$0C, nF4, nRst, $06, nG4, $0C, nRst, $06, nF4, $0C
+	smpsLoop	0, 2, PPZPast_Sub9
+	smpsJump	PPZPast_Sub10
 	
 PPZPast_PCM1:
 	smpsStop
 	
 PPZPast_PCM8:
 	smpsPan	$AF
-	
-PPZPast_Sub10:
 	smpsSetvoice	$05
 	
-PPZPast_Sub12:
-	dc.b	nRst, $06, nD5, nRst, $0C, nF5, $06, nCs5, nRst, nF5
-	dc.b	nRst, nC5, nRst, nF5, nRst, nCs5, nF5, $0C, nRst, nD5
-	dc.b	$06, nF5, nRst, nCs5, nRst, nF5, $0C, nC5, $06, nRst
-	dc.b	nF5, nRst, nCs5, nF5, nRst, nRst, $0C, nC5, $06, nE5
-	dc.b	nRst, nB4, nRst, nE5, nRst, nA4, nRst, nE5, nRst, nB4
-	dc.b	$0C, nE5, $06, nRst, $0C, nE5, $06, $06, nRst, nE5
-	dc.b	nRst, $12, nB4, $06, nC5, nRst, $0C, nE5, $06, nRst
-	dc.b	$0C
-	smpsLoop	0, 4, PPZPast_Sub10
+PPZPast_Sub11:
+	dc.b	nRst, $06
+	
+PPZPast_Sub13:
+	dc.b	nD5, nRst, $0C, nF5, $06, nCs5, nRst, nF5, nRst, nC5
+	dc.b	nRst, nF5, nRst, nCs5, nF5, $0C, nRst, nD5, $06, nF5
+	dc.b	nRst, nCs5, nRst, nF5, $0C, nC5, $06, nRst, nF5, nRst
+	dc.b	nCs5, nF5, nRst, nRst, $0C, nC5, $06, nE5, nRst, nB4
+	dc.b	nRst, nE5, nRst, nA4, nRst, nE5, nRst, nB4, $0C, nE5
+	dc.b	$06, nRst, $0C, nE5, $06, $06, nRst, nE5, nRst, $12
+	dc.b	nB4, $06, nC5, nRst, $0C, nE5, $06, nRst, $0C
+	smpsLoop	0, 4, PPZPast_Sub11
 	dc.b	nF4, $06, $06, nC5, nF4, nRst, nC5, $0C, nF4, $06
 	dc.b	nC5, nF4, nF4, nC5, $0C, nF4, $06, nC5, nF4, nE4
 	dc.b	nG4, nB4, nE5, nRst, nE4, nB4, $0C, nE4, $06, nB4
@@ -383,23 +387,23 @@ PPZPast_Sub12:
 	dc.b	$0C, nRst, $06, nA4, $0C, nRst, nB4, nRst, $06, nE5
 	dc.b	$0C, nRst, $06, nB4, $0C, nRst, $06, nE5, $0C, nRst
 	dc.b	$06, nB4, $0C, nRst, nB4, nRst, $06, nE5, $0C, nRst
-	dc.b	$06, nB4, $0C, nRst, $06, nE5, $0C, nRst, $06
+	dc.b	$06, nB4, $0C, nRst, $06, nE5, $0C, nRst, $06, nB4
+	dc.b	$0C
 	
-PPZPast_Sub11:
-	dc.b	nB4, $0C, nC4, $0C, nC5, $06, nE5, nRst, nB4, nC4
-	dc.b	nE5, nRst, nA4, nC4, nE5, nRst, nB4, nC4, nE5, nE4
-	dc.b	$0C, nB4, $06, nG5, nE4, nG5, nE4, nB4, nRst, nG5
-	dc.b	nE4, nG5, nE4, nG5, nB4, nE4, nD4, $0C, nC5, $06
-	dc.b	nF5, nD4, nD5, nD4, nRst, nE5, $0C, nD4, $06, nC5
-	dc.b	$0C, nD4, $06, nD5, nA5, nG4, nRst, nG4, nE5, nG4
-	dc.b	nB4, nG4, nA4, nB4, nG5, nB4, nBb4, nA4, nF5, nA4
-	dc.b	nAb4, nE4, nD5, nRst, nG5, nE4, nB4, nRst, nD5, nE4
-	dc.b	nG5, nRst, nD5, nE4, nE4, nE5, nE4, nF5, $0C, nA4
-	dc.b	$06, nE5, nRst, nA4, nF5, $0C, nA4, $06, nG5, $0C
-	dc.b	nA4, $06, nF5, nA4, nE5, nRst, nD4, nG5, nRst, nF5
-	dc.b	$0C, nD4, $06, nG5, nD4, nD4, nF5, $0C, nD4, $06
-	dc.b	nA4, nD4, nBb4, nRst, nG4, nB4, nRst, nE5, nG4, nE5
-	dc.b	nF4, nG4, nB4, $0C, nG4, $06, nE5, $0C, nG4, $06
-	dc.b	nB4, $0C
-	smpsLoop	0, 2, PPZPast_Sub11
-	smpsJump	PPZPast_Sub12
+PPZPast_Sub12:
+	dc.b	nC4, $0C, nC5, $06, nE5, nRst, nB4, nC4, nE5, nRst
+	dc.b	nA4, nC4, nE5, nRst, nB4, nC4, nE5, nE4, $0C, nB4
+	dc.b	$06, nG5, nE4, nG5, nE4, nB4, nRst, nG5, nE4, nG5
+	dc.b	nE4, nG5, nB4, nE4, nD4, $0C, nC5, $06, nF5, nD4
+	dc.b	nD5, nD4, nRst, nE5, $0C, nD4, $06, nC5, $0C, nD4
+	dc.b	$06, nD5, nA5, nG4, nRst, nG4, nE5, nG4, nB4, nG4
+	dc.b	nA4, nB4, nG5, nB4, nBb4, nA4, nF5, nA4, nAb4, nE4
+	dc.b	nD5, nRst, nG5, nE4, nB4, nRst, nD5, nE4, nG5, nRst
+	dc.b	nD5, nE4, nE4, nE5, nE4, nF5, $0C, nA4, $06, nE5
+	dc.b	nRst, nA4, nF5, $0C, nA4, $06, nG5, $0C, nA4, $06
+	dc.b	nF5, nA4, nE5, nRst, nD4, nG5, nRst, nF5, $0C, nD4
+	dc.b	$06, nG5, nD4, nD4, nF5, $0C, nD4, $06, nA4, nD4
+	dc.b	nBb4, nRst, nG4, nB4, nRst, nE5, nG4, nE5, nF4, nG4
+	dc.b	nB4, $0C, nG4, $06, nE5, $0C, nG4, $06, nB4, $0C
+	smpsLoop	0, 2, PPZPast_Sub12
+	smpsJump	PPZPast_Sub13
