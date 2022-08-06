@@ -59,6 +59,16 @@ NOTES = {
     0xD9: "nE7", 0xDA: "nF7", 0xDB: "nFs7", 0xDC: "nG7",
     0xDD: "nAb7", 0xDE: "nA7", 0xDF: "nBb7"
 }
+CHANIDS = {
+    0x00: "cPCM1",
+    0x02: "cPCM2",
+    0x04: "cPCM3",
+    0x06: "cPCM4",
+    0x08: "cPCM5",
+    0x0A: "cPCM6",
+    0x0C: "cPCM7",
+    0x0E: "cPCM8"
+}
 
 def hex_asm68k(i):
     s = hex(i)[2:].upper()
@@ -66,7 +76,7 @@ def hex_asm68k(i):
         s = "0" + s
     return "$" + s
 
-def write_asm(proj, input, output):
+def write_asm(proj, input, output, sfx=False):
     indent_level = 1
 
     def write(data, indent=None):
@@ -188,17 +198,29 @@ def write_asm(proj, input, output):
     indent_level = start_block("Header")
 
     input.read(2) # TODO: ???
-    write_instruction("smpsHeaderStartSong")
-    channels = read_byte()
-    write_instruction("smpsHeaderChan", hex_asm68k(channels))
-    input.read(1) # TODO: ???
-    write_instruction_i_bytes("smpsHeaderTempo", 2)
+    write_instruction(sfx and "smpsHeaderStartSFX" or "smpsHeaderStartSong")
+    if sfx:
+        write_instruction_i_bytes("smpsHeaderTempoSFX", 1)
+        channels = read_byte()
+        write_instruction("smpsHeaderChanSFX", hex_asm68k(channels))
+    else:
+        channels = read_byte()
+        write_instruction("smpsHeaderChan", hex_asm68k(channels))
+        input.read(1) # TODO: ???
+        write_instruction_i_bytes("smpsHeaderTempo", 2)
 
     write("")
     locs = {}
-    for i in range(channels):
-        loc = read_short()
-        write_instruction("smpsHeaderPCM", label_from_loc(locs, loc, "PCM" + str(i + 1)), read_byte_s(), read_byte_s())
+    if sfx:
+        for i in range(channels):
+            read_byte() # track flags
+            write_instruction("smpsHeaderSFXChannel", 
+                CHANIDS[read_byte()],
+                label_from_loc(locs, read_short(), "PCM" + str(i + 1)), read_byte_s(), read_byte_s())
+    else:
+        for i in range(channels):
+            write_instruction("smpsHeaderPCM", 
+                label_from_loc(locs, read_short(), "PCM" + str(i + 1)), read_byte_s(), read_byte_s())
 
     indent_level = end_block()
 
@@ -254,10 +276,11 @@ def main():
     project_name = input("name : ")
     orig_bin = input("file : ")
     out_file = input("out file : ")
+    sfx = input("sfx? (y/n) : ").lower() == "y"
 
     with open(out_file, "w") as output:
         with open(orig_bin, "rb") as f:
-            write_asm(project_name, f, output)
+            write_asm(project_name, f, output, sfx=sfx)
 
 if __name__ == "__main__":
     main()

@@ -136,12 +136,15 @@ cPCM8				EQU $0E
 ; ---------------------------------------------------------------------------------------------
 ; Header Macros
 
-; Header macros for music (not for SFX)
-
 smpsHeaderStartSong macro
 songStart set *
 	dc.w $0000
 	endm
+smpsHeaderStartSFX macro
+	smpsHeaderStartSong
+	endm
+
+; Header macros for music (not for SFX)
 
 ; Header - Set up Channel count
 smpsHeaderChan macro val
