@@ -32,6 +32,7 @@ Converts Sonic CD SMPS data to ASM.
 from glob import glob
 from os import path
 import struct
+import sys
 
 NOTES = {
     0x80: "nRst",
@@ -287,9 +288,16 @@ def write_asm(proj, input, output, sfx=False):
         notes = []
 
 def main():
-    orig_bin = input("file : ")
+
+    def test_boolean(msg):
+        answer = input(msg).lower().strip()
+        return answer and answer != "false" and answer != "n" and answer != "0"
+
+    argv = sys.argv[1:]
+
+    orig_bin = argv[0] or input("file : ")
     if path.isdir(orig_bin):
-        sfx = input("sfx? (y/n) : ").lower() == "y"
+        sfx = argv[1] or test_boolean("sfx? (y/n) : ")
 
         for i in glob(path.join(orig_bin, "*.bin")):
             out_file = path.join(path.dirname(i), path.splitext(path.basename(i))[0] + ".asm")
@@ -298,11 +306,11 @@ def main():
                 with open(i, "rb") as f:
                     write_asm(project_name, f, output, sfx=sfx)
     else:
-        out_file = input("out file : ") or (
+        out_file = argv[1] or input("out file : ") or (
             path.join(path.dirname(orig_bin), path.splitext(path.basename(orig_bin))[0] + ".asm")
         )
-        project_name = input("name : ") or (path.splitext(path.basename(orig_bin))[0].replace(" ", ""))
-        sfx = input("sfx? (y/n) : ").lower() == "y"
+        project_name = argv[2] or input("name : ") or (path.splitext(path.basename(orig_bin))[0].replace(" ", ""))
+        sfx = argv[3] or test_boolean("sfx? (y/n) : ")
 
         with open(out_file, "w") as output:
             with open(orig_bin, "rb") as f:
