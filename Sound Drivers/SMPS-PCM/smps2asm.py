@@ -58,7 +58,15 @@ NOTES = {
     0xD1: "nAb6", 0xD2: "nA6", 0xD3: "nBb6", 0xD4: "nB6",
     0xD5: "nC7", 0xD6: "nCs7", 0xD7: "nD7", 0xD8: "nEb7",
     0xD9: "nE7", 0xDA: "nF7", 0xDB: "nFs7", 0xDC: "nG7",
-    0xDD: "nAb7", 0xDE: "nA7", 0xDF: "nBb7"
+    0xDD: "nAb7", 0xDE: "nA7", 0xDF: "nBb7",
+    0xE7: "smpsNoAttack"
+}
+PANNING_VALUES = {
+    0x00: "panNone",
+    0x40: "panRight",
+    0x80: "panLeft",
+    0xC0: "panCentre"
+    # 0xC0: "panCenter"
 }
 CHANIDS = {
     0x00: "cPCM1",
@@ -141,19 +149,20 @@ def write_asm(proj, input, output, sfx=False):
         if not locs.get(loc, None):
             locs[loc] = name
         return proj + "_" + locs[loc]
-    def sub_from_pos(locs, pos, total_subrountines, offset=0):
+    def sub_from_pos(locs, pos, total_subrountines, offset=0, name="Sub"):
         # TODO: loc-pos-1
         loc = read_short() + pos + 1 + offset # ???
         assert loc < eof
         if not locs.get(loc, None):
             total_subrountines = total_subrountines + 1
-        label = label_from_loc(locs, loc, "Sub" + str(total_subrountines))
+        label = label_from_loc(locs, loc, name + hex_asm68k(total_subrountines)[1:])
         return label, total_subrountines
 
     def write_command(this_short, total_subrountines, pos):
         buffer = ""
         if this_short == 0xe0:
-            buffer = write_instruction_buffer("smpsPan", read_byte_s())
+            pan_value = read_byte()
+            buffer = write_instruction_buffer("smpsPan", PANNING_VALUES.get(pan_value, hex_asm68k(pan_value)))
         elif this_short == 0xe1:
             buffer = write_instruction_buffer("smpsAlterNote", read_byte_s())
         elif this_short == 0xe2:
@@ -162,8 +171,8 @@ def write_asm(proj, input, output, sfx=False):
             buffer = write_instruction_buffer("smpsCDDALoopFlag")
         elif this_short == 0xe6:
             buffer = write_instruction_buffer("smpsAlterVol", read_byte_s())
-        elif this_short == 0xe7:
-            buffer = write_instruction_buffer("smpsNoAttack")
+        # elif this_short == 0xe7:
+        #    buffer = write_instruction_buffer("smpsNoAttack")
         elif this_short == 0xe8:
             buffer = write_instruction_buffer("smpsNoteFill", read_byte_s())
         elif this_short == 0xea:
@@ -175,15 +184,15 @@ def write_asm(proj, input, output, sfx=False):
         elif this_short >= 0xf0 and this_short <= 0xf2:
             buffer = write_instruction_buffer("smpsStop")
         elif this_short == 0xf4 or this_short == 0xf6:
-            label, total_subrountines = sub_from_pos(locs, pos, total_subrountines)
+            label, total_subrountines = sub_from_pos(locs, pos, total_subrountines, name="Jump")
             buffer = write_instruction_buffer("smpsJump" + (this_short == 0xf6 and "F6" or ""), label)
         elif this_short == 0xf7:
             index = read_byte()
             loops = read_byte()
-            label, total_subrountines = sub_from_pos(locs, pos, total_subrountines, offset=2)
+            label, total_subrountines = sub_from_pos(locs, pos, total_subrountines, offset=2, name="Call")
             buffer = write_instruction_buffer("smpsLoop", index, loops, label)
         elif this_short == 0xf8:
-            label, total_subrountines = sub_from_pos(locs, pos, total_subrountines)
+            label, total_subrountines = sub_from_pos(locs, pos, total_subrountines, name="Call")
             buffer = write_instruction_buffer("smpsCall", label)
         elif this_short == 0xf9:
             buffer = write_instruction_buffer("smpsReturn")
@@ -262,7 +271,7 @@ def write_asm(proj, input, output, sfx=False):
 
         this_short = read_byte()
         pos = input.tell()
-        if this_short >= 0xe0:
+        if this_short >= 0xe0 and this_short != 0xe7:
             buffer, total_subrountines = write_command(this_short, total_subrountines, pos)
             if len(notes) > 0:
                 indent_level = indent_level < 2 and 2 or indent_level

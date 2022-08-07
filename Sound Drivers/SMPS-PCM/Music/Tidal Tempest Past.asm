@@ -15,7 +15,7 @@ Song_TTZPast_Header:
 Song_TTZPast_PCM2:
 	smpsChangeTransposition	$01
 	
-Song_TTZPast_Sub1:
+Song_TTZPast_Call01:
 	smpsSetvoice	$00
 	dc.b	nA1, $0C, nE2, nD2, nE2, nG2, nD2, nE2, nC2, nA1
 	dc.b	$0C, nE2, nD2, nE2, nG2, nFs2, nG2, nA2
@@ -23,9 +23,9 @@ Song_TTZPast_Sub1:
 	dc.b	nA1, $0C, nE2, nD2, nE2, nG2, nD2, nE2, nC2, nA1
 	dc.b	$0C, nE2, nD2, nE2, nG2, nFs2, nG2, nA2
 	smpsChangeTransposition	$02
-	smpsLoop	0, 2, Song_TTZPast_Sub1
+	smpsLoop	0, 2, Song_TTZPast_Call01
 	
-Song_TTZPast_Sub2:
+Song_TTZPast_Call02:
 	dc.b	nC2, $0C
 	smpsAlterVol	$EC
 	dc.b	nEb2
@@ -52,14 +52,14 @@ Song_TTZPast_Sub2:
 	smpsAlterVol	$F1
 	dc.b	nEb2
 	smpsAlterVol	$69
-	smpsLoop	0, 2, Song_TTZPast_Sub2
+	smpsLoop	0, 2, Song_TTZPast_Call02
 	smpsChangeTransposition	$03
-	smpsLoop	1, 2, Song_TTZPast_Sub2
+	smpsLoop	1, 2, Song_TTZPast_Call02
 	smpsChangeTransposition	$FA
-	smpsLoop	2, 2, Song_TTZPast_Sub2
+	smpsLoop	2, 2, Song_TTZPast_Call02
 	smpsAlterVol	$D8
 	
-Song_TTZPast_Sub3:
+Song_TTZPast_Call03:
 	dc.b	nF1, $03, nA1, nC2, nE2
 	smpsAlterVol	$CE
 	smpsPan	$F7
@@ -109,16 +109,16 @@ Song_TTZPast_Sub3:
 	dc.b	nC1, nE1, nG1, nB1
 	smpsAlterVol	$32
 	smpsPan	$CD
-	smpsLoop	0, 4, Song_TTZPast_Sub3
+	smpsLoop	0, 4, Song_TTZPast_Call03
 	smpsAlterVol	$28
 	dc.b	nRst, $60, nRst, nRst, nRst
-	smpsJumpF6	Song_TTZPast_Sub1
+	smpsJumpF6	Song_TTZPast_Call01
 	smpsStop
 	
 Song_TTZPast_PCM3:
 	smpsChangeTransposition	$05
 	
-Song_TTZPast_Sub7:
+Song_TTZPast_Jump07:
 	smpsAlterNote	$0E
 	smpsSetvoice	$01
 	smpsPan	$FF
@@ -320,27 +320,27 @@ Song_TTZPast_Sub7:
 	smpsSetvoice	$0B
 	smpsAlterVol	$B0
 	
-Song_TTZPast_Sub4:
+Song_TTZPast_Call04:
 	dc.b	nD2, $06, nEb2
 	smpsAlterVol	$0A
-	smpsLoop	0, 8, Song_TTZPast_Sub4
+	smpsLoop	0, 8, Song_TTZPast_Call04
 	
-Song_TTZPast_Sub5:
+Song_TTZPast_Call05:
 	dc.b	nD2, $06, nEb2
 	smpsAlterVol	$F6
-	smpsLoop	0, 8, Song_TTZPast_Sub5
-	smpsLoop	1, 2, Song_TTZPast_Sub4
+	smpsLoop	0, 8, Song_TTZPast_Call05
+	smpsLoop	1, 2, Song_TTZPast_Call04
 	smpsChangeTransposition	$03
-	smpsLoop	2, 2, Song_TTZPast_Sub4
+	smpsLoop	2, 2, Song_TTZPast_Call04
 	smpsChangeTransposition	$FA
-	smpsLoop	3, 2, Song_TTZPast_Sub4
+	smpsLoop	3, 2, Song_TTZPast_Call04
 	smpsPan	$FF
 	smpsAlterVol	$50
 	smpsAlterNote	$F8
 	smpsChangeTransposition	$FC
 	smpsAlterNote	$0E
 	
-Song_TTZPast_Sub6:
+Song_TTZPast_Call06:
 	dc.b	nRst, $0C, nE2, nD2, nC2, nB1, nA1, nBb1, nD2, nRst
 	dc.b	$0C, nE2, nD2, nC2, nD2, nG2, nE2
 	smpsAlterVol	$C4
@@ -351,17 +351,17 @@ Song_TTZPast_Sub6:
 	smpsAlterVol	$C4
 	dc.b	nA2
 	smpsAlterVol	$3C
-	smpsLoop	0, 2, Song_TTZPast_Sub6
+	smpsLoop	0, 2, Song_TTZPast_Call06
 	smpsAlterNote	$F2
 	smpsChangeTransposition	$04
 	dc.b	nRst, $60, nRst, nRst, nRst
-	smpsJumpF6	Song_TTZPast_Sub7
+	smpsJumpF6	Song_TTZPast_Jump07
 	smpsStop
 	
 Song_TTZPast_PCM4:
 	smpsChangeTransposition	$05
 	
-Song_TTZPast_Sub8:
+Song_TTZPast_Call08:
 	smpsSetvoice	$02
 	dc.b	nRst, $18, nC2, nRst, $0C, nC2, $24, nRst, $18, nC2
 	dc.b	nRst, $0C, nC2, $24
@@ -369,18 +369,18 @@ Song_TTZPast_Sub8:
 	dc.b	nRst, $18, nC2, nRst, $0C, nC2, $24, nRst, $18, nC2
 	dc.b	nRst, $0C, nC2, $24
 	smpsChangeTransposition	$02
-	smpsLoop	0, 2, Song_TTZPast_Sub8
+	smpsLoop	0, 2, Song_TTZPast_Call08
 	
-Song_TTZPast_Sub9:
+Song_TTZPast_Call09:
 	dc.b	nRst, $18, nAb1, nRst, $0C, nAb1, $24
-	smpsLoop	0, 4, Song_TTZPast_Sub9
+	smpsLoop	0, 4, Song_TTZPast_Call09
 	smpsChangeTransposition	$03
 	
-Song_TTZPast_Sub10:
+Song_TTZPast_Call0A:
 	dc.b	nRst, $18, nAb1, nRst, $0C, nAb1, $24
-	smpsLoop	0, 4, Song_TTZPast_Sub10
+	smpsLoop	0, 4, Song_TTZPast_Call0A
 	smpsChangeTransposition	$FD
-	smpsLoop	1, 2, Song_TTZPast_Sub9
+	smpsLoop	1, 2, Song_TTZPast_Call09
 	smpsSetvoice	$0B
 	smpsAlterNote	$0F
 	smpsChangeTransposition	$FC
@@ -408,41 +408,41 @@ Song_TTZPast_Sub10:
 	smpsAlterNote	$F1
 	smpsPan	$FF
 	dc.b	nRst, $60, nRst, nRst, nRst
-	smpsJumpF6	Song_TTZPast_Sub8
+	smpsJumpF6	Song_TTZPast_Call08
 	smpsStop
 	
 Song_TTZPast_PCM5:
 	smpsChangeTransposition	$08
 	
-Song_TTZPast_Sub11:
+Song_TTZPast_Call0B:
 	smpsSetvoice	$03
 	dc.b	nA1, $0C, nRst, nRst, nA1, nRst, nRst, nE1, nG1, nA1
 	dc.b	$0C, nRst, nRst, nA1, nRst, nRst, nA1, nAb1, nG1, $0C
 	dc.b	nRst, nRst, nG1, nRst, nRst, nD1, nF1, nG1, $0C, nRst
 	dc.b	nRst, nG1, nRst, nD1, nG1, nAb1
-	smpsLoop	0, 2, Song_TTZPast_Sub11
+	smpsLoop	0, 2, Song_TTZPast_Call0B
 	
-Song_TTZPast_Sub12:
+Song_TTZPast_Call0C:
 	dc.b	nF1, $0C, nRst, nRst, nF1, nRst, nRst, nF1, nF1, nF1
 	dc.b	$0C, nRst, nRst, nF1, nRst, nRst, nF1, nF1, nF1, $0C
 	dc.b	nRst, nRst, nF1, nRst, nRst, nF1, nF1, nF1, $0C, nRst
 	dc.b	nRst, nF1, nC2, nBb1, nG1, nF1
 	smpsChangeTransposition	$03
-	smpsLoop	0, 2, Song_TTZPast_Sub12
+	smpsLoop	0, 2, Song_TTZPast_Call0C
 	smpsChangeTransposition	$FA
-	smpsLoop	1, 2, Song_TTZPast_Sub12
+	smpsLoop	1, 2, Song_TTZPast_Call0C
 	dc.b	nF1, $18, nD1, nE1, nBb1, nF1, nD1, nE1, nA1, nF1
 	dc.b	$18, nD1, nE1, nBb1, nF1, nD1, nE1, nA1, nF1, $18
 	dc.b	nD1, nE1, nBb1, nF1, nD1, nE1, nA1, nF1, $18, nD1
 	dc.b	nE1, nBb1, nF1, nD1, nE1, nA1, nRst, $60, nRst, nRst
 	dc.b	nRst
-	smpsJumpF6	Song_TTZPast_Sub11
+	smpsJumpF6	Song_TTZPast_Call0B
 	smpsStop
 	
 Song_TTZPast_PCM6:
 	smpsChangeTransposition	$05
 	
-Song_TTZPast_Sub13:
+Song_TTZPast_Jump0D:
 	smpsSetvoice	$04
 	smpsPan	$8F
 	dc.b	nC2, $18
@@ -455,7 +455,7 @@ Song_TTZPast_Sub13:
 	smpsSetvoice	$05
 	smpsPan	$F8
 	dc.b	$18
-	smpsJumpF6	Song_TTZPast_Sub13
+	smpsJumpF6	Song_TTZPast_Jump0D
 	smpsStop
 	
 Song_TTZPast_PCM7:
@@ -490,7 +490,7 @@ Song_TTZPast_PCM8:
 	smpsPan	$AF
 	smpsChangeTransposition	$06
 	
-Song_TTZPast_Sub14:
+Song_TTZPast_Call0E:
 	smpsAlterNote	$08
 	smpsSetvoice	$0C
 	smpsAlterVol	$EC
@@ -504,15 +504,15 @@ Song_TTZPast_Sub14:
 	smpsAlterVol	$28
 	smpsAlterVol	$14
 	smpsChangeTransposition	$FE
-	smpsLoop	0, 2, Song_TTZPast_Sub14
+	smpsLoop	0, 2, Song_TTZPast_Call0E
 	smpsChangeTransposition	$04
-	smpsLoop	1, 2, Song_TTZPast_Sub14
+	smpsLoop	1, 2, Song_TTZPast_Call0E
 	smpsChangeTransposition	$FA
 	smpsAlterNote	$F8
 	smpsPan	$FF
 	smpsChangeTransposition	$01
 	
-Song_TTZPast_Sub15:
+Song_TTZPast_Call0F:
 	smpsSetvoice	$09
 	smpsPan	$FF
 	dc.b	nC2, $0C
@@ -562,17 +562,17 @@ Song_TTZPast_Sub15:
 	smpsPan	$7F
 	dc.b	nC2
 	smpsAlterVol	$5A
-	smpsLoop	0, 2, Song_TTZPast_Sub15
+	smpsLoop	0, 2, Song_TTZPast_Call0F
 	smpsChangeTransposition	$03
-	smpsLoop	1, 2, Song_TTZPast_Sub15
+	smpsLoop	1, 2, Song_TTZPast_Call0F
 	smpsChangeTransposition	$FA
-	smpsLoop	2, 2, Song_TTZPast_Sub15
+	smpsLoop	2, 2, Song_TTZPast_Call0F
 	smpsChangeTransposition	$FF
 	
-Song_TTZPast_Sub16:
+Song_TTZPast_Call10:
 	smpsSetvoice	$0A
 	dc.b	nD2, $0C, nE2
-	smpsLoop	0, 32, Song_TTZPast_Sub16
+	smpsLoop	0, 32, Song_TTZPast_Call10
 	dc.b	nRst, $60, nRst, nRst, nRst
 	smpsJumpF6	Song_TTZPast_PCM8
 	smpsStop

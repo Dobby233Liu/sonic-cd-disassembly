@@ -57,7 +57,7 @@ Song_CCZPast_PCM2:
 	dc.b	nCs2
 	smpsPan	$FF
 	
-Song_CCZPast_Sub1:
+Song_CCZPast_Call01:
 	smpsSetvoice	$03
 	dc.b	nCs1, $0C, nRst
 	smpsSetvoice	$02
@@ -66,7 +66,7 @@ Song_CCZPast_Sub1:
 	dc.b	nCs1, $0C, nCs1
 	smpsSetvoice	$02
 	dc.b	nG1, $18
-	smpsLoop	0, 7, Song_CCZPast_Sub1
+	smpsLoop	0, 7, Song_CCZPast_Call01
 	smpsSetvoice	$03
 	dc.b	nCs1, $0C, nCs1
 	smpsSetvoice	$02
@@ -80,7 +80,7 @@ Song_CCZPast_Sub1:
 	smpsSetvoice	$05
 	dc.b	nG1, nG1
 	
-Song_CCZPast_Sub2:
+Song_CCZPast_Call02:
 	smpsSetvoice	$03
 	dc.b	nCs1, $0C, nCs1
 	smpsSetvoice	$05
@@ -113,7 +113,7 @@ Song_CCZPast_Sub2:
 	dc.b	nG1, $06, nG1
 	smpsSetvoice	$03
 	dc.b	nCs1, $0C
-	smpsLoop	0, 3, Song_CCZPast_Sub2
+	smpsLoop	0, 3, Song_CCZPast_Call02
 	smpsSetvoice	$03
 	dc.b	nCs1, $0C, nCs1
 	smpsSetvoice	$05
@@ -141,8 +141,8 @@ Song_CCZPast_Sub2:
 	dc.b	nCs1, $0C
 	smpsSetvoice	$05
 	dc.b	nG1, $06, nG1, nG1, nG1
-	smpsLoop	1, 4, Song_CCZPast_Sub2
-	smpsJumpF6	Song_CCZPast_Sub1
+	smpsLoop	1, 4, Song_CCZPast_Call02
+	smpsJumpF6	Song_CCZPast_Call01
 	
 Song_CCZPast_PCM3:
 	smpsSetvoice	$0E
@@ -170,20 +170,20 @@ Song_CCZPast_PCM3:
 	smpsAlterVol	$0A
 	dc.b	nRst, nRst
 	
-Song_CCZPast_Sub8:
+Song_CCZPast_Jump08:
 	smpsPan	$8F
 	smpsAlterNote	$FB
 	
-Song_CCZPast_Sub3:
+Song_CCZPast_Call03:
 	smpsSetvoice	$00
 	dc.b	nC0, $0C, nBb0, nC1, nC0, nBb0, nBb0, $06, nC1, $0C
 	dc.b	nC1, $06, nBb0, $0C
-	smpsLoop	0, 16, Song_CCZPast_Sub3
+	smpsLoop	0, 16, Song_CCZPast_Call03
 	smpsChangeTransposition	$01
 	smpsAlterNote	$0A
 	smpsAlterVol	$B0
 	
-Song_CCZPast_Sub4:
+Song_CCZPast_Call04:
 	smpsSetvoice	$12
 	smpsPan	$F0
 	dc.b	nEb0, $06
@@ -193,13 +193,13 @@ Song_CCZPast_Sub4:
 	dc.b	nCs0
 	smpsPan	$0F
 	dc.b	nC0
-	smpsLoop	0, 8, Song_CCZPast_Sub4
+	smpsLoop	0, 8, Song_CCZPast_Call04
 	smpsChangeTransposition	$FD
-	smpsLoop	1, 2, Song_CCZPast_Sub4
+	smpsLoop	1, 2, Song_CCZPast_Call04
 	smpsChangeTransposition	$06
-	smpsLoop	2, 2, Song_CCZPast_Sub4
+	smpsLoop	2, 2, Song_CCZPast_Call04
 	
-Song_CCZPast_Sub5:
+Song_CCZPast_Call05:
 	smpsSetvoice	$12
 	smpsAlterVol	$14
 	smpsPan	$0F
@@ -219,10 +219,10 @@ Song_CCZPast_Sub5:
 	smpsPan	$8F
 	dc.b	nC1, nC1
 	smpsAlterVol	$EC
-	smpsLoop	0, 4, Song_CCZPast_Sub5
+	smpsLoop	0, 4, Song_CCZPast_Call05
 	smpsPan	$FF
 	
-Song_CCZPast_Sub6:
+Song_CCZPast_Call06:
 	smpsAlterVol	$46
 	smpsSetvoice	$09
 	smpsChangeTransposition	$F4
@@ -251,18 +251,18 @@ Song_CCZPast_Sub6:
 	smpsPan	$FF
 	smpsChangeTransposition	$0C
 	smpsAlterVol	$BA
-	smpsLoop	0, 4, Song_CCZPast_Sub6
+	smpsLoop	0, 4, Song_CCZPast_Call06
 	smpsChangeTransposition	$FF
 	smpsAlterNote	$F6
 	smpsAlterVol	$50
 	
-Song_CCZPast_Sub7:
+Song_CCZPast_Call07:
 	smpsSetvoice	$00
 	dc.b	nC0, $0C, nBb0, nC1, nC0, nBb0, nBb0, $06, nC1, $0C
 	dc.b	nC1, $06, nBb0, $0C
-	smpsLoop	0, 8, Song_CCZPast_Sub7
+	smpsLoop	0, 8, Song_CCZPast_Call07
 	smpsAlterNote	$05
-	smpsJumpF6	Song_CCZPast_Sub8
+	smpsJumpF6	Song_CCZPast_Jump08
 	
 Song_CCZPast_PCM4:
 	smpsChangeTransposition	$EA
@@ -274,35 +274,35 @@ Song_CCZPast_PCM4:
 	smpsAlterVol	$BA
 	smpsChangeTransposition	$16
 	
-Song_CCZPast_Sub13:
+Song_CCZPast_Jump0D:
 	smpsChangeTransposition	$E9
 	smpsAlterNote	$06
 	smpsAlterVol	$46
 	
-Song_CCZPast_Sub9:
+Song_CCZPast_Call09:
 	smpsPan	$FF
 	smpsSetvoice	$11
 	dc.b	nC1, $0C, nBb0, nB0, nC1, nRst, nBb0, nB0, nC1
-	smpsLoop	0, 16, Song_CCZPast_Sub9
+	smpsLoop	0, 16, Song_CCZPast_Call09
 	
-Song_CCZPast_Sub10:
+Song_CCZPast_Call0A:
 	dc.b	nEb1, $0C
-	smpsLoop	0, 16, Song_CCZPast_Sub10
+	smpsLoop	0, 16, Song_CCZPast_Call0A
 	
-Song_CCZPast_Sub11:
+Song_CCZPast_Call0B:
 	dc.b	nC1, $0C
-	smpsLoop	0, 16, Song_CCZPast_Sub11
-	smpsLoop	1, 2, Song_CCZPast_Sub10
+	smpsLoop	0, 16, Song_CCZPast_Call0B
+	smpsLoop	1, 2, Song_CCZPast_Call0A
 	
-Song_CCZPast_Sub12:
+Song_CCZPast_Call0C:
 	smpsPan	$FF
 	smpsSetvoice	$11
 	dc.b	nC1, $0C, nBb0, nB0, nC1, nRst, nBb0, nB0, nC1
-	smpsLoop	0, 16, Song_CCZPast_Sub12
+	smpsLoop	0, 16, Song_CCZPast_Call0C
 	smpsAlterVol	$BA
 	smpsAlterNote	$FA
 	smpsChangeTransposition	$17
-	smpsJumpF6	Song_CCZPast_Sub13
+	smpsJumpF6	Song_CCZPast_Jump0D
 	
 Song_CCZPast_PCM5:
 	smpsAlterVol	$1E
@@ -312,7 +312,7 @@ Song_CCZPast_PCM5:
 	smpsAlterVol	$E2
 	smpsPan	$FA
 	
-Song_CCZPast_Sub14:
+Song_CCZPast_Call0E:
 	smpsSetvoice	$01
 	smpsChangeTransposition	$05
 	dc.b	nG0, $0C, nG1, nF1, nE1, nRst, nC1, nRst, nBb0, nRst
@@ -349,7 +349,7 @@ Song_CCZPast_Sub14:
 	dc.b	nF1, $18, nRst, $0C, nF1, $18, nRst, $0C
 	smpsAlterVol	$E2
 	smpsAlterNote	$06
-	smpsLoop	1, 2, Song_CCZPast_Sub14
+	smpsLoop	1, 2, Song_CCZPast_Call0E
 	smpsSetvoice	$01
 	smpsChangeTransposition	$05
 	dc.b	nG0, $24, nD1, $3C, nRst, $18, nD1, nD1, $12, nEb1
@@ -357,16 +357,16 @@ Song_CCZPast_Sub14:
 	dc.b	nD1, $3C, nRst, $18, nD1, nD1, $12, nEb1, nF1, $0C
 	dc.b	nG1, $1E, nFs1, $03, nF1, nE1, $3C, nRst, $60
 	
-Song_CCZPast_Sub15:
+Song_CCZPast_Call0F:
 	dc.b	nC1, $0C, nG1, nFs1, nF1, nEb1, $12, nC1
 	smpsAlterVol	$E2
 	dc.b	nC1, $0C
 	smpsAlterVol	$1E
 	dc.b	nRst, $0C, nG1, nFs1, nF1, nEb1, $06, nC1, nEb1, nF1
 	dc.b	nRst, nF1, nEb1, nRst
-	smpsLoop	0, 4, Song_CCZPast_Sub15
+	smpsLoop	0, 4, Song_CCZPast_Call0F
 	
-Song_CCZPast_Sub16:
+Song_CCZPast_Call10:
 	dc.b	nRst, $06, nRst, nG0, $0C, nBb0, nG0, nBb0, $06, nG0
 	dc.b	nBb0, nC1
 	smpsAlterVol	$E2
@@ -384,9 +384,9 @@ Song_CCZPast_Sub16:
 	smpsAlterVol	$3C
 	dc.b	nG0, $06, nBb0, $0C, nG0, nBb0, $06, nD1, $0C, nC1
 	dc.b	$12, nRst, $24
-	smpsLoop	0, 2, Song_CCZPast_Sub16
+	smpsLoop	0, 2, Song_CCZPast_Call10
 	smpsChangeTransposition	$FB
-	smpsJumpF6	Song_CCZPast_Sub14
+	smpsJumpF6	Song_CCZPast_Call0E
 	
 Song_CCZPast_PCM9:
 	smpsStop
@@ -402,7 +402,7 @@ Song_CCZPast_PCM7:
 	dc.b	nEb1, $0C, $0C, $0C, $0C
 	smpsAlterVol	$D0
 	
-Song_CCZPast_Sub17:
+Song_CCZPast_Call11:
 	smpsPan	$AF
 	smpsSetvoice	$0B
 	dc.b	nF1, $06, nF1, nF1, $0C
@@ -421,7 +421,7 @@ Song_CCZPast_Sub17:
 	smpsSetvoice	$0B
 	dc.b	nF1, $06, nF1
 	smpsPan	$AF
-	smpsLoop	0, 7, Song_CCZPast_Sub17
+	smpsLoop	0, 7, Song_CCZPast_Call11
 	smpsPan	$AF
 	smpsSetvoice	$0B
 	dc.b	nF1, $06, nF1, nF1, $0C
@@ -439,7 +439,7 @@ Song_CCZPast_Sub17:
 	dc.b	nF1, $0C
 	smpsPan	$F2
 	dc.b	nF1
-	smpsJumpF6	Song_CCZPast_Sub17
+	smpsJumpF6	Song_CCZPast_Call11
 	
 Song_CCZPast_PCM8:
 	smpsAlterVol	$14
@@ -466,10 +466,10 @@ Song_CCZPast_PCM8:
 	smpsAlterVol	$EC
 	smpsChangeTransposition	$10
 	
-Song_CCZPast_Sub23:
+Song_CCZPast_Jump17:
 	smpsAlterNote	$F9
 	
-Song_CCZPast_Sub18:
+Song_CCZPast_Call12:
 	smpsSetvoice	$0A
 	smpsAlterVol	$0A
 	smpsPan	$F9
@@ -484,14 +484,14 @@ Song_CCZPast_Sub18:
 	smpsChangeTransposition	$11
 	smpsPan	$FF
 	smpsAlterVol	$3C
-	smpsLoop	0, 2, Song_CCZPast_Sub18
+	smpsLoop	0, 2, Song_CCZPast_Call12
 	dc.b	nRst, $18
-	smpsLoop	1, 16, Song_CCZPast_Sub18
+	smpsLoop	1, 16, Song_CCZPast_Call12
 	
-Song_CCZPast_Sub20:
+Song_CCZPast_Call14:
 	smpsChangeTransposition	$03
 	
-Song_CCZPast_Sub19:
+Song_CCZPast_Call13:
 	smpsSetvoice	$0A
 	smpsAlterVol	$0A
 	smpsPan	$F9
@@ -506,15 +506,15 @@ Song_CCZPast_Sub19:
 	smpsChangeTransposition	$11
 	smpsPan	$FF
 	smpsAlterVol	$3C
-	smpsLoop	0, 2, Song_CCZPast_Sub19
+	smpsLoop	0, 2, Song_CCZPast_Call13
 	dc.b	nRst, $18
-	smpsLoop	1, 2, Song_CCZPast_Sub19
+	smpsLoop	1, 2, Song_CCZPast_Call13
 	smpsChangeTransposition	$FD
-	smpsLoop	2, 2, Song_CCZPast_Sub19
+	smpsLoop	2, 2, Song_CCZPast_Call13
 	smpsChangeTransposition	$03
-	smpsLoop	3, 2, Song_CCZPast_Sub20
+	smpsLoop	3, 2, Song_CCZPast_Call14
 	
-Song_CCZPast_Sub21:
+Song_CCZPast_Call15:
 	smpsSetvoice	$0A
 	smpsChangeTransposition	$EC
 	dc.b	nEb1, $18
@@ -529,7 +529,7 @@ Song_CCZPast_Sub21:
 	smpsChangeTransposition	$07
 	dc.b	nG1, $18
 	smpsChangeTransposition	$0D
-	smpsLoop	0, 7, Song_CCZPast_Sub21
+	smpsLoop	0, 7, Song_CCZPast_Call15
 	smpsSetvoice	$0A
 	smpsChangeTransposition	$EC
 	dc.b	nEb1, $18
@@ -539,7 +539,7 @@ Song_CCZPast_Sub21:
 	smpsChangeTransposition	$0D
 	smpsAlterNote	$F9
 	
-Song_CCZPast_Sub22:
+Song_CCZPast_Call16:
 	smpsSetvoice	$0A
 	smpsAlterVol	$0A
 	smpsPan	$F9
@@ -554,11 +554,11 @@ Song_CCZPast_Sub22:
 	smpsChangeTransposition	$11
 	smpsPan	$FF
 	smpsAlterVol	$3C
-	smpsLoop	0, 2, Song_CCZPast_Sub22
+	smpsLoop	0, 2, Song_CCZPast_Call16
 	dc.b	nRst, $18
-	smpsLoop	1, 8, Song_CCZPast_Sub22
+	smpsLoop	1, 8, Song_CCZPast_Call16
 	smpsAlterNote	$07
-	smpsJumpF6	Song_CCZPast_Sub23
+	smpsJumpF6	Song_CCZPast_Jump17
 	
 Song_CCZPast_PCM6:
 	smpsSetvoice	$0C
@@ -571,40 +571,40 @@ Song_CCZPast_PCM6:
 	smpsAlterVol	$30
 	dc.b	nC1, $0C, $0C, $0C, $0C
 	
-Song_CCZPast_Sub29:
+Song_CCZPast_Jump1D:
 	smpsAlterNote	$05
 	
-Song_CCZPast_Sub25:
+Song_CCZPast_Call19:
 	smpsSetvoice	$09
 	dc.b	nRst, $18
-	smpsCall	Song_CCZPast_Sub24
-	smpsLoop	0, 3, Song_CCZPast_Sub25
+	smpsCall	Song_CCZPast_Call18
+	smpsLoop	0, 3, Song_CCZPast_Call19
 	dc.b	nRst, $60
-	smpsLoop	1, 4, Song_CCZPast_Sub25
+	smpsLoop	1, 4, Song_CCZPast_Call19
 	
-Song_CCZPast_Sub26:
+Song_CCZPast_Call1A:
 	smpsChangeTransposition	$05
 	smpsAlterVol	$1E
 	smpsSetvoice	$08
 	dc.b	nC1, $18
 	smpsSetvoice	$10
-	smpsCall	Song_CCZPast_Sub24
+	smpsCall	Song_CCZPast_Call18
 	dc.b	nRst, $18
 	smpsSetvoice	$10
-	smpsCall	Song_CCZPast_Sub24
+	smpsCall	Song_CCZPast_Call18
 	smpsSetvoice	$08
 	dc.b	nC1, $18
 	smpsChangeTransposition	$FD
 	smpsSetvoice	$10
-	smpsCall	Song_CCZPast_Sub24
+	smpsCall	Song_CCZPast_Call18
 	dc.b	nRst, $18
 	smpsSetvoice	$10
-	smpsCall	Song_CCZPast_Sub24
+	smpsCall	Song_CCZPast_Call18
 	smpsChangeTransposition	$FE
 	smpsAlterVol	$E2
-	smpsLoop	0, 2, Song_CCZPast_Sub26
+	smpsLoop	0, 2, Song_CCZPast_Call1A
 	
-Song_CCZPast_Sub27:
+Song_CCZPast_Call1B:
 	smpsChangeTransposition	$07
 	smpsAlterVol	$1E
 	smpsPan	$7F
@@ -620,18 +620,18 @@ Song_CCZPast_Sub27:
 	smpsPan	$FF
 	smpsChangeTransposition	$F9
 	smpsAlterVol	$E2
-	smpsLoop	0, 8, Song_CCZPast_Sub27
+	smpsLoop	0, 8, Song_CCZPast_Call1B
 	smpsAlterNote	$FB
 	
-Song_CCZPast_Sub28:
+Song_CCZPast_Call1C:
 	smpsSetvoice	$09
 	dc.b	nRst, $18
-	smpsCall	Song_CCZPast_Sub24
-	smpsLoop	0, 8, Song_CCZPast_Sub28
-	smpsJumpF6	Song_CCZPast_Sub29
+	smpsCall	Song_CCZPast_Call18
+	smpsLoop	0, 8, Song_CCZPast_Call1C
+	smpsJumpF6	Song_CCZPast_Jump1D
 	dc.b	$00
 	
-Song_CCZPast_Sub24:
+Song_CCZPast_Call18:
 	smpsPan	$FF
 	dc.b	nC1, $0C
 	smpsAlterVol	$CE
@@ -654,3 +654,4 @@ Song_CCZPast_Sub24:
 	
 Song_CCZPast_PCM1:
 	smpsStop
+	dc.b	$00

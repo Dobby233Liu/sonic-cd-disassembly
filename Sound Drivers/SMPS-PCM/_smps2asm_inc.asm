@@ -138,7 +138,7 @@ cPCM8				EQU $0E
 
 smpsHeaderStartSong macro
 songStart set *
-	dc.w $0000
+	dc.w $0000 ; voices
 	endm
 smpsHeaderStartSFX macro
 	smpsHeaderStartSong
@@ -148,7 +148,8 @@ smpsHeaderStartSFX macro
 
 ; Header - Set up Channel count
 smpsHeaderChan macro val
-	dc.b	\val, $00 ; TODO: ??
+	dc.b	\val
+	dc.b	$00 ; psg channels
 	endm
 
 ; Header - Set up Tempo
@@ -178,7 +179,8 @@ smpsHeaderTempoSFX macro div
 
 ; Header - Set up PCM Channel
 smpsHeaderSFXChannel macro chanid,loc,pitch,vol
-	dc.b	$80,\chanid
+	dc.b	$80 ; channel flags
+	dc.b	\chanid
 	dc.w	\loc-songStart
 	dc.b	\pitch
 	dc.b	\vol
@@ -223,9 +225,7 @@ smpsAlterVol macro val
 	endm
 
 ; E7xx - Prevent attack of next note
-smpsNoAttack macro
-	dc.b	$E7
-	endm
+smpsNoAttack	EQU $E7
 
 ; E8xx - Set note fill to xx
 smpsNoteFill macro val
