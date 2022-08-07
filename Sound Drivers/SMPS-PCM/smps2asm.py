@@ -289,15 +289,21 @@ def write_asm(proj, input, output, sfx=False):
 
 def main():
 
+    def get_boolean(str):
+        return str and str != "false" and str != "n" and str != "0"
     def test_boolean(msg):
         answer = input(msg).lower().strip()
-        return answer and answer != "false" and answer != "n" and answer != "0"
+        return get_boolean(answer)
+    def argv(num):
+        return len(sys.argv) >= (1 + num + 1) and sys.argv[1 + num] or None
 
-    argv = sys.argv[1:]
-
-    orig_bin = argv[0] or input("file : ")
+    orig_bin = argv(0) or input("file : ")
     if path.isdir(orig_bin):
-        sfx = argv[1] or test_boolean("sfx? (y/n) : ")
+        sfx = argv(1)
+        if sfx:
+            sfx = get_boolean(argv(1))
+        else:
+            sfx = test_boolean("sfx? (y/n) : ")
 
         for i in glob(path.join(orig_bin, "*.bin")):
             out_file = path.join(path.dirname(i), path.splitext(path.basename(i))[0] + ".asm")
@@ -306,11 +312,15 @@ def main():
                 with open(i, "rb") as f:
                     write_asm(project_name, f, output, sfx=sfx)
     else:
-        out_file = argv[1] or input("out file : ") or (
+        out_file = argv(1) or input("out file : ") or (
             path.join(path.dirname(orig_bin), path.splitext(path.basename(orig_bin))[0] + ".asm")
         )
-        project_name = argv[2] or input("name : ") or (path.splitext(path.basename(orig_bin))[0].replace(" ", ""))
-        sfx = argv[3] or test_boolean("sfx? (y/n) : ")
+        project_name = argv(2) or input("name : ") or (path.splitext(path.basename(orig_bin))[0].replace(" ", ""))
+        sfx = argv(3)
+        if sfx:
+            sfx = get_boolean(argv(3))
+        else:
+            sfx = test_boolean("sfx? (y/n) : ")
 
         with open(out_file, "w") as output:
             with open(orig_bin, "rb") as f:
