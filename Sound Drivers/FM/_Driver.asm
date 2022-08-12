@@ -480,13 +480,13 @@ UpdateVibrato:
 	push	hl				; Get current vibrato frequency value
 	ld	l,(ix+ftrkVibFreq)
 	ld	h,(ix+ftrkVibFreq+1)
-	
-	dec	(ix+ftrkVibSpeed)		; Update speed counter
-	jr	nz,.UpdateDir
 	ld	e,(ix+ftrkVibratoPtr)
 	ld	d,(ix+ftrkVibratoPtr+1)
+	
 	push	de
 	pop	iy
+	dec	(ix+ftrkVibSpeed)		; Update speed counter
+	jr	nz,.UpdateDir
 	ld	a,(iy+(ftrkVibSpeed-ftrkVibDelay))
 	ld	(ix+ftrkVibSpeed),a
 	
@@ -554,6 +554,7 @@ ForceKeyOff:
 	ld	c,(ix+ftrkChannel)		; Set key off
 	ld	a,28h
 	call	WriteYM1
+	;res	FTRK_VIBEND,(ix+ftrkFlags)	; Clear vibrato envelope end flag
 	ret
 
 ; -------------------------------------------------------------------------
