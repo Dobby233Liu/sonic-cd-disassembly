@@ -16,8 +16,7 @@ PalmtreePanicPast_PCM1:
 	smpsAlterNote	$20
 
 PalmtreePanicPast_Jump1:
-	dc.b	nC2, $5e
-	dc.b	nRst, $05
+	dc.b	nC2, $61
 	smpsJump	PalmtreePanicPast_Jump1
 
 PalmtreePanicPast_PCM2:
