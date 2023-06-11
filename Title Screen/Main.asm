@@ -13,6 +13,13 @@
 	include	"Title Screen/_Common.i"
 
 ; -------------------------------------------------------------------------
+; Image buffer VRAM constants
+; -------------------------------------------------------------------------
+
+IMGVRAM		EQU	$0020			; VRAM address
+IMGV1LEN	EQU	IMGLENGTH/2		; Part 1 length
+
+; -------------------------------------------------------------------------
 ; Object variables structure
 ; -------------------------------------------------------------------------
 
@@ -26,7 +33,7 @@ oMapFrame	rs.b	1			; Mappings frame
 		rs.b	1
 oX		rs.l	1			; X position
 oY		rs.l	1			; Y position
-oVars		rs.b	$40-__rs
+oVars		rs.b	$40-__rs		; Object specific variables
 oSize		rs.b	0			; Size of structure
 
 ; -------------------------------------------------------------------------
@@ -35,7 +42,7 @@ oSize		rs.b	0			; Size of structure
 
 	rsset	WORKRAM+$FF00A000
 VARSSTART	rs.b	0			; Start of variables
-cloudsArt	rs.b	IMGLENGTH		; Clouds art buffer
+cloudsImage	rs.b	IMGLENGTH		; Clouds image buffer
 hscroll		rs.b	$380			; Horizontal scroll buffer
 		rs.b	$80
 sprites		rs.b	80*8			; Sprite buffer
@@ -56,7 +63,7 @@ object8		rs.b	oSize			; Object 8
 object9		rs.b	oSize			; Object 9
 	;endif
 objectsEnd	rs.b	0			; End of object pool
-OBJCOUNT	EQU	(objectsEnd-objects)/oSize
+OBJCOUNT	EQU	(__rs-objects)/oSize
 
 	;if REGION=JAPAN
 	;	rs.b	$1200
@@ -148,9 +155,9 @@ Start:
 	clr.l	(a0)+
 	dbf	d7,.ClearVars
 	
-	bsr.w	SyncWithSubCPU1			; Wait for Sub CPU to need Word RAM access
-	bsr.w	GiveWordRAMAccess		; Give Sub CPU Word RAM Access
-	bsr.w	SyncWithSubCPU2			; Wait for Sub CPU to finish initializing
+	bsr.w	WaitSubCPUStart			; Wait for the Sub CPU program to start
+	bsr.w	GiveWordRAMAccess		; Give Word RAM access
+	bsr.w	WaitSubCPUInit			; Wait for the Sub CPU program to finish initializing
 	
 	bsr.w	InitMD				; Initialize Mega Drive hardware
 	bsr.w	ClearSprites			; Clear sprites
@@ -240,7 +247,7 @@ Start:
 
 	lea	Pal_Title,a1			; Flash white and fade in title screen paltte
 	lea	fadePalette.w,a2
-	bsr.w	Copy128Bytes
+	bsr.w	Copy128
 	move.w	#($00<<9)|($30-1),palFadeInfo.w
 	bsr.w	FadeFromWhite2
 
@@ -260,7 +267,7 @@ Start:
 MainLoop:
 	move.b	#2,titleMode.w			; Set to "menu" mode
 	
-	; Display clouds buffer 2, render to buffer 1
+	; Show clouds buffer 2, render to buffer 1
 	bsr.w	RenderClouds			; Start rendering clouds
 	jsr	ClearSprites(pc)		; Clear sprites
 	jsr	RunObjects(pc)			; Run objects
@@ -275,13 +282,13 @@ MainLoop:
 	bsr.w	VSync
 
 	bsr.w	WaitWordRAMAccess		; Wait for Word RAM access
-	bsr.w	GetCloudsArt			; Get rendered clouds art
+	bsr.w	GetCloudsImage			; Get rendered clouds image
 	bsr.w	GiveWordRAMAccess		; Give back Word RAM access
 
 	tst.b	exitFlag.w			; Are we exiting the title screen?
 	bne.s	.Exit				; If so, branch
 	
-	; Display clouds buffer 1, render to buffer 2
+	; Show clouds buffer 1, render to buffer 2
 	jsr	ClearSprites(pc)		; Clear sprites
 	jsr	RunObjects(pc)			; Run objects
 	bsr.w	PaletteCycle			; Run palette cycle
@@ -296,7 +303,7 @@ MainLoop:
 	bsr.w	VSync
 
 	bsr.w	WaitWordRAMAccess		; Wait for Word RAM access
-	bsr.w	GetCloudsArt			; Get rendered clouds art
+	bsr.w	GetCloudsImage			; Get rendered clouds image
 	bsr.w	GiveWordRAMAccess		; Give back Word RAM access
 
 	tst.b	exitFlag.w			; Are we exiting the title screen?
@@ -375,46 +382,42 @@ VInterrupt:
 ; -------------------------------------------------------------------------
 
 .Routines:
-	dc.w	VInt_NormalBuf1_1-.Routines	; Copy 1st half of rendered clouds art to buffer 1
-	dc.w	VInt_NormalBuf1_2-.Routines	; Copy 2nd half of rendered clouds art to buffer 1
-	dc.w	VInt_NormalBuf2_1-.Routines	; Copy 1st half of rendered clouds art to buffer 2
-	dc.w	VInt_NormalBuf2_2-.Routines	; Copy 2nd half of rendered clouds art to buffer 2
+	dc.w	VInt_CopyClouds1_1-.Routines	; Copy 1st half of rendered clouds image to buffer 1
+	dc.w	VInt_CopyClouds1_2-.Routines	; Copy 2nd half of rendered clouds image to buffer 1
+	dc.w	VInt_CopyClouds2_1-.Routines	; Copy 1st half of rendered clouds image to buffer 2
+	dc.w	VInt_CopyClouds2_2-.Routines	; Copy 2nd half of rendered clouds image to buffer 2
 	dc.w	VInt_Nothing-.Routines		; Does nothing
 	dc.w	VInt_NoClouds-.Routines		; Don't render clouds
 
 ; -------------------------------------------------------------------------
 
-VInt_NormalBuf1_1:
+VInt_CopyClouds1_1:
 	DMA68K	sprites,$D400,$280,VRAM		; Copy sprite data
-						; Copy rendered clouds art
-	DMA68K	cloudsArt,$0020,IMGLENGTH/2,VRAM
+	COPYIMG	cloudsImage, 0, 0		; Copy rendered clouds image
 	jsr	ReadControllers(pc)		; Read controllers
 	bra.w	VInt_Finish			; Finish
 
 ; -------------------------------------------------------------------------
 
-VInt_NormalBuf1_2:
+VInt_CopyClouds1_2:
 	DMA68K	sprites,$D400,$280,VRAM		; Copy sprite data
-						; Copy rendered clouds art
-	DMA68K	cloudsArt+(IMGLENGTH/2),$0020+(IMGLENGTH/2),IMGLENGTH/2,VRAM
+	COPYIMG	cloudsImage, 0, 1		; Copy rendered clouds image
 	jsr	ReadControllers(pc)		; Read controllers
 	bra.w	VInt_Finish			; Finish
 
 ; -------------------------------------------------------------------------
 
-VInt_NormalBuf2_1:
+VInt_CopyClouds2_1:
 	DMA68K	sprites,$D400,$280,VRAM		; Copy sprite data
-						; Copy rendered clouds art
-	DMA68K	cloudsArt,$3020,IMGLENGTH/2,VRAM
+	COPYIMG	cloudsImage, 1, 0		; Copy rendered clouds image
 	jsr	ReadControllers(pc)		; Read controllers
 	bra.w	VInt_Finish			; Finish
 
 ; -------------------------------------------------------------------------
 
-VInt_NormalBuf2_2:
+VInt_CopyClouds2_2:
 	DMA68K	sprites,$D400,$280,VRAM		; Copy sprite data
-						; Copy rendered clouds art
-	DMA68K	cloudsArt+(IMGLENGTH/2),$3020+(IMGLENGTH/2),IMGLENGTH/2,VRAM
+	COPYIMG	cloudsImage, 1, 1		; Copy rendered clouds image
 	jsr	ReadControllers(pc)		; Read controllers
 	bra.w	VInt_Finish			; Finish
 
@@ -467,12 +470,12 @@ VInt_Lag:
 ; -------------------------------------------------------------------------
 
 ScrollBgBuf1:
-	lea	hscroll.w,a1			; Display clouds buffer 1
+	lea	hscroll.w,a1			; Show clouds buffer 1
 	moveq	#(IMGHEIGHT-8)-1,d1
 
-.DisplayClouds:
+.ShowClouds:
 	clr.l	(a1)+
-	dbf	d1,.DisplayClouds
+	dbf	d1,.ShowClouds
 
 	lea	scrollBuf.w,a2			; Water scroll buffer
 	moveq	#64-1,d2			; 64 scanlines
@@ -497,16 +500,16 @@ ScrollBgBuf1:
 	rts
 
 ; -------------------------------------------------------------------------
-; Scroll background (display clouds buffer 2)
+; Scroll background (show clouds buffer 2)
 ; -------------------------------------------------------------------------
 
 ScrollBgBuf2:
-	lea	hscroll.w,a1			; Display clouds buffer 2
+	lea	hscroll.w,a1			; Show clouds buffer 2
 	moveq	#(IMGHEIGHT-8)-1,d1
 
-.DisplayClouds:
+.ShowClouds:
 	move.l	#$100,(a1)+
-	dbf	d1,.DisplayClouds
+	dbf	d1,.ShowClouds
 
 	lea	scrollBuf.w,a2			; Water scroll buffer
 	moveq	#64-1,d2			; 64 scanlines
@@ -566,7 +569,7 @@ ReadController:
 	move.b	(a0),d2				; Mask out tapped buttons
 	eor.b	d2,d0
 	move.b	d1,(a0)+			; Store pressed buttons
-	and.b	d1,d0				; store tapped buttons
+	and.b	d1,d0				; Store tapped buttons
 	move.b	d0,(a0)+
 	rts
 
@@ -615,13 +618,13 @@ DrawCloudsMap:
 	lea	VDPCTRL,a2			; VDP control port
 	lea	VDPDATA,a3			; VDP data port
 
-	move.w	#$8001,d6			; Set buffer 1 tilemap
+	move.w	#$8001,d6			; Draw buffer 1 tilemap
 	VDPCMD	move.l,$E000,VRAM,WRITE,d0
 	moveq	#IMGWTILE-1,d1
 	moveq	#IMGHTILE-1,d2
 	bsr.s	.DrawMap
 
-	move.w	#$8181,d6			; Set buffer 2 tilemap
+	move.w	#$8181,d6			; Draw buffer 2 tilemap
 	VDPCMD	move.l,$E040,VRAM,WRITE,d0
 	moveq	#IMGWTILE-1,d1
 	moveq	#IMGHTILE-1,d2
@@ -657,7 +660,7 @@ RenderClouds:
 	move.b	#1,GACOMCMD2			; Tell Sub CPU to render clouds
 
 .WaitSubCPU:
-	cmpi.b	#1,GACOMSTAT2			; Has the Sub CPU received our tip?
+	cmpi.b	#1,GACOMSTAT2			; Has the Sub CPU responded?
 	beq.s	.CommDone			; If so, branch
 	addq.w	#1,subWaitTime.w		; Increment wait time
 	bcc.s	.WaitSubCPU			; If we should wait some more, loop
@@ -667,7 +670,7 @@ RenderClouds:
 	move.b	#0,GACOMCMD2			; Respond to the Sub CPU
 
 .WaitSubCPU2:
-	tst.b	GACOMSTAT2			; Has the Sub CPU received our tip?
+	tst.b	GACOMSTAT2			; Has the Sub CPU responded?
 	beq.s	.End				; If so, branch
 	addq.w	#1,subWaitTime.w		; Increment wait time
 	bcc.s	.WaitSubCPU2			; If we should wait some more, loop
@@ -677,17 +680,17 @@ RenderClouds:
 	rts
 
 ; -------------------------------------------------------------------------
-; Sync with Sub CPU (wait flag set)
+; Wait for the Sub CPU program to start
 ; -------------------------------------------------------------------------
 
-SyncWithSubCPU1:
+WaitSubCPUStart:
 	cmpi.b	#4,subFailCount.w		; Is the Sub CPU deemed unreliable?
 	bcc.s	.End				; If so, branch
 	
-	btst	#7,GASUBFLAG			; Are we synced with the Sub CPU?
-	bne.s	.End				; If so, wait
+	btst	#7,GASUBFLAG			; Has the Sub CPU program started?
+	bne.s	.End				; If so, branch
 	addq.w	#1,subWaitTime.w		; Increment wait time
-	bcc.s	SyncWithSubCPU1			; If we should wait some more, loop
+	bcc.s	WaitSubCPUStart			; If we should wait some more, loop
 	addq.b	#1,subFailCount.w		; Increment Sub CPU fail count
 
 .End:
@@ -695,17 +698,17 @@ SyncWithSubCPU1:
 	rts
 
 ; -------------------------------------------------------------------------
-; Sync with Sub CPU (wait flag clear)
+; Wait for the Sub CPU program to finish initializing
 ; -------------------------------------------------------------------------
 
-SyncWithSubCPU2:
+WaitSubCPUInit:
 	cmpi.b	#4,subFailCount.w		; Is the Sub CPU deemed unreliable?
 	bcc.s	.End				; If so, branch
 	
-	btst	#7,GASUBFLAG			; Are we synced with the Sub CPU?
-	beq.s	.End				; If so, wait
+	btst	#7,GASUBFLAG			; Has the Sub CPU program initialized?
+	beq.s	.End				; If so, branch
 	addq.w	#1,subWaitTime.w		; Increment wait time
-	bcc.s	SyncWithSubCPU2			; If we should wait some more, loop
+	bcc.s	WaitSubCPUInit			; If we should wait some more, loop
 	addq.b	#1,subFailCount.w		; Increment Sub CPU fail count
 
 .End:
@@ -778,6 +781,7 @@ InitMD:
 	move.b	#$C0,IODATA1
 
 	jsr	StopZ80(pc)			; Stop the Z80
+
 	DMAFILL	0,$10000,0			; Clear VRAM
 
 	lea	.Palette(pc),a0			; Load palette
@@ -854,34 +858,19 @@ StartZ80:
 	rts
 
 ; -------------------------------------------------------------------------
-; Get clouds art
+; Get clouds image
 ; -------------------------------------------------------------------------
 
-GetCloudsArt:
-	lea	WORDRAM2M+IMGBUFFER,a1		; Rendered data in Word RAM
-	lea	cloudsArt.w,a2			; Destination buffer
+GetCloudsImage:
+	lea	WORDRAM2M+IMGBUFFER,a1		; Rendered image in Word RAM
+	lea	cloudsImage.w,a2		; Destination buffer
 	move.w	#(IMGLENGTH/$800)-1,d7		; Number of $800 byte chunks to copy
 
 .CopyChunks:
 	rept	$800/$80			; Copy $800 bytes
-		bsr.s	Copy128Bytes
+		bsr.s	Copy128
 	endr
 	dbf	d7,.CopyChunks			; Loop until chunks are copied
-
-	if (IMGLENGTH&$7FF)<>0			; Copy leftover data
-		move.w	#(IMGLENGTH&$7FF)/4-1,d7
-
-.CopyLeftovers:
-		move.l	(a1)+,(a2)+
-		dbf	d7,.CopyLeftovers
-
-		if (IMGLENGTH&2)<>0
-			move.w	(a1)+,(a2)+
-		endif
-		if (IMGLENGTH&1)<>0
-			move.b	(a1)+,(a2)+
-		endif
-	endif
 	rts
 
 ; -------------------------------------------------------------------------
@@ -892,7 +881,7 @@ GetCloudsArt:
 ;	a2.l - Pointer to destination buffer
 ; -------------------------------------------------------------------------
 
-Copy128Bytes:
+Copy128:
 	movem.l	(a1)+,d0-d5/a3-a4
 	movem.l	d0-d5/a3-a4,(a2)
 	movem.l	(a1)+,d0-d5/a3-a4
@@ -1651,965 +1640,12 @@ DrawObject:
 	rts
 
 ; -------------------------------------------------------------------------
-; Sonic object
-; -------------------------------------------------------------------------
 
-	rsset	oVars
-oSonicDelay	rs.b	1			; Animation delay
-
-; -------------------------------------------------------------------------
-
-ObjSonic:
-	move.l	#MapSpr_Sonic,oMap(a0)		; Set mappings
-	move.w	#$E000|($6D00/$20),oTile(a0)	; Set sprite tile ID
-	move.b	#%11,oFlags(a0)			; Set flags
-	move.w	#91,oX(a0)			; Set X position
-	move.w	#15,oY(a0)			; Set Y position
-
-	move.b	#2,oSonicDelay(a0)		; Set animation delay
-
-; -------------------------------------------------------------------------
-
-.Frame0Delay:
-	bsr.w	BookmarkObject			; Set bookmark
-	subq.b	#1,oSonicDelay(a0)		; Decrement delay timer
-	bne.s	.Frame0Delay			; If it hasn't run out, branch
-
-	addq.b	#1,oMapFrame(a0)		; Set next sprite frame
-	move.b	#3,oSonicDelay(a0)		; Reset animation delay
-
-; -------------------------------------------------------------------------
-
-.Frame1Delay:
-	bsr.w	BookmarkObject			; Set bookmark
-	subq.b	#1,oSonicDelay(a0)		; Decrement delay timer
-	bne.s	.Frame1Delay			; If it hasn't run out, branch
-
-	move.l	a0,-(sp)			; Load background mountains art
-	VDPCMD	move.l,$6000,VRAM,WRITE,VDPCTRL
-	lea	Art_Mountains(pc),a0
-	bsr.w	NemDec
-	movea.l	(sp)+,a0
-
-	addq.b	#1,oMapFrame(a0)		; Set next sprite frame
-	move.b	#2,oSonicDelay(a0)		; Reset animation delay
-
-; -------------------------------------------------------------------------
-
-.Frame2Delay:
-	bsr.w	BookmarkObject			; Set bookmark
-	subq.b	#1,oSonicDelay(a0)		; Decrement delay timer
-	bne.s	.Frame2Delay			; If it hasn't run out, branch
-
-	move.l	a0,-(sp)			; Load background mountains art
-	VDPCMD	move.l,$6B00,VRAM,WRITE,VDPCTRL
-	lea	Art_Water(pc),a0
-	bsr.w	NemDec
-	movea.l	(sp)+,a0
-
-	addq.b	#1,oMapFrame(a0)		; Set next sprite frame
-	move.b	#1,oSonicDelay(a0)		; Reset animation delay
-
-; -------------------------------------------------------------------------
-
-.Frame3Delay:
-	bsr.w	BookmarkObject			; Set bookmark
-	subq.b	#1,oSonicDelay(a0)		; Decrement delay timer
-	bne.s	.Frame3Delay			; If it hasn't run out, branch
-
-	bset	#7,titleMode.w			; Mark Sonic as turned around
-	
-	lea	ObjSonicArm(pc),a2		; Spawn Sonic's arm
-	bsr.w	SpawnObject
-	move.w	a0,oArmParent(a1)
-
-	lea	ObjBanner,a2			; Spawn banner
-	bsr.w	SpawnObject
-	
-	addq.b	#1,oMapFrame(a0)		; Set next sprite frame
-	move.b	#$14,oSonicDelay(a0)		; Reset animation delay
-
-; -------------------------------------------------------------------------
-
-.Frame4Delay:
-	bsr.w	BookmarkObject			; Set bookmark
-	subq.b	#1,oSonicDelay(a0)		; Decrement delay timer
-	bne.s	.Frame4Delay			; If it hasn't run out, branch
-	
-	addq.b	#1,oMapFrame(a0)		; Set next sprite frame
-	move.b	#4,oSonicDelay(a0)		; Reset animation delay
-
-; -------------------------------------------------------------------------
-
-.Frame5Delay:
-	bsr.w	BookmarkObject			; Set bookmark
-	subq.b	#1,oSonicDelay(a0)		; Decrement delay timer
-	bne.s	.Frame5Delay			; If it hasn't run out, branch
-	
-	move.b	#4,oMapFrame(a0)		; Go back to frame 4
-
-; -------------------------------------------------------------------------
-
-.Done:
-	bsr.w	BookmarkObject			; Set bookmark
-	bra.s	.Done				; Remain static
-
-; -------------------------------------------------------------------------
-; Sonic mappings
-; -------------------------------------------------------------------------
-
-MapSpr_Sonic:
-	include	"Title Screen/Data/Sonic Mappings.asm"
-	even
-
-; -------------------------------------------------------------------------
-; Sonic's arm object
-; -------------------------------------------------------------------------
-
-	rsset	oVars
-oArmDelay	rs.b	1			; Delay counter
-		rs.b	3			; Unused
-oArmFrame	rs.b	1			; Animatiom frame
-		rs.b	3			; Unused
-oArmParent	rs.w	1			; Parent object
-
-; -------------------------------------------------------------------------
-
-ObjSonicArm:
-	move.l	#MapSpr_Sonic,oMap(a0)		; Set mappings
-	move.w	#$E000|($6D00/$20),oTile(a0)	; Set sprite tile ID
-	move.b	#%11,oFlags(a0)			; Set flags
-	move.w	#140,oX(a0)			; Set X position
-	move.w	#104,oY(a0)			; Set Y position
-	move.b	#9,oMapFrame(a0)		; Set sprite frame
-
-; -------------------------------------------------------------------------
-
-.Delay:
-	bsr.w	BookmarkObject			; Set bookmark
-	addi.b	#$12,oArmDelay(a0)		; Increment delay counter
-	bcc.s	.Delay				; If it hasn't overflowed, loop
-
-; -------------------------------------------------------------------------
-
-.Animate:
-	moveq	#0,d0				; Get animation frame
-	move.b	oArmFrame(a0),d0
-	move.b	.Frames(pc,d0.w),oMapFrame(a0)
-
-	addq.b	#1,d0				; Increment animation frame ID
-	cmpi.b	#.FramesEnd-.Frames,d0		; Are we at the end of the animation?
-	bcc.s	.Done				; If so, branch
-	move.b	d0,oArmFrame(a0)		; Update animation frame ID
-	
-	bsr.w	BookmarkObject			; Set bookmark
-	bra.s	.Animate			; Animate
-
-; -------------------------------------------------------------------------
-
-.Done:
-	bsr.w	BookmarkObject			; Set bookmark
-	bra.s	.Done				; Remain static
-
-; -------------------------------------------------------------------------
-
-.Frames:
-	dc.b	9, 8, 7, 6, 6, 7, 8, 9
-	dc.b	9, 8, 7, 6, 6, 7, 8, 9
-.FramesEnd:
-
-; -------------------------------------------------------------------------
-; Banner object
-; -------------------------------------------------------------------------
-
-ObjBanner:
-	move.l	#MapSpr_Banner,oMap(a0)		; Set mappings
-	move.w	#$A000|($F000/$20),oTile(a0)	; Set sprite tile ID
-	move.b	#%11,oFlags(a0)			; Set flags
-	move.w	#127,oX(a0)			; Set X position
-	move.w	#127,oY(a0)			; Set Y position
-
-; -------------------------------------------------------------------------
-
-.Done:
-	jsr	BookmarkObject(pc)		; Set bookmark
-	bra.s	.Done				; Remain static
-
-; -------------------------------------------------------------------------
-; Banner mappings
-; -------------------------------------------------------------------------
-
-MapSpr_Banner:
-	include	"Title Screen/Data/Banner Mappings.asm"
-	even
-
-; -------------------------------------------------------------------------
-; Planet object
-; -------------------------------------------------------------------------
-
-	rsset	oVars
-oPlanetOff	rs.b	1			; Offset
-oPlanetDelay	rs.b	1			; Delay counter
-		rs.b	4
-oPlanetY	rs.w	1			; Y position
-
-; -------------------------------------------------------------------------
-
-ObjPlanet:
-	bsr.w	BookmarkObject			; Set bookmark
-	
-	move.l	a0,-(sp)			; Load planet art	
-	VDPCMD	move.l,$8040,VRAM,WRITE,VDPCTRL
-	lea	Art_Planet(pc),a0
-	bsr.w	NemDec
-	movea.l	(sp)+,a0
-	
-	move.l	#MapSpr_Planet,oMap(a0)		; Set mappings
-	move.w	#$6000|($8040/$20),oTile(a0)	; Set sprite tile ID
-	move.b	#%1,oFlags(a0)			; Set flags
-	move.w	#226,oX(a0)			; Set X position
-	move.w	#24,oY(a0)			; Set Y position
-	move.w	oY(a0),oPlanetY(a0)
-
-; -------------------------------------------------------------------------
-
-.Hover:
-	addi.b	#$40,oPlanetDelay(a0)		; Increment delay counter
-	bcc.s	.Exit				; If it hasn't overflowed, branch
-
-	moveq	#0,d0				; Get offset value
-	move.b	oPlanetOff(a0),d0
-	move.b	.Offsets(pc,d0.w),d0
-	ext.w	d0
-	add.w	d0,oY(a0)
-
-	move.b	oPlanetOff(a0),d0		; Next offset
-	addq.b	#1,d0
-	andi.b	#$1F,d0
-	move.b	d0,oPlanetOff(a0)
-
-.Exit:
-	jsr	BookmarkObject(pc)		; Set bookmark
-	bra.s	.Hover				; Handle hovering
-
-; -------------------------------------------------------------------------
-
-.Offsets:
-	dc.b	0, 0, 0, -1
-	dc.b	0, 0, 0, -1
-	dc.b	0, 0, 0, -1
-	dc.b	0, 0, 0, 0
-	dc.b	0, 0, 0, 0
-	dc.b	1, 0, 0, 0
-	dc.b	1, 0, 0, 0
-	dc.b	1, 0, 0, 0
-
-; -------------------------------------------------------------------------
-; Planet mappings
-; -------------------------------------------------------------------------
-
-MapSpr_Planet:
-	include	"Title Screen/Data/Planet Mappings.asm"
-	even
-
-; -------------------------------------------------------------------------
-; Menu object
-; -------------------------------------------------------------------------
-
-	rsset	oVars
-oMenuDelay	rs.b	1			; Delay counter
-		rs.b	3
-oMenuOption	rs.b	1			; Option ID
-oMenuAllowSel	rs.b	1			; Allow selection flag
-		rs.b	$16
-oMenuCloudsIdx	rs.b	1			; Clouds cheat index
-		rs.b	3
-oMenuSndTestIdx	rs.b	1			; Sound test cheat index
-		rs.b	3
-oMenuStgSelIdx	rs.b	1			; Stage select cheat index
-		rs.b	3
-oMenuBestTmsIdx	rs.b	1			; Best times cheat index
-
-; -------------------------------------------------------------------------
-
-ObjMenu:
-	move.l	#MapSpr_Menu,oMap(a0)		; Set mappings
-	move.w	#$A000|($D800/$20),oTile(a0)	; Set sprite tile ID
-	move.b	#%1,oFlags(a0)			; Set flags
-	move.w	#83,oX(a0)			; Set X position
-	move.w	#180,oY(a0)			; Set Y position
-	if REGION=USA				; Activate timer
-		move.w	#$3FC,timer.w
-	else
-		move.w	#$1E0,timer.w
-	endif
-
-; -------------------------------------------------------------------------
-
-ObjMenu_PressStart:
-	addi.b	#$10,oMenuDelay(a0)		; Increment delay counter
-	bcc.s	.NoFlash			; If it hasn't overflowed, branch
-	eori.b	#1,oMapFrame(a0)		; Flash text
-
-.NoFlash:
-	btst	#7,p1CtrlTap.w			; Has the start button been pressed?
-	bne.s	.PrepareMenu			; If so, branch
-
-	bsr.w	ObjMenu_CloudsCheat		; Check clouds cheat
-	bsr.w	ObjMenu_ChkCloudCtrl		; Check cloud control
-
-	bsr.w	ObjMenu_SoundTestCheat		; Check sound test cheat
-	tst.b	d0				; Was it activated?
-	bne.w	ObjMenu_CheatActivated		; If so, branch
-
-	bsr.w	ObjMenu_StageSelCheat		; Check stage select cheat
-	tst.b	d0				; Was it activated?
-	bne.w	ObjMenu_CheatActivated		; If so, branch
-	
-	bsr.w	ObjMenu_BestTimesCheat		; Check best times cheat
-	tst.b	d0				; Was it activated?
-	bne.w	ObjMenu_CheatActivated		; If so, branch
-
-	tst.w	timer.w				; Has the timer run out?
-	beq.w	ObjMenu_TimeOut			; If so, branch
-
-	bsr.w	BookmarkObject			; Set bookmark
-	bra.s	ObjMenu_PressStart		; Update
-
-; -------------------------------------------------------------------------
-
-.PrepareMenu:
-	clr.w	p1CtrlData.w			; Clear controller data
-	move.b	#1,oMapFrame(a0)		; Make invisible
-	move.w	#$1E0,timer.w			; Reset timer
-
-	lea	menuOptions.w,a2		; Options buffer
-	move.b	titleFlags,d1			; Title screen flags
-
-	move.w	#$FF02,(a2)+			; Add stop flag and new game option
-	moveq	#1,d0				; Highlight new game option
-	btst	#6,d1				; Is there a save file?
-	beq.s	.SetSelection			; If not, branch
-	moveq	#2,d0				; Highlight continue option
-	move.b	#3,(a2)+			; Add continue option
-
-.SetSelection:
-	move.b	d0,menuSel.w			; Set menu selection
-
-	btst	#5,d1				; Is time attack enabled?
-	beq.s	.NoTimeAttack			; If not, branch
-	move.b	#4,(a2)+			; Add time attack option
-
-.NoTimeAttack:
-	btst	#4,d1				; Is save management enabled?
-	beq.s	.NoRamData			; If not, branch
-	move.b	#5,(a2)+			; Add save management option
-
-.NoRamData:
-	btst	#3,d1				; Is DA Garden enabled?
-	beq.s	.NoDAGarden			; If not, branch
-	move.b	#6,(a2)+			; Add DA Garden option
-
-.NoDAGarden:
-	btst	#2,d1				; Is Visual Mode enabled?
-	beq.s	.NoVisualMode			; If not, branch
-	move.b	#7,(a2)+			; Add Visual Mode option
-
-.NoVisualMode:
-	move.b	#$FF,(a2)			; Add stop flag
-
-	lea	ObjMenuArrow(pc),a2		; Spawn left menu arrow
-	bsr.w	SpawnObject
-	move.w	a0,oArrowParent(a1)
-	lea	ObjMenuArrow(pc),a2		; Spawn right menu arrow
-	bsr.w	SpawnObject
-	move.w	a0,oArrowParent(a1)
-	move.b	#1,oArrowID(a1)
-
-; -------------------------------------------------------------------------
-
-ObjMenu_MoveRight:
-	move.w	#$C000|($D800/$20),oTile(a0)	; Unhighlight text
-	clr.b	oMenuAllowSel(a0)		; Disable selection
-	bsr.w	BookmarkObject			; Set bookmark
-	addi.b	#$80,oMenuDelay(a0)		; Incremenet delay counter
-	bcc.s	ObjMenu_MoveRight		; If it hasn't overflowed, branch
-
-.MoveOut:
-	move.w	oX(a0),d0			; Move in
-	addi.w	#$20,d0
-	move.w	d0,oX(a0)
-	bsr.w	BookmarkObject			; Set bookmark
-	cmpi.w	#$100,oX(a0)			; Is the text fully off screen?
-	bcs.s	.MoveOut			; If not, branch
-	bsr.w	BookmarkObject			; Set bookmark
-	
-	lea	menuOptions.w,a2		; Set option ID
-	moveq	#0,d0
-	move.b	menuSel.w,d0
-	lea	(a2,d0.w),a2
-	move.b	(a2),d0
-	move.b	d0,oMenuOption(a0)
-	bsr.w	ObjMenu_SetOption
-
-	move.w	#-$2D,oX(a0)			; Move to left side of screen
-	bsr.w	BookmarkObject			; Set bookmark
-
-.MoveIn:
-	move.w	oX(a0),d0			; Move in
-	addi.w	#$10,d0
-	move.w	d0,oX(a0)
-	bsr.w	BookmarkObject			; Set bookmark
-	tst.w	oX(a0)				; Is the text still off screen?
-	bmi.s	.MoveIn				; If so, branch
-	cmpi.w	#$53,oX(a0)			; Is the text fully on screen?
-	bcs.s	.MoveIn				; If not, branch
-	move.w	#$53,oX(a0)			; Stop moving
-	
-	move.w	#$A000|($D800/$20),oTile(a0)	; Highlight text
-	bra.w	ObjMenu_WaitSelection		; Wait for selection
-
-; -------------------------------------------------------------------------
-
-ObjMenu_MoveLeft:
-	move.w	#$C000|($D800/$20),oTile(a0)	; Unhighlight text
-	clr.b	oMenuAllowSel(a0)		; Disable selection
-	bsr.w	BookmarkObject			; Set bookmark
-	addi.b	#$80,oMenuDelay(a0)		; Incremenet delay counter
-	bcc.s	ObjMenu_MoveLeft		; If it hasn't overflowed, branch
-
-.MoveOut:
-	move.w	oX(a0),d0			; Move in
-	subi.w	#$20,d0
-	move.w	d0,oX(a0)
-	bsr.w	BookmarkObject			; Set bookmark
-	tst.w	oX(a0)				; Is the text still on screen?
-	bpl.s	.MoveOut			; If so, branch
-	cmpi.w	#-$35,oX(a0)			; Is the text fully off screen?
-	bcc.s	.MoveOut			; If not, branch
-	bsr.w	BookmarkObject			; Set bookmark
-	
-	lea	menuOptions.w,a2		; Set option ID
-	moveq	#0,d0
-	move.b	menuSel.w,d0
-	lea	(a2,d0.w),a2
-	move.b	(a2),d0
-	move.b	d0,oMenuOption(a0)
-	bsr.w	ObjMenu_SetOption
-
-	move.w	#$D3,oX(a0)			; Move to right side of screen
-	
-.MoveIn:
-	bsr.w	BookmarkObject			; Set bookmark
-	move.w	oX(a0),d0			; Move in
-	subi.w	#$10,d0
-	move.w	d0,oX(a0)
-	cmpi.w	#$53,oX(a0)			; Is the text fully on screen?
-	bcc.s	.MoveIn				; If not, branch
-	move.w	#$53,oX(a0)			; Stop moving
-	
-	move.w	#$A000|($D800/$20),oTile(a0)	; Highlight text
-	bra.w	ObjMenu_WaitSelection		; Wait for selection
-
-; -------------------------------------------------------------------------
-
-ObjMenu_WaitSelection:
-	move.b	#3,oMenuAllowSel(a0)		; Allow selection
-	bsr.w	BookmarkObject			; Set bookmark
-
-.CheckButtons:
-	lea	menuOptions.w,a2		; Options buffer
-	btst	#2,p1CtrlHold.w			; Has left been pressed?
-	bne.s	ObjMenu_SelectLeft		; If so, branch
-	btst	#3,p1CtrlHold.w			; Has right been pressed?
-	bne.w	ObjMenu_SelectRight		; If so, branch
-
-	move.b	p1CtrlTap.w,d0			; Has any of the face buttons been pressed?
-	andi.b	#%11110000,d0
-	bne.w	ObjMenu_SelectOption		; If so, branch
-
-	tst.w	timer.w				; Has the timer run out?
-	beq.w	ObjMenu_TimeOut			; If so, branch
-
-	bsr.w	BookmarkObject			; Set bookmark
-	bra.s	.CheckButtons			; Check buttons
-
-; -------------------------------------------------------------------------
-
-ObjMenu_SelectLeft:
-	move.w	#$1E0,timer.w			; Reset timer
-	
-	moveq	#0,d0				; Move selection left
-	move.b	menuSel.w,d0
-	subq.b	#1,d0
-	move.b	(a2,d0.w),d1
-	cmpi.b	#$FF,d1				; Should we stop?
-	beq.s	.End				; If so, branch
-	
-	move.b	d0,menuSel.w			; Set selection
-	bra.w	ObjMenu_MoveRight		; Move text right
-
-.End:
-	rts
-
-; -------------------------------------------------------------------------
-
-ObjMenu_SelectRight:
-	move.w	#$1E0,timer.w			; Reset timer
-	
-	moveq	#0,d0				; Move selection right
-	move.b	menuSel.w,d0
-	addq.b	#1,d0
-	move.b	(a2,d0.w),d1
-	cmpi.b	#$FF,d1				; Should we stop?
-	beq.s	.End				; If so, branch
-	
-	move.b	d0,menuSel.w			; Set selection
-	bra.w	ObjMenu_MoveLeft		; Move text left
-
-.End:
-	rts
-
-; -------------------------------------------------------------------------
-
-ObjMenu_SelectOption:
-	lea	menuOptions.w,a2		; Get option ID
-	moveq	#0,d0
-	move.b	menuSel.w,d0
-	lea	(a2,d0.w),a2
-	move.b	(a2),d0
-	subq.b	#1,d0				; Make it zero based
-	bcc.s	.SetExitFlag			; If it hasn't underflowed, branch
-	move.b	#1,d0				; If it has, use new game option
-
-.SetExitFlag:
-	move.b	d0,exitFlag.w			; Set exit flag
-
-.Done:
-	bsr.w	BookmarkObject			; Set bookmark
-	bra.s	.Done				; Remain static
-
-; -------------------------------------------------------------------------
-
-ObjMenu_TimeOut:
-	move.b	#$FF,exitFlag.w			; Go to attract mode
-
-.Done:
-	bsr.w	BookmarkObject			; Set bookmark
-	bra.s	.Done				; Remain static
-
-; -------------------------------------------------------------------------
-
-ObjMenu_CheatActivated:
-	move.b	d0,exitFlag.w			; Set exit flag
-
-.Done:
-	bsr.w	BookmarkObject			; Set bookmark
-	bra.s	.Done				; Remain static
-
-; -------------------------------------------------------------------------
-
-ObjMenu_CloudsCheat:
-	moveq	#0,d0				; Get pointer to current cheat button
-	lea	.Cheat(pc),a2
-	move.b	oMenuCloudsIdx(a0),d0
-	lea	(a2,d0.w),a2
-
-	btst	#6,p1CtrlHold.w			; Is A being held?
-	beq.s	.Failed				; If not, branch
-
-	move.b	p1CtrlTap.w,d0			; Get current buttons being tapped
-	move.b	(a2),d1				; Get current cheat button
-	cmp.b	d1,d0				; Do they match?
-	bne.s	.Failed				; If not, branch
-
-	addq.b	#1,oMenuCloudsIdx(a0)		; Advance cheat
-	cmpi.b	#.CheatEnd-.Cheat,oMenuCloudsIdx(a0)
-	beq.s	.Activate			; If the cheat is now done, branch
-	bra.s	.NotActivated			; Not done yet
-
-.Failed:
-	tst.b	d0				; Were any buttons tapped at all?
-	beq.s	.NotActivated			; If not, branch
-	clr.b	oMenuCloudsIdx(a0)		; Reset cheat
-
-.NotActivated:
-	moveq	#0,d0				; Not activated
-	rts
-
-.Activate:
-	bsr.w	ObjMenu_PlayRingSound		; Play ring sound
-	moveq	#-1,d0				; Activated
-	move.b	d0,cloudsCtrlFlag.w		; Enable cloud control
-	rts
-
-; -------------------------------------------------------------------------
-
-.Cheat:
-	dc.b	1, 2, 2, 2, 2, 1
-.CheatEnd:
-	dc.b	$FF
-	even
-
-; -------------------------------------------------------------------------
-
-ObjMenu_ChkCloudCtrl:
-	tst.b	cloudsCtrlFlag.w		; Is cloud control enabled?
-	beq.s	.End				; If not, branch
-	move.b	p2CtrlHold.w,d0			; Get player 2 buttons
-	beq.s	.End				; If nothing is being pressed, branch
-	move.w	#$1E0,timer.w			; Reset timer
-
-.End:
-	rts
-
-; -------------------------------------------------------------------------
-
-ObjMenu_SoundTestCheat:
-	moveq	#0,d0				; Get pointer to current cheat button
-	lea	.Cheat(pc),a2
-	move.b	oMenuSndTestIdx(a0),d0
-	lea	(a2,d0.w),a2
-
-	move.b	p1CtrlTap.w,d0			; Get current buttons being tapped
-	move.b	(a2),d1				; Get current cheat button
-	cmp.b	d1,d0				; Do they match?
-	bne.s	.Failed				; If not, branch
-
-	addq.b	#1,oMenuSndTestIdx(a0)		; Advance cheat
-	cmpi.b	#.CheatEnd-.Cheat,oMenuSndTestIdx(a0)
-	beq.s	.Activate			; If the cheat is now done, branch
-	bra.s	.NotActivated			; Not done yet
-
-.Failed:
-	tst.b	d0				; Were any buttons tapped at all?
-	beq.s	.NotActivated			; If not, branch
-	clr.b	oMenuSndTestIdx(a0)		; Reset cheat
-
-.NotActivated:
-	moveq	#0,d0				; Not activated
-	rts
-
-.Activate:
-	bsr.w	ObjMenu_PlayRingSound		; Play ring sound
-	moveq	#7,d0				; Exit to sound test
-	rts
-
-; -------------------------------------------------------------------------
-
-.Cheat:
-	dc.b	2, 2, 2, 4, 8, $40
-.CheatEnd:
-	dc.b	$FF
-	even
-
-; -------------------------------------------------------------------------
-
-ObjMenu_StageSelCheat:
-	moveq	#0,d0				; Get pointer to current cheat button
-	lea	.Cheat(pc),a2
-	move.b	oMenuStgSelIdx(a0),d0
-	lea	(a2,d0.w),a2
-
-	move.b	p1CtrlTap.w,d0			; Get current buttons being tapped
-	move.b	(a2),d1				; Get current cheat button
-	cmp.b	d1,d0				; Do they match?
-	bne.s	.Failed				; If not, branch
-
-	addq.b	#1,oMenuStgSelIdx(a0)		; Advance cheat
-	cmpi.b	#.CheatEnd-.Cheat,oMenuStgSelIdx(a0)
-	beq.s	.Activate			; If the cheat is now done, branch
-	bra.s	.NotActivated			; Not done yet
-
-.Failed:
-	tst.b	d0				; Were any buttons tapped at all?
-	beq.s	.NotActivated			; If not, branch
-	clr.b	oMenuStgSelIdx(a0)		; Reset cheat
-
-.NotActivated:
-	moveq	#0,d0				; Not activated
-	rts
-
-.Activate:
-	bsr.w	ObjMenu_PlayRingSound		; Play ring sound
-	moveq	#8,d0				; Exit to stage select
-	rts
-
-; -------------------------------------------------------------------------
-
-.Cheat:
-	dc.b	1, 2, 2, 4, 8, $10
-.CheatEnd:
-	dc.b	$FF
-	even
-
-; -------------------------------------------------------------------------
-
-ObjMenu_BestTimesCheat:
-	moveq	#0,d0				; Get pointer to current cheat button
-	lea	.Cheat(pc),a2
-	move.b	oMenuBestTmsIdx(a0),d0
-	lea	(a2,d0.w),a2
-
-	move.b	p1CtrlTap.w,d0			; Get current buttons being tapped
-	move.b	(a2),d1				; Get current cheat button
-	cmp.b	d1,d0				; Do they match?
-	bne.s	.Failed				; If not, branch
-
-	addq.b	#1,oMenuBestTmsIdx(a0)		; Advance cheat
-	cmpi.b	#.CheatEnd-.Cheat,oMenuBestTmsIdx(a0)
-	beq.s	.Activate			; If the cheat is now done, branch
-	bra.s	.NotActivated			; Not done yet
-
-.Failed:
-	tst.b	d0				; Were any buttons tapped at all?
-	beq.s	.NotActivated			; If not, branch
-	clr.b	oMenuBestTmsIdx(a0)		; Reset cheat
-
-.NotActivated:
-	moveq	#0,d0				; Not activated
-	rts
-
-.Activate:
-	bsr.w	ObjMenu_PlayRingSound		; Play ring sound
-	moveq	#9,d0				; Exit to best times screen
-	rts
-
-; -------------------------------------------------------------------------
-
-.Cheat:
-	dc.b	8, 8, 1, 1, 2, $20
-.CheatEnd:
-	dc.b	$FF
-	even
-
-; -------------------------------------------------------------------------
-
-ObjMenu_PlayRingSound:
-	move.b	#FM_RING,fmSndQueue.w		; Play ring sound
-	rts
-
-; -------------------------------------------------------------------------
-
-ObjMenu_SetOption:
-	moveq	#0,d0				; Get option
-	move.b	oMenuOption(a0),d0
-	move.b	d0,oMapFrame(a0)
-
-	move.l	a0,-(sp)			; Load text art
-	add.w	d0,d0
-	move.w	.Text(pc,d0.w),d0
-	lea	.Text(pc,d0.w),a0
-	VDPCMD	move.l,$D800,VRAM,WRITE,VDPCTRL
-	bsr.w	NemDec
-	movea.l	(sp)+,a0
-	rts
-
-; -------------------------------------------------------------------------
-
-.Text:
-	dc.w	Art_PressStartText-.Text
-	dc.w	Art_PressStartText-.Text
-	dc.w	Art_NewGameText-.Text
-	dc.w	Art_ContinueText-.Text
-	dc.w	Art_TimeAttackText-.Text
-	dc.w	Art_RamDataText-.Text
-	dc.w	Art_DAGardenText-.Text
-	dc.w	Art_VisualModeText-.Text
-
-; -------------------------------------------------------------------------
-; Menu mappings
-; -------------------------------------------------------------------------
-
-MapSpr_Menu:
-	include	"Title Screen/Data/Menu Mappings.asm"
-	even
-
-; -------------------------------------------------------------------------
-; Menu arrow option
-; -------------------------------------------------------------------------
-
-	rsset	oVars
-oArrowDelay	rs.b	1			; Animation delay counter
-oArrowFrame	rs.b	1			; Animation frame
-		rs.b	2
-oArrowID	rs.b	1			; Text ID
-		rs.b	3
-oArrowParent	rs.w	1			; Parent object
-
-; -------------------------------------------------------------------------
-
-ObjMenuArrow:
-	move.l	#MapSpr_MenuArrow,oMap(a0)	; Set mappings
-	move.w	#$A000|($DC00/$20),oTile(a0)	; Set sprite tile ID
-	move.b	#%1,oFlags(a0)			; Set flags
-	move.w	#181,oY(a0)			; Set Y position
-	move.w	#72,oX(a0)			; Set left arrow X position
-	tst.b	oArrowID(a0)			; Is this the right arrow?
-	beq.s	ObjMenuArrow_Left		; If not, branch
-	move.w	#168,oX(a0)			; Set right arrow X position
-
-; -------------------------------------------------------------------------
-
-ObjMenuArrow_Right:
-	movea.w	oArrowParent(a0),a1		; Get parent object
-	tst.b	oMenuAllowSel(a1)		; Is selection enabled?
-	bne.s	.CheckOption			; If so, branch
-
-.Invisible:
-	clr.b	oMapFrame(a0)			; Don't display
-	clr.w	oArrowDelay(a0)
-
-	bsr.w	BookmarkObject			; Set bookmark
-	bra.s	ObjMenuArrow_Right		; Check display
-
-.CheckOption:
-	lea	menuOptions.w,a2		; Get option on the right
-	moveq	#0,d0
-	move.b	menuSel.w,d0
-	addq.b	#1,d0
-	move.b	(a2,d0.w),d0
-	cmpi.b	#$FF,d0				; Is there no options on the right?
-	beq.s	.Invisible			; If so, branch
-
-	moveq	#0,d0				; Display animation frame
-	move.b	oArrowFrame(a0),d0
-	move.b	.Frames(pc,d0.w),oMapFrame(a0)
-
-	addi.b	#$10,oArrowDelay(a0)		; Increment animation delay counter
-	bcc.s	.Displayed			; If it hasn't overflowed, branch
-	addq.b	#1,oArrowFrame(a0)		; Increment animation frame
-	cmpi.b	#.FramesEnd-.Frames,oArrowFrame(a0)
-	bcs.s	.Displayed			; Branch if it doesn't need to wrap
-	clr.b	oArrowFrame(a0)			; Wrap to the start
-
-.Displayed:
-	bsr.w	BookmarkObject			; Set bookmark
-	bra.s	ObjMenuArrow_Right		; Check display
-
-; -------------------------------------------------------------------------
-
-.Frames:
-	dc.b	4, 5, 6
-.FramesEnd:
-	even
-
-; -------------------------------------------------------------------------
-
-ObjMenuArrow_Left:
-	movea.w	oArrowParent(a0),a1		; Get parent object
-	tst.b	oMenuAllowSel(a1)		; Is selection enabled?
-	bne.s	.CheckOption			; If so, branch
-
-.Invisible:
-	clr.b	oMapFrame(a0)			; Don't display
-	clr.w	oArrowDelay(a0)
-
-	bsr.w	BookmarkObject			; Set bookmark
-	bra.s	ObjMenuArrow_Left		; Check display
-
-.CheckOption:
-	lea	menuOptions.w,a2		; Get option on the left
-	moveq	#0,d0
-	move.b	menuSel.w,d0
-	subq.b	#1,d0
-	move.b	(a2,d0.w),d0
-	cmpi.b	#$FF,d0				; Is there no options on the right?
-	beq.s	.Invisible			; If so, branch
-
-	moveq	#0,d0				; Display animation frame
-	move.b	oArrowFrame(a0),d0
-	move.b	.Frames(pc,d0.w),oMapFrame(a0)
-
-	addi.b	#$10,oArrowDelay(a0)		; Increment animation delay counter
-	bcc.s	.Displayed			; If it hasn't overflowed, branch
-	addq.b	#1,oArrowFrame(a0)		; Increment animation frame
-	cmpi.b	#.FramesEnd-.Frames,oArrowFrame(a0)
-	bcs.s	.Displayed			; Branch if it doesn't need to wrap
-	clr.b	oArrowFrame(a0)			; Wrap to the start
-
-.Displayed:
-	bsr.w	BookmarkObject			; Set bookmark
-	bra.s	ObjMenuArrow_Left		; Check display
-
-; -------------------------------------------------------------------------
-
-.Frames:
-	dc.b	1, 2, 3
-.FramesEnd:
-	even
-
-; -------------------------------------------------------------------------
-; Menu arrow mappings
-; -------------------------------------------------------------------------
-
-MapSpr_MenuArrow:
-	include	"Title Screen/Data/Menu Arrow Mappings.asm"
-	even
-
-; -------------------------------------------------------------------------
-; Copyright text object
-; -------------------------------------------------------------------------
-
-ObjCopyright:
-	move.l	#MapSpr_Copyright,oMap(a0)	; Set mappings
-	move.w	#$E000|($DE00/$20),oTile(a0)	; Set sprite tile ID
-	move.b	#%1,oFlags(a0)			; Set flags
-	if REGION=USA
-		move.w	#208,oY(a0)		; Set Y position
-		move.w	#80,oX(a0)		; Set X position
-		move.b	#1,oMapFrame(a0)	; Display with trademark
-	else
-		move.w	#91,oX(a0)		; Set X position
-		move.w	#208,oY(a0)		; Set Y position
-	endif
-
-; -------------------------------------------------------------------------
-
-.Done:
-	bsr.w	BookmarkObject			; Set bookmark
-	bra.s	.Done				; Remain static
-
-; -------------------------------------------------------------------------
-; Copyright text mappings
-; -------------------------------------------------------------------------
-
-MapSpr_Copyright:
-	if REGION=USA
-		include	"Title Screen/Data/Copyright Mappings (USA).asm"
-	else
-		include	"Title Screen/Data/Copyright Mappings (JPN and EUR).asm"
-	endif
-	even
-
-; -------------------------------------------------------------------------
-; Trademark symbol object
-; -------------------------------------------------------------------------
-
-ObjTM:
-	move.l	#MapSpr_TM,oMap(a0)		; Set mappings
-	if REGION=USA				; Set sprite tile ID
-		move.w	#$E000|($DFC0/$20),oTile(a0)
-	else
-		move.w	#$E000|($DF20/$20),oTile(a0)
-	endif
-	move.b	#%1,oFlags(a0)			; Set flags
-	move.w	#194,oX(a0)			; Set X position
-	move.w	#131,oY(a0)			; Set Y position
-	
-; -------------------------------------------------------------------------
-
-.Done:
-	bsr.w	BookmarkObject			; Set bookmark
-	bra.s	.Done				; Remain static
-
-; -------------------------------------------------------------------------
-; Trademark symbol mappings
-; -------------------------------------------------------------------------
-
-MapSpr_TM:
-	include	"Title Screen/Data/TM Mappings.asm"
-	even
+	include	"Title Screen/Objects/Sonic/Main.asm"
+	include	"Title Screen/Objects/Banner/Main.asm"
+	include	"Title Screen/Objects/Planet/Main.asm"
+	include	"Title Screen/Objects/Menu/Main.asm"
+	include	"Title Screen/Objects/Copyright/Main.asm"
 
 ; -------------------------------------------------------------------------
 ; Draw tilemaps
@@ -2669,7 +1705,7 @@ DrawBgTilemap:
 
 .WriteTile:
 	move.w	d6,(a3)				; Write tile ID
-	dbf	d3,.DrawTile			; Loop until row is written
+	dbf	d3,.DrawTile			; Loop until row is drawn
 	
 	add.l	d4,d0				; Next row
 	dbf	d2,.DrawRow			; Loop until map is drawn
@@ -2713,15 +1749,15 @@ DrawFgTilemap:
 ; -------------------------------------------------------------------------
 
 Map_Water:
-	incbin	"Title Screen/Data/Water Tilemap.bin"
+	incbin	"Title Screen/Data/Water Mappings.bin"
 	even
 
 Map_Mountains:
-	incbin	"Title Screen/Data/Moutains Tilemap.bin"
+	incbin	"Title Screen/Data/Moutains Mappings.bin"
 	even
 
 Map_Emblem:
-	incbin	"Title Screen/Data/Emblem Tilemap.bin"
+	incbin	"Title Screen/Data/Emblem Mappings.bin"
 	even
 
 Art_Water:
@@ -2737,15 +1773,15 @@ Art_Emblem:
 	even
 
 Art_Banner:
-	incbin	"Title Screen/Data/Banner Art.nem"
+	incbin	"Title Screen/Objects/Banner/Data/Art.nem"
 	even
 
 Art_Planet:
-	incbin	"Title Screen/Data/Planet Art.nem"
+	incbin	"Title Screen/Objects/Planet/Data/Art.nem"
 	even
 
 Art_Sonic:
-	incbin	"Title Screen/Data/Sonic Art.nem"
+	incbin	"Title Screen/Objects/Sonic/Data/Art.nem"
 	even
 
 Art_SolidColor:
@@ -2753,52 +1789,52 @@ Art_SolidColor:
 	even
 
 Art_NewGameText:
-	incbin	"Title Screen/Data/Text - New Game.nem"
+	incbin	"Title Screen/Objects/Menu/Data/Art (Text, New Game).nem"
 	even
 
 Art_ContinueText:
-	incbin	"Title Screen/Data/Text - Continue.nem"
+	incbin	"Title Screen/Objects/Menu/Data/Art (Text, Continue).nem"
 	even
 
 Art_TimeAttackText:
-	incbin	"Title Screen/Data/Text - Time Attack.nem"
+	incbin	"Title Screen/Objects/Menu/Data/Art (Text, Time Attack).nem"
 	even
 
 Art_RamDataText:
-	incbin	"Title Screen/Data/Text - RAM Data.nem"
+	incbin	"Title Screen/Objects/Menu/Data/Art (Text, RAM Data).nem"
 	even
 
 Art_DAGardenText:
-	incbin	"Title Screen/Data/Text - D.A. Garden.nem"
+	incbin	"Title Screen/Objects/Menu/Data/Art (Text, D.A. Garden).nem"
 	even
 
 Art_VisualModeText:
-	incbin	"Title Screen/Data/Text - Visual Mode.nem"
+	incbin	"Title Screen/Objects/Menu/Data/Art (Text, Visual Mode).nem"
 	even
 
 Art_PressStartText:
-	incbin	"Title Screen/Data/Text - Press Start.nem"
+	incbin	"Title Screen/Objects/Menu/Data/Art (Text, Press Start).nem"
 	even
 
 Art_MenuArrow:
-	incbin	"Title Screen/Data/Menu Arrow Art.nem"
+	incbin	"Title Screen/Objects/Menu/Data/Art (Arrow).nem"
 	even
 
 Art_Copyright:
-	incbin	"Title Screen/Data/Copyright Art.nem"
+	incbin	"Title Screen/Objects/Copyright/Data/Art (Copyright, JPN and EUR).nem"
 	even
 
 	if REGION=USA
 Art_TM:
-		incbin	"Title Screen/Data/TM Art (USA).nem"
+		incbin	"Title Screen/Objects/Copyright/Data/Art (TM, USA).nem"
 		even
 
 Art_CopyrightTM:
-		incbin	"Title Screen/Data/Copyright and TM.nem"
+		incbin	"Title Screen/Objects/Copyright/Data/Art (Copyright, USA).nem"
 		even
 	else
 Art_TM:
-		incbin	"Title Screen/Data/TM Art (JPN and EUR).nem"
+		incbin	"Title Screen/Objects/Copyright/Data/Art (TM, JPN and EUR).nem"
 		even
 	endif
 

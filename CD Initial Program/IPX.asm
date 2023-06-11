@@ -12,13 +12,14 @@
 	include	"_Include/Backup RAM.i"
 	include	"_Include/Sound.i"
 	include	"_Include/MMD.i"
+	include	"Special Stage/_Global Variables.i"
 
 ; -------------------------------------------------------------------------
 ; MMD header
 ; -------------------------------------------------------------------------
 
 	MMD	0, &
-		WORKRAM, End-Start, &
+		WORKRAM, $1000, &
 		Start, 0, 0
 
 ; -------------------------------------------------------------------------
@@ -52,12 +53,12 @@ Start:
 	bsr.w	SubCPUCmd
 
 	moveq	#0,d0
-	move.l	d0,levelScore			; Reset score
+	move.l	d0,score			; Reset score
 	move.b	d0,timeAttackMode		; Reset time attack mode flag
-	move.b	d0,enteredBigRing		; Reset entered big ring flag
-	move.b	d0,lastCheckpoint		; Reset last checkpoint ID
-	move.w	d0,levelRings			; Reset ring count
-	move.l	d0,levelTime			; Reset level timer
+	move.b	d0,specialStage			; Reset special stage flag
+	move.b	d0,checkpoint			; Reset checkpoint
+	move.w	d0,rings			; Reset ring count
+	move.l	d0,time				; Reset time
 	move.b	d0,goodFuture			; Reset good future flag
 	move.b	d0,projDestroyed		; Reset projector destroyed flag
 	move.b	#TIME_PRESENT,timeZone		; Set time zone to present
@@ -109,9 +110,9 @@ BuRAMManager:
 ; -------------------------------------------------------------------------
 
 SpecStage1Demo:
-	move.b	#1-1,GACOMCMD3			; Stage 1
-	move.b	#0,GACOMCMDA			; Reset stages beaten
-	bset	#0,GACOMCMDB			; Temporary mode
+	move.b	#1-1,specStageIDCmd		; Stage 1
+	move.b	#0,timeStonesCmd		; Reset time stones retrieved for this stage
+	bset	#0,specStageFlags		; Temporary mode
 	
 	moveq	#SCMD_SPECSTAGE,d0		; Run special stage
 	bsr.w	RunMMD
@@ -122,9 +123,9 @@ SpecStage1Demo:
 ; -------------------------------------------------------------------------
 
 SpecStage6Demo:
-	move.b	#6-1,GACOMCMD3			; Stage 6
-	move.b	#0,GACOMCMDA			; Reset stages beaten
-	bset	#0,GACOMCMDB			; Temporary mode
+	move.b	#6-1,specStageIDCmd		; Stage 6
+	move.b	#0,timeStonesCmd		; Reset time stones retrieved for this stage
+	bset	#0,specStageFlags		; Temporary mode
 	
 	moveq	#SCMD_SPECSTAGE,d0		; Run special stage
 	bsr.w	RunMMD
@@ -136,23 +137,23 @@ SpecStage6Demo:
 
 LoadGame:
 	bsr.w	ReadSaveData			; Read save data
-	move.w	savedLevel,level		; Get level from save data
-	move.b	#3,lifeCount			; Reset life count to 3
+	move.w	savedLevel,zoneAct		; Get level from save data
+	move.b	#3,lives			; Reset life count to 3
 	move.b	#0,plcLoadFlags			; Reset PLC load flags
 
-	cmpi.b	#0,levelZone			; Are we in Palmtree Panic?
+	cmpi.b	#0,zone				; Are we in Palmtree Panic?
 	beq.w	RunR1				; If so, branch
-	cmpi.b	#1,levelZone			; Are we in Collision Chaos?
+	cmpi.b	#1,zone				; Are we in Collision Chaos?
 	bls.w	RunR3				; If so, branch
-	cmpi.b	#2,levelZone			; Are we in Tidal Tempest?
+	cmpi.b	#2,zone				; Are we in Tidal Tempest?
 	bls.w	RunR4				; If so, branch
-	cmpi.b	#3,levelZone			; Are we in Quartz Quadrant?
+	cmpi.b	#3,zone				; Are we in Quartz Quadrant?
 	bls.w	RunR5				; If so, branch
-	cmpi.b	#4,levelZone			; Are we in Wacky Workbench?
+	cmpi.b	#4,zone				; Are we in Wacky Workbench?
 	bls.w	RunR6				; If so, branch
-	cmpi.b	#5,levelZone			; Are we in Stardust Speedway?
+	cmpi.b	#5,zone				; Are we in Stardust Speedway?
 	bls.w	RunR7				; If so, branch
-	cmpi.b	#6,levelZone			; Are we in Metallic Madness?
+	cmpi.b	#6,zone				; Are we in Metallic Madness?
 	bls.w	RunR8				; If so, branch
 
 ; -------------------------------------------------------------------------
@@ -163,7 +164,7 @@ NewGame:
 RunR1:
 	moveq	#0,d0
 	move.b	d0,plcLoadFlags			; Reset PLC load flags
-	move.w	d0,levelZone			; Set level to Palmtree Panic Act 1
+	move.w	d0,zone				; Set level to Palmtree Panic Act 1
 	move.w	d0,savedLevel
 	move.b	d0,goodFutures			; Reset good futures achieved
 	move.b	d0,curSpecStage			; Reset special stage ID
@@ -179,7 +180,7 @@ RunR1:
 	bsr.w	UnlockTimeAttackLevel
 	bset	#6,titleFlags
 	bset	#5,titleFlags
-	move.b	#0,lastCheckpoint		; Reset last checkpoint ID
+	move.b	#0,checkpoint			; Reset checkpoint
 	move.b	#0,projDestroyed		; Reset projector destroyed flag
 	
 	bclr	#0,goodFuture			; Was act 3 in the good future?
@@ -199,7 +200,7 @@ RunR3:
 
 	moveq	#3*2,d0				; Unlock zone in time attack
 	bsr.w	UnlockTimeAttackLevel
-	move.b	#0,lastCheckpoint		; Reset last checkpoint ID
+	move.b	#0,checkpoint			; Reset checkpoint
 	move.b	#0,projDestroyed		; Reset projector destroyed flag
 	
 	bclr	#0,goodFuture			; Was act 3 in the good future?
@@ -217,7 +218,7 @@ RunR4:
 
 	moveq	#3*3,d0				; Unlock zone in time attack
 	bsr.w	UnlockTimeAttackLevel
-	move.b	#0,lastCheckpoint		; Reset last checkpoint ID
+	move.b	#0,checkpoint			; Reset checkpoint
 	move.b	#0,projDestroyed		; Reset projector destroyed flag
 	
 	bclr	#0,goodFuture			; Was act 3 in the good future?
@@ -235,7 +236,7 @@ RunR5:
 
 	moveq	#3*4,d0				; Unlock zone in time attack
 	bsr.w	UnlockTimeAttackLevel
-	move.b	#0,lastCheckpoint		; Reset last checkpoint ID
+	move.b	#0,checkpoint			; Reset checkpoint
 	move.b	#0,projDestroyed		; Reset projector destroyed flag
 	
 	bclr	#0,goodFuture			; Was act 3 in the good future?
@@ -253,7 +254,7 @@ RunR6:
 
 	moveq	#3*5,d0				; Unlock zone in time attack
 	bsr.w	UnlockTimeAttackLevel
-	move.b	#0,lastCheckpoint		; Reset last checkpoint ID
+	move.b	#0,checkpoint			; Reset checkpoint
 	move.b	#0,projDestroyed		; Reset projector destroyed flag
 	
 	bclr	#0,goodFuture			; Was act 3 in the good future?
@@ -271,7 +272,7 @@ RunR7:
 
 	moveq	#3*6,d0				; Unlock zone in time attack
 	bsr.w	UnlockTimeAttackLevel
-	move.b	#0,lastCheckpoint		; Reset last checkpoint ID
+	move.b	#0,checkpoint			; Reset checkpoint
 	move.b	#0,projDestroyed		; Reset projector destroyed flag
 	
 	bclr	#0,goodFuture			; Was act 3 in the good future?
@@ -289,7 +290,7 @@ RunR8:
 
 	moveq	#3*7,d0				; Unlock zone in time attack
 	bsr.w	UnlockTimeAttackLevel
-	move.b	#0,lastCheckpoint		; Reset last checkpoint ID
+	move.b	#0,checkpoint			; Reset checkpoint
 	move.b	#0,projDestroyed		; Reset projector destroyed flag
 	
 	bclr	#0,goodFuture			; Was act 3 in the good future?
@@ -332,9 +333,9 @@ GoodEnding:
 ; -------------------------------------------------------------------------
 
 GameOver:
-	move.b	#0,levelAct			; Reset act
-	move.w	level,savedLevel		; Save level ID
-	move.b	#0,lastCheckpoint		; Reset last checkpoint ID
+	move.b	#0,act				; Reset act
+	move.w	zoneAct,savedLevel		; Save zone and act ID
+	move.b	#0,checkpoint			; Reset checkpoint
 	move.b	#0,projDestroyed		; Reset projector destroyed flag
 	bclr	#0,goodFuture			; Reset good future flag
 	rts
@@ -354,7 +355,7 @@ gameTimeStones:
 
 RunR11:
 	lea	R11SubCmds(pc),a0
-	move.w	#$000,level
+	move.w	#$000,zoneAct
 	bra.w	RunLevel
 
 ; -------------------------------------------------------------------------
@@ -363,7 +364,7 @@ RunR11:
 
 RunR12:
 	lea	R12SubCmds(pc),a0
-	move.w	#$001,level
+	move.w	#$001,zoneAct
 	bra.w	RunLevel
 
 ; -------------------------------------------------------------------------
@@ -372,7 +373,7 @@ RunR12:
 
 RunR13:
 	lea	R13SubCmds(pc),a0
-	move.w	#$002,level
+	move.w	#$002,zoneAct
 	bra.w	RunBossLevel
 
 ; -------------------------------------------------------------------------
@@ -381,7 +382,7 @@ RunR13:
 
 RunR31:
 	lea	R31SubCmds(pc),a0
-	move.w	#$100,level
+	move.w	#$100,zoneAct
 	bra.w	RunLevel
 
 ; -------------------------------------------------------------------------
@@ -390,7 +391,7 @@ RunR31:
 
 RunR32:
 	lea	R32SubCmds(pc),a0
-	move.w	#$101,level
+	move.w	#$101,zoneAct
 	bra.w	RunLevel
 
 ; -------------------------------------------------------------------------
@@ -399,7 +400,7 @@ RunR32:
 
 RunR33:
 	lea	R33SubCmds(pc),a0
-	move.w	#$102,level
+	move.w	#$102,zoneAct
 	bra.w	RunBossLevel
 
 ; -------------------------------------------------------------------------
@@ -408,7 +409,7 @@ RunR33:
 
 RunR41:
 	lea	R41SubCmds(pc),a0
-	move.w	#$200,level
+	move.w	#$200,zoneAct
 	bra.w	RunLevel
 
 ; -------------------------------------------------------------------------
@@ -417,7 +418,7 @@ RunR41:
 
 RunR42:
 	lea	R42SubCmds(pc),a0
-	move.w	#$201,level
+	move.w	#$201,zoneAct
 	bra.w	RunLevel
 
 ; -------------------------------------------------------------------------
@@ -426,7 +427,7 @@ RunR42:
 
 RunR43:
 	lea	R43SubCmds(pc),a0
-	move.w	#$202,level
+	move.w	#$202,zoneAct
 	bra.w	RunBossLevel
 
 ; -------------------------------------------------------------------------
@@ -435,7 +436,7 @@ RunR43:
 
 RunR51:
 	lea	R51SubCmds(pc),a0
-	move.w	#$300,level
+	move.w	#$300,zoneAct
 	bra.w	RunLevel
 
 ; -------------------------------------------------------------------------
@@ -444,7 +445,7 @@ RunR51:
 
 RunR52:
 	lea	R52SubCmds(pc),a0
-	move.w	#$301,level
+	move.w	#$301,zoneAct
 	bra.w	RunLevel
 
 ; -------------------------------------------------------------------------
@@ -453,7 +454,7 @@ RunR52:
 
 RunR53:
 	lea	R53SubCmds(pc),a0
-	move.w	#$302,level
+	move.w	#$302,zoneAct
 	bra.w	RunBossLevel
 
 ; -------------------------------------------------------------------------
@@ -462,7 +463,7 @@ RunR53:
 
 RunR61:
 	lea	R61SubCmds(pc),a0
-	move.w	#$400,level
+	move.w	#$400,zoneAct
 	bra.s	RunLevel
 
 ; -------------------------------------------------------------------------
@@ -471,7 +472,7 @@ RunR61:
 
 RunR62:
 	lea	R62SubCmds(pc),a0
-	move.w	#$401,level
+	move.w	#$401,zoneAct
 	bra.s	RunLevel
 
 ; -------------------------------------------------------------------------
@@ -480,7 +481,7 @@ RunR62:
 
 RunR63:
 	lea	R63SubCmds(pc),a0
-	move.w	#$402,level
+	move.w	#$402,zoneAct
 	bra.w	RunBossLevel
 
 ; -------------------------------------------------------------------------
@@ -489,7 +490,7 @@ RunR63:
 
 RunR71:
 	lea	R71SubCmds(pc),a0
-	move.w	#$500,level
+	move.w	#$500,zoneAct
 	bra.s	RunLevel
 
 ; -------------------------------------------------------------------------
@@ -498,7 +499,7 @@ RunR71:
 
 RunR72:
 	lea	R72SubCmds(pc),a0
-	move.w	#$501,level
+	move.w	#$501,zoneAct
 	bra.s	RunLevel
 
 ; -------------------------------------------------------------------------
@@ -507,7 +508,7 @@ RunR72:
 
 RunR73:
 	lea	R73SubCmds(pc),a0
-	move.w	#$502,level
+	move.w	#$502,zoneAct
 	bra.w	RunBossLevel
 
 ; -------------------------------------------------------------------------
@@ -516,7 +517,7 @@ RunR73:
 
 RunR81:
 	lea	R81SubCmds(pc),a0
-	move.w	#$600,level
+	move.w	#$600,zoneAct
 	bra.s	RunLevel
 
 ; -------------------------------------------------------------------------
@@ -525,7 +526,7 @@ RunR81:
 
 RunR82:
 	lea	R82SubCmds(pc),a0
-	move.w	#$601,level
+	move.w	#$601,zoneAct
 	bra.s	RunLevel
 
 ; -------------------------------------------------------------------------
@@ -534,7 +535,7 @@ RunR82:
 
 RunR83:
 	lea	R83SubCmds(pc),a0
-	move.w	#$602,level
+	move.w	#$602,zoneAct
 	bra.w	RunBossLevel
 
 ; -------------------------------------------------------------------------
@@ -548,9 +549,9 @@ RunLevel:
 .LevelLoop:
 	bsr.w	RunMMD				; Run level file
 
-	tst.b	lifeCount			; Have we run out of lives?
+	tst.b	lives				; Have we run out of lives?
 	beq.s	.LevelOver			; If so, branch
-	btst	#7,timeZone			; Are we time traveling?
+	btst	#7,timeZone			; Are we time warping?
 	beq.s	.LevelOver			; If not, branch
 
 	moveq	#SCMD_WARP,d0			; Run warp sequence file
@@ -575,20 +576,20 @@ RunLevel:
 	bra.s	.LevelLoop			; Loop
 
 .LevelOver:
-	tst.b	lifeCount			; Do we still have lives left?
+	tst.b	lives				; Do we still have lives left?
 	bne.s	.CheckSpecStage			; If so, branch
 	move.l	(sp)+,d0			; If not, exit
 	bra.w	GameOver
 
 .CheckSpecStage:
-	tst.b	enteredBigRing			; Has Sonic entered a big ring?
+	tst.b	specialStage			; Are we going into a special stage?
 	bne.s	.SpecialStage			; If so, branch
 	rts
 
 .SpecialStage:
-	move.b	curSpecStage,GACOMCMD3		; Set stage ID
-	move.b	timeStones,GACOMCMDA		; Copy time stones retrieved flags
-	bclr	#0,GACOMCMDB			; Normal mode
+	move.b	curSpecStage,specStageIDCmd	; Set stage ID
+	move.b	timeStones,timeStonesCmd	; Copy time stones retrieved flags
+	bclr	#0,specStageFlags		; Normal mode
 
 	moveq	#SCMD_SPECSTAGE,d0		; Run special stage
 	bsr.w	RunMMD
@@ -615,7 +616,7 @@ RunBossLevel:
 .RunLevel:
 	bsr.w	RunMMD				; Run level file
 
-	tst.b	lifeCount			; Do we still have lives left?
+	tst.b	lives				; Do we still have lives left?
 	bne.s	.NextLevel			; If so, branch
 	move.l	(sp)+,d0			; If not, exit
 	bra.w	GameOver
@@ -627,7 +628,7 @@ RunBossLevel:
 	subq.b	#1,savedLevel			; Cap level ID
 
 .End:
-	move.b	#0,lastCheckpoint		; Reset last checkpoint ID
+	move.b	#0,checkpoint			; Reset checkpoint
 	rts
 
 ; -------------------------------------------------------------------------
@@ -718,7 +719,7 @@ StageSelect:
 	bsr.w	RunMMD
 
 	mulu.w	#6,d0				; Get selected stage data
-	move.w	StageSels+2(pc,d0.w),level	; Set level
+	move.w	StageSels+2(pc,d0.w),zoneAct	; Set level
 	move.b	StageSels+4(pc,d0.w),timeZone	; Time zone
 	move.b	StageSels+5(pc,d0.w),goodFuture	; Good future flag
 	move.w	StageSels(pc,d0.w),d0		; File load Sub CPU command
@@ -966,7 +967,7 @@ Demo:
 
 Demo_R11A:
 	move.b	#0,plcLoadFlags			; Reset PLC load flags
-	move.w	#$000,level			; Set level to Palmtree Panic Act 1
+	move.w	#$000,zoneAct			; Set level to Palmtree Panic Act 1
 	move.b	#TIME_PRESENT,timeZone		; Set time zone to present
 	move.b	#0,goodFuture			; Reset good future flag
 	
@@ -981,7 +982,7 @@ Demo_R11A:
 
 Demo_R43C:
 	move.b	#0,plcLoadFlags			; Reset PLC load flags
-	move.w	#$202,level			; Set level to Tidal Tempest Act 3
+	move.w	#$202,zoneAct			; Set level to Tidal Tempest Act 3
 	move.b	#TIME_FUTURE,timeZone		; Set time zone to present
 	move.b	#1,goodFuture			; Set good future flag
 	
@@ -996,7 +997,7 @@ Demo_R43C:
 
 Demo_R82A:
 	move.b	#0,plcLoadFlags			; Reset PLC load flags
-	move.w	#$601,level			; Set level to Metallic Madness Act 2
+	move.w	#$601,zoneAct			; Set level to Metallic Madness Act 2
 	move.b	#TIME_PRESENT,timeZone		; Set time zone to present
 	move.b	#0,goodFuture			; Reset good future flag
 	
@@ -1069,16 +1070,16 @@ SoundTest_Exit:
 ; -------------------------------------------------------------------------
 
 SoundTest_SpecStg8:
-	move.b	#8-1,GACOMCMD3			; Stage 8
-	move.b	#0,GACOMCMDA			; Reset stages beaten
-	bset	#0,GACOMCMDB			; Temporary mode
-	bset	#2,GACOMCMDB
+	move.b	#8-1,specStageIDCmd		; Stage 8
+	move.b	#0,timeStonesCmd		; Reset time stones retrieved for this stage
+	bset	#0,specStageFlags		; Temporary mode
+	bset	#2,specStageFlags		; Secret mode
 	
 	moveq	#SCMD_SPECSTAGE,d0		; Run special stage
 	bsr.w	RunMMD
 	tst.b	specStageLost			; Was the stage beaten?
 	bne.s	.End				; If not, branch
-	move.w	#SCMD_STAFFCREDS,d0		; If so, run staff credits
+	move.w	#SCMD_SS8CREDS,d0		; If so, run credits
 	bsr.w	RunMMD
 
 .End:
@@ -1228,7 +1229,7 @@ TimeAttack:
 
 	mulu.w	#6,d0				; Get selected stage data
 	lea	StageSels(pc),a6
-	move.w	2(a6,d0.w),level		; Set level
+	move.w	2(a6,d0.w),zoneAct		; Set level
 	move.b	4(a6,d0.w),timeZone		; Time zone
 	move.b	5(a6,d0.w),goodFuture		; Good future flag
 	move.w	(a6,d0.w),d0			; File load Sub CPU command
@@ -1238,8 +1239,8 @@ TimeAttack:
 	
 	bsr.w	RunMMD				; Run level file
 	
-	move.b	#0,lastCheckpoint		; Reset last checkpoint ID
-	move.l	levelTime,timeAttackTime	; Save time attack time
+	move.b	#0,checkpoint			; Reset checkpoint
+	move.l	time,timeAttackTime		; Save time attack time
 	
 	bra.s	TimeAttack			; Loop back to menu
 
@@ -1294,9 +1295,9 @@ TimeAttack_SS:
 	neg.b	d0				; Set special stage ID
 	ext.w	d0
 	subq.w	#1,d0
-	move.b	d0,GACOMCMD3
-	move.b	#0,GACOMCMDA			; Reset stages beaten
-	bset	#1,GACOMCMDB			; Time attack mode
+	move.b	d0,specStageIDCmd
+	move.b	#0,timeStonesCmd		; Reset time stones retrieved for this stage
+	bset	#1,specStageFlags		; Time attack mode
 
 	moveq	#SCMD_SPECSTAGE,d0		; Run special stage
 	bsr.w	RunMMD
@@ -1592,6 +1593,5 @@ savedSR:
 
 	jmp	0.w				; Unreferenced
 	ALIGN	MAINVARS
-End:
 
 ; -------------------------------------------------------------------------

@@ -138,6 +138,10 @@ GACOMSTATD	EQU	GATEARRAY+$002D		; Communication status 6
 GACOMSTATE	EQU	GATEARRAY+$002E		; Communication status 7
 GACOMSTATF	EQU	GATEARRAY+$002F		; Communication status 7
 
+; BIOS functions
+BIOS_SetVDPRegs	EQU	CDBIOS+$2B0		; Set up VDP registers
+BIOS_DMA68k	EQU	CDBIOS+$2D4		; DMA 68000 data to VDP memory
+
 ; CD Work RAM assignments
 _EXCPT		EQU	$FFFFFD00		; Exception
 _LEVEL6		EQU	$FFFFFD06		; V-INT
@@ -375,33 +379,37 @@ cmd	= (\type\\rwd\)|(((\addr)&$3FFF)<<16)|((\addr)/$4000)
 ;	dest - Destination address in VDP memory
 ;	len  - Length of data in bytes
 ;	type - Type of VDP memory
+;	a6.l - VDP control port
 ; -------------------------------------------------------------------------
 
-DMA68K macro src, dest, len, type
-	; Check if source address is in Word RAM
-	local	srcd
-	if ((\src)>=WORDRAM2M)&((\src)<WORDRAM2ME)
-		srcd:	EQU (\src)+2
-	else
-		srcd:	EQU \src
-	endif
-
+DMA68K2 macro src, dest, len, type
 	; DMA data
-	lea	VDPCTRL,a6
 	move.l	#$93009400|((((\len)/2)&$FF00)>>8)|((((\len)/2)&$FF)<<16),(a6)
-	move.l	#$95009600|((((srcd)/2)&$FF00)>>8)|((((srcd)/2)&$FF)<<16),(a6)
-	move.w	#$9700|(((srcd)>>17)&$7F),(a6)
+	move.l	#$95009600|((((\src)/2)&$FF00)>>8)|((((\src)/2)&$FF)<<16),(a6)
+	move.w	#$9700|(((\src)>>17)&$7F),(a6)
 	VDPCMD	move.w,\dest,\type,DMA,>>16,(a6)
 	VDPCMD	move.w,\dest,\type,DMA,&$FFFF,-(sp)
 	move.w	(sp)+,(a6)
 
 	; Manually write first word
 	VDPCMD	move.l,\dest,\type,WRITE,(a6)
-	if ((\src)>=$FFFF8000)&((\src)<=$FFFFFFFF)
-		move.w	(\src).w,VDPDATA
-	else
-		move.w	(\src),VDPDATA
-	endif
+	move.w	\src,VDPDATA
+	endm
+
+; -------------------------------------------------------------------------
+; VDP DMA from 68000 memory to VDP memory
+; (Automatically sets VDP control port in a6)
+; -------------------------------------------------------------------------
+; PARAMETERS:
+;	src  - Source address in 68000 memory
+;	dest - Destination address in VDP memory
+;	len  - Length of data in bytes
+;	type - Type of VDP memory
+; -------------------------------------------------------------------------
+
+DMA68K macro src, dest, len, type
+	lea	VDPCTRL,a6
+	DMA68K2	\src,\dest,\len,\type
 	endm
 
 ; -------------------------------------------------------------------------
@@ -448,6 +456,34 @@ DMACOPY macro src, dest, len
 	VDPCMD	move.l,\addr,VRAM,COPY,(a6)
 	DMAWAIT	a6
 	move.w	#$8F02,(a6)
+	endm
+
+; -------------------------------------------------------------------------
+; Copy image buffer to VRAM
+; -------------------------------------------------------------------------
+; PARAMETERS:
+;	src  - Source address
+;	buf  - Buffer ID
+;	part - Buffer part ID
+; -------------------------------------------------------------------------
+
+COPYIMG macro src, buf, part
+	local off, len, vadr
+	
+	if (\part)=0
+		off: = 0
+		len: = IMGV1LEN
+	else
+		off: = IMGV1LEN
+		len: = IMGLENGTH-IMGV1LEN
+	endif
+	
+	vadr: = IMGVRAM+((\buf)*IMGLENGTH)
+	if (\part)<>0
+		vadr: = vadr+IMGV1LEN
+	endif
+
+	DMA68K	(\src)+off,vadr,\#len,VRAM
 	endm
 
 ; -------------------------------------------------------------------------

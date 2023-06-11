@@ -6,7 +6,6 @@
 ; -------------------------------------------------------------------------
 
 oExplodeBadnik	EQU	oRoutine2		; Explosion from badnik flag
-oExplodeLoPrio	EQU	oSubtype2		; Low priority sprite flag
 oExplodePoints	EQU	oVar3E			; Sprite ID for points object
 
 ; -------------------------------------------------------------------------
@@ -38,7 +37,7 @@ ObjExplosion_MakePoints:
 ; -------------------------------------------------------------------------
 
 ObjExplosion:
-	moveq	#0,d0				; Run object routine
+	moveq	#0,d0				; Run routine
 	move.b	oRoutine(a0),d0
 	move.w	.Index(pc,d0.w),d0
 	jmp	.Index(pc,d0.w)
@@ -46,23 +45,23 @@ ObjExplosion:
 ; -------------------------------------------------------------------------
 
 .Index:
-	dc.w	ObjExplosion_Init-.Index	; Initialization
-	dc.w	ObjExplosion_Main-.Index	; Main
-	dc.w	ObjExplosion_Done-.Index	; Finished
+	dc.w	ObjExplosion_Init-.Index
+	dc.w	ObjExplosion_Main-.Index
+	dc.w	ObjExplosion_Done-.Index
 
 ; -------------------------------------------------------------------------
-; Explosion initialization routine
+; Initialization
 ; -------------------------------------------------------------------------
 
 ObjExplosion_Init:
 	addq.b	#2,oRoutine(a0)			; Advance routine
 
-	ori.b	#4,oRender(a0)			; Set render flags
+	ori.b	#%00000100,oSprFlags(a0)	; Set sprite flags
 	move.b	#1,oPriority(a0)		; Set priority
 	move.w	#$8680,oTile(a0)		; Set base tile
-	tst.b	oExplodeLoPrio(a0)		; Should our sprite be low priority?
+	tst.b	oLayer(a0)			; Are we on layer 2?
 	beq.s	.HighPriority			; If not, branch
-	andi.b	#$7F,oTile(a0)			; Clear tile priority bit
+	andi.b	#$7F,oTile(a0)			; Set low priority
 
 .HighPriority:
 	move.l	#MapSpr_Explosion,oMap(a0)	; Set mappings
@@ -78,7 +77,7 @@ ObjExplosion_Init:
 	move.w	#$100,oAnim(a0)			; If so, use it
 
 ; -------------------------------------------------------------------------
-; Main explosion routine
+; Main routine
 ; -------------------------------------------------------------------------
 
 ObjExplosion_Main:
@@ -87,7 +86,7 @@ ObjExplosion_Main:
 	jmp	DrawObject			; Draw sprite
 
 ; -------------------------------------------------------------------------
-; Explosion finished routine
+; Finished
 ; -------------------------------------------------------------------------
 
 ObjExplosion_Done:

@@ -40,6 +40,9 @@ Variables:
 
 UpdateDriver:
 	jsr	GetPointers(pc)			; Get driver pointers
+	if BOSS<>0
+		addq.b	#1,pdrvUnkCounter(a5)	; Increment unknown counter
+	endif
 	jsr	ProcSoundQueue(pc)		; Process sound queue
 	jsr	PlaySoundID(pc)			; Play sound from queue
 	jsr	HandlePause(pc)			; Handle pausing
@@ -109,7 +112,7 @@ UpdateTrack:
 .Update:
 	jsr	UpdateSample(pC)		; Update sample
 
-	; BUG: The developers removed modulation support and optimized
+	; BUG: The developers removed vibrato support and optimized
 	; this call, but they accidentally left in the stack pointer shift
 	; in the routine. See the routine for more information.
 	; Dobby: fixed.
@@ -522,7 +525,11 @@ ProcSoundQueue:
 
 	cmpi.b	#PCMS_START,d0		; Is a sound effect queued?
 	bcs.s	.NextSlot			; If not, branch
-	cmpi.b	#PCMS_END,d0
+	if BOSS<>0
+		cmpi.b	#$BA,d0
+	else
+		cmpi.b	#PCMS_END,d0
+	endif
 	bls.w	.SFXID				; If so, branch
 
 	cmpi.b	#PCMC_START,d0		; Is a song queued?
@@ -585,7 +592,11 @@ PlaySoundID:
 
 	cmpi.b	#PCMS_START,d7			; Is it a sound effect?
 	bcs.s	.End				; If not, branch
-	cmpi.b	#PCMS_END,d7
+	if BOSS<>0
+		cmpi.b	#$BA,d7
+	else
+		cmpi.b	#PCMS_END,d7
+	endif
 	bls.w	PlaySFX				; If so, branch
 
 	cmpi.b	#PCMC_START,d7			; Is it a command?

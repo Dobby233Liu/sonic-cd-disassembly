@@ -15,7 +15,7 @@ ObjProjector:
 	jsr	DrawObject
 	cmpi.b	#2,oRoutine(a0)
 	bgt.s	.End
-	jsr	CheckObjDespawnTime
+	jsr	CheckObjDespawn
 	tst.b	(a0)
 	bne.s	.End
 	move.w	#4,d0
@@ -48,14 +48,14 @@ ObjProjector_Init:
 	move.w	#5,d0
 	jsr	LoadPLC
 	addq.b	#2,oRoutine(a0)
-	ori.b	#4,oRender(a0)
+	ori.b	#4,oSprFlags(a0)
 	move.b	#4,oPriority(a0)
 	move.b	#$C,oXRadius(a0)
 	move.b	#$C,oWidth(a0)
 	move.b	#$C,oYRadius(a0)
 	move.b	#$FB,oColType(a0)
 	move.w	#$403,d0
-	tst.b	levelAct
+	tst.b	act
 	beq.s	.SetBaseTile
 	move.w	#$3AF,d0
 
@@ -122,7 +122,7 @@ ObjProjector_StartExploding:
 	lea	objPlayerSlot.w,a1
 	jsr	SolidObject
 	beq.s	ObjProjector_Exploding
-	jsr	ClearObjRide
+	jsr	GetOffObject
 
 ObjProjector_Exploding:
 	movea.l	oVar2C(a0),a6
@@ -144,7 +144,7 @@ ObjProjector_Exploding:
 	move.w	oY(a0),oY(a1)
 	add.w	d5,oX(a1)
 	add.w	d6,oY(a1)
-	move.w	#$9E,d0
+	move.w	#FM_EXPLODE,d0
 	jsr	PlayFMSound
 
 .End:
@@ -161,7 +161,7 @@ ObjProjector_Exploding:
 ; -------------------------------------------------------------------------
 
 ObjProjector_Destroyed:
-	subq.w	#1,$2A(a0)
+	subq.w	#1,oVar2A(a0)
 	bne.s	locret_20E6E6
 	st	projDestroyed
 	bra.w	ObjProjector_Destroy
@@ -184,10 +184,10 @@ ObjMetalSonicHologram:
 	tst.b	oRoutine(a0)
 	bne.s	.Animate
 	addq.b	#2,oRoutine(a0)
-	ori.b	#4,oRender(a0)
+	ori.b	#4,oSprFlags(a0)
 	move.b	#4,oPriority(a0)
 	move.w	#$403,d0
-	tst.b	levelAct
+	tst.b	act
 	beq.s	.SetBaseTile
 	move.w	#$3AF,d0
 

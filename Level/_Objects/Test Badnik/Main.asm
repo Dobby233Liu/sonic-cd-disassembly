@@ -26,7 +26,7 @@ ObjTestBadnik:
 ; -------------------------------------------------------------------------
 
 ObjTestBadnik_Init:
-	;btst	#7,oStatus(a0)			; Are we offscreen?
+	;btst	#7,oFlags(a0)			; Are we offscreen?
 	;bne.w	DeleteObject			; If so, delete ourselves
 
 	;addq.b	#2,oRoutine(a0)			; Advance routine

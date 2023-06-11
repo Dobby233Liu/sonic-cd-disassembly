@@ -30,8 +30,8 @@ ObjectIndex:
 	dc.l	ObjGoalPost			; 16 - Goal post
 	dc.l	ObjSignpost			; 17 - Signpost
 	dc.l	ObjExplosion			; 18 - Explosion
-	dc.l	ObjMonitorTimepost		; 19 - Monitor/Time post
-	dc.l	ObjMonitorContents		; 1A - Monitor contents
+	dc.l	ObjMonitorTimePost		; 19 - Monitor/Time post
+	dc.l	ObjMonitorItem			; 1A - Monitor item
 	dc.l	ObjBoulder			; 1B - Boulder
 	dc.l	ObjHUDPoints			; 1C - HUD/Points
 	dc.l	ObjNull				; 1D - Blank
@@ -39,8 +39,8 @@ ObjectIndex:
 	dc.l	ObjFlower			; 1F - Flower
 	dc.l	ObjCollapsePlatform		; 20 - Collaping platform
 	dc.l	ObjPlatform			; 21 - Platform
-	dc.l	ObjKamemusi			; 22 - Kamemusi badnik/projectiles
-	dc.l	ObjScrappedBadnik		; 23 - Scrapped badnik ("ene_tama")
+	dc.l	ObjTamabboh			; 22 - Tamabboh badnik/projectiles
+	dc.l	ObjMissile			; 23 - Missile (scrapped)
 	dc.l	ObjAnimal			; 24 - Animal
 	dc.l	ObjNull				; 25 - Blank
 	dc.l	ObjSpikes			; 26 - Spikes

@@ -13,7 +13,7 @@ ObjRobotGenerator:
 	jsr	DrawObject
 	cmpi.b	#2,oRoutine(a0)
 	bgt.s	.End
-	jmp	CheckObjDespawnTime
+	jmp	CheckObjDespawn
 
 ; -------------------------------------------------------------------------
 
@@ -31,14 +31,14 @@ ObjRobotGenerator_Index:
 
 ObjRobotGenerator_Init:
 	addq.b	#2,oRoutine(a0)
-	ori.b	#4,oRender(a0)
+	ori.b	#%00000100,oSprFlags(a0)
 	move.b	#4,oPriority(a0)
 	move.b	#$22,oXRadius(a0)
 	move.b	#$22,oWidth(a0)
 	move.b	#$20,oYRadius(a0)
 	lea	ObjRobotGenerator_BaseTileList(pc),a1
 	moveq	#0,d0
-	move.b	levelAct,d0
+	move.b	act,d0
 	asl.w	#2,d0
 	add.b	timeZone,d0
 	add.w	d0,d0
@@ -88,7 +88,7 @@ ObjRobotGenerator_Main:
 	lea	objPlayerSlot.w,a1
 	jsr	SolidObject
 	beq.s	.End
-	jsr	ClearObjRide
+	jsr	GetOffObject
 
 .End:
 	rts
@@ -129,7 +129,7 @@ ObjRobotGenerator_Exploding:
 	move.w	oY(a0),oY(a1)
 	add.w	d5,oX(a1)
 	add.w	d6,oY(a1)
-	move.w	#$9E,d0
+	move.w	#FM_EXPLODE,d0
 	jsr	PlayFMSound
 
 .End:
@@ -150,7 +150,7 @@ ObjRobotGenerator_BreakDown:
 	bne.s	.End
 	subq.b	#6,oRoutine(a0)
 	move.w	oVar30(a0),oY(a0)
-	move.w	#$D9,d0
+	move.w	#FM_D9,d0
 	jmp	PlayFMSound
 
 ; -------------------------------------------------------------------------

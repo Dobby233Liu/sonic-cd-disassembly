@@ -9,7 +9,7 @@
 ; Check if an object should despawn offscreen (leftover from Sonic 1)
 ; -------------------------------------------------------------------------
 ; PARAMETERS:
-;	a0.l - Object RAM
+;	a0.l - Object slot
 ; -------------------------------------------------------------------------
 
 ;CheckObjDespawnS1:

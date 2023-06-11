@@ -22,7 +22,7 @@ ObjEggmanStatue:
 	jsr	DrawObject
 	cmpi.b	#2,oRoutine(a0)
 	bgt.s	.End
-	jmp	CheckObjDespawnTime
+	jmp	CheckObjDespawn
 	
 .End:
 	rts
@@ -46,7 +46,7 @@ ObjEggmanStatue_Init:
 
 .BadFuture:
 	addq.b	#2,oRoutine(a0)
-	ori.b	#4,oRender(a0)
+	ori.b	#4,oSprFlags(a0)
 	move.b	#3,oPriority(a0)
 	move.b	#20,oXRadius(a0)
 	move.b	#20,oWidth(a0)
@@ -67,7 +67,7 @@ ObjEggmanStatue_Main:
 	lea	objPlayerSlot.w,a1
 	jsr	SolidObject
 	beq.s	.End
-	jsr	ClearObjRide
+	jsr	GetOffObject
 	
 .End:
 	rts
@@ -100,7 +100,7 @@ ObjEggmanStatue_Explode:
 	move.w	oY(a0),oY(a1)
 	add.w	d5,oX(a1)
 	add.w	d6,oY(a1)
-	move.w	#FM_9E,d0
+	move.w	#FM_EXPLODE,d0
 	jsr	PlayFMSound
 	
 .End:
@@ -215,7 +215,7 @@ ObjSpikeBomb:
 
 ObjSpikeBomb_Init:
 	addq.b	#2,oRoutine(a0)
-	ori.b	#4,oRender(a0)
+	ori.b	#4,oSprFlags(a0)
 	move.b	#3,oPriority(a0)
 	move.b	#6,oYRadius(a0)
 	move.b	#6,oXRadius(a0)
@@ -247,7 +247,7 @@ ObjSpikeBomb_Explode:
 	move.b	#$18,oID(a0)
 	move.b	#0,oRoutine(a0)
 	move.b	#1,oExplodeBadnik(a0)
-	move.w	#$9E,d0
+	move.w	#FM_EXPLODE,d0
 	jmp	PlayFMSound
 
 ; -------------------------------------------------------------------------

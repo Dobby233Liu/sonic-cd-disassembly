@@ -24,7 +24,7 @@ ObjPiston:
 	jsr	.Index(pc,d0.w)
 
 	jsr	DrawObject
-	jmp	CheckObjDespawnTime
+	jmp	CheckObjDespawn
 
 ; -------------------------------------------------------------------------
 
@@ -36,13 +36,13 @@ ObjPiston:
 
 ObjPiston_Solid:
 	lea	objPlayerSlot.w,a1
-	jmp	SolidObject1
+	jmp	TopSolidObject
 
 ; -------------------------------------------------------------------------
 
 ObjPiston_Init:
 	addq.b	#2,oRoutine(a0)
-	ori.b	#4,oRender(a0)
+	ori.b	#4,oSprFlags(a0)
 	move.w	#$340,oTile(a0)
 	move.l	#MapSpr_Piston,oMap(a0)
 	move.b	#40,oYRadius(a0)
@@ -81,7 +81,7 @@ ObjPiston_Main:
 	cmpi.b	#$21,oPistonOff(a0)
 	bcs.s	.Solid
 	lea	objPlayerSlot.w,a1
-	jmp	ClearObjRide
+	jmp	GetOffObject
 
 .Solid:
 	jmp	ObjPiston_Solid(pc)
@@ -128,7 +128,7 @@ ObjPiston_SetupSolidSide:
 	add.w	oX(a0),d0
 	move.w	d0,oX(a1)
 	move.w	oY(a0),oY(a1)
-	ori.b	#4,oRender(a1)
+	ori.b	#4,oSprFlags(a1)
 	move.l	#MapSpr_Piston,oMap(a1)
 	move.b	#40,oYRadius(a1)
 	move.b	#1,oMapFrame(a1)

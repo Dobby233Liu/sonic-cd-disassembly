@@ -32,7 +32,7 @@ Player_ObjCollide:
 	move.w	#$5F,d6
 
 .Loop:
-	tst.b	oRender(a1)
+	tst.b	oSprFlags(a1)
 	bpl.s	.Next
 	move.b	oColType(a1),d0
 	bne.s	.CheckWidth
@@ -115,9 +115,9 @@ Player_TouchMonitor:
 	bcs.s	.End2
 	neg.w	oYVel(a0)
 	move.w	#-$180,oYVel(a1)
-	tst.b	oRoutine2(a1)
+	tst.b	oMonitorFall(a1)
 	bne.s	.End2
-	addq.b	#4,oRoutine2(a1)
+	addq.b	#4,oMonitorFall(a1)
 	rts
 
 ; -------------------------------------------------------------------------
@@ -135,9 +135,9 @@ Player_TouchMonitor:
 ; -------------------------------------------------------------------------
 
 Player_TouchEnemy:
-	tst.b	timeWarpFlag
+	tst.b	timeWarp
 	bne.s	.DamageEnemy
-	tst.b	invincibleFlag
+	tst.b	invincible
 	bne.s	.DamageEnemy
 	cmpi.b	#2,oAnim(a0)
 	bne.w	Player_TouchHazard
@@ -152,7 +152,7 @@ Player_TouchEnemy:
 	move.b	#0,oColType(a1)
 	subq.b	#1,oColStatus(a1)
 	bne.s	.End
-	bset	#7,oStatus(a1)
+	bset	#7,oFlags(a1)
 
 .End:
 	rts
@@ -160,7 +160,7 @@ Player_TouchEnemy:
 ; -------------------------------------------------------------------------
 
 .KillEnemy:
-	bset	#7,oStatus(a1)
+	bset	#7,oFlags(a1)
 	moveq	#0,d0
 	move.w	scoreChain.w,d0
 	addq.w	#2,scoreChain.w
@@ -178,7 +178,7 @@ Player_TouchEnemy:
 
 .GivePoints:
 	bsr.w	AddPoints
-	move.w	#$96,d0
+	move.w	#FM_DESTROY,d0
 	jsr	PlayFMSound
 	move.b	#$18,oID(a1)
 	move.b	#0,oRoutine(a1)
@@ -213,12 +213,12 @@ EnemyPoints:
 ; -------------------------------------------------------------------------
 
 Player_TouchHazard2:
-	bset	#7,oStatus(a1)
+	bset	#7,oFlags(a1)
 
 Player_TouchHazard:
-	tst.b	timeWarpFlag
+	tst.b	timeWarp
 	bne.s	.NoHurt
-	tst.b	invincibleFlag
+	tst.b	invincible
 	beq.s	.ChkHurt
 
 .NoHurt:
@@ -238,9 +238,9 @@ HurtPlayer:
 	andi.b	#%11100111,oPlayerCtrl(a0)
 	clr.w	oPlayerMoveLock(a0)
 
-	tst.b	shieldFlag
+	tst.b	shield
 	bne.s	.ClearShield
-	tst.w	levelRings
+	tst.w	rings
 	beq.w	.CheckKill
 	jsr	FindObjSlot
 	bne.s	.ClearShield
@@ -249,17 +249,17 @@ HurtPlayer:
 	move.w	oY(a0),oY(a1)
 
 .ClearShield:
-	bclr	#0,shieldFlag
+	bclr	#0,shield
 	bne.s	.SetHurt
-	move.b	#0,blueRing
+	move.b	#0,combineRing
 
 .SetHurt:
 	move.b	#4,oRoutine(a0)
 	bsr.w	Player_ResetOnFloor
-	bset	#1,oStatus(a0)
+	bset	#1,oFlags(a0)
 	move.w	#-$400,oYVel(a0)
 	move.w	#-$200,oXVel(a0)
-	btst	#6,oStatus(a0)
+	btst	#6,oFlags(a0)
 	beq.s	.NoWater
 	move.w	#-$200,oYVel(a0)
 	move.w	#-$100,oXVel(a0)
@@ -287,12 +287,12 @@ HurtPlayer:
 ; -------------------------------------------------------------------------
 
 KillPlayer:
-	tst.w	lvlDebugMode
+	tst.w	debugMode
 	bne.s	.End
-	move.b	#0,invincibleFlag
+	move.b	#0,invincible
 	move.b	#6,oRoutine(a0)
 	bsr.w	Player_ResetOnFloor
-	bset	#1,oStatus(a0)
+	bset	#1,oFlags(a0)
 	move.w	#-$700,oYVel(a0)
 	move.w	#0,oXVel(a0)
 	move.w	#0,oPlayerGVel(a0)
@@ -300,7 +300,7 @@ KillPlayer:
 	move.b	#$18,oAnim(a0)
 	bset	#7,oTile(a0)
 	move.b	#0,oPriority(a0)
-	move.w	#$93,d0
+	move.w	#FM_HURT,d0
 	jsr	PlayFMSound
 
 .End:
@@ -376,11 +376,11 @@ Player_TouchSpecial:
 ; -------------------------------------------------------------------------
 
 .Bubble:
-	move.b	oStatus(a0),d0
+	move.b	oFlags(a0),d0
 	andi.b	#%10100,d0
 	beq.s	.End2
-	bclr	#2,oStatus(a0)
-	bclr	#4,oStatus(a0)
+	bclr	#2,oFlags(a0)
+	bclr	#4,oFlags(a0)
 	clr.b	oColType(a1)
 	move.b	#$15,oAnim(a0)
 	move.w	#$400,oYVel(a0)

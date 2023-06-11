@@ -40,7 +40,7 @@ ObjTitleCard_Init:
 	move.b	#$3C,oID(a1)
 	move.b	#4,oRoutine(a1)
 	move.w	#$8360,oTile(a1)
-	move.l	#MapSpr_TitleCard,4(a1)
+	move.l	#MapSpr_TitleCard,oMap(a1)
 	move.w	d1,d2
 	lsl.w	#3,d2
 	move.w	(a2,d2.w),oYScr(a1)
@@ -50,7 +50,7 @@ ObjTitleCard_Init:
 	move.b	6(a2,d2.w),oMapFrame(a1)
 	cmpi.b	#5,d1
 	bne.s	.NotActNum
-	move.b	levelAct,d3
+	move.b	act,d3
 	add.b	d3,oMapFrame(a1)
 
 .NotActNum:

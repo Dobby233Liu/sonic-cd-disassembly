@@ -122,12 +122,12 @@ FID_ENDMAIN	rs.b	1			; Ending FMV (Main CPU)
 FID_GOODENDSUB	rs.b	1			; Bad ending FMV (Sub CPU)
 FID_BADENDSUB	rs.b	1			; Good ending FMV (Sub CPU)
 FID_FUNISINF	rs.b	1			; "Fun is infinite" screen
-FID_STAFF	rs.b	1			; Staff credits
+FID_SS8CREDS	rs.b	1			; Special stage 8 credits
 FID_MCSONIC	rs.b	1			; M.C. Sonic screen
 FID_TAILS	rs.b	1			; Tails screen
 FID_BATMAN	rs.b	1			; Batman Sonic screen
 FID_CUTESONIC	rs.b	1			; Cute Sonic screen
-FID_TIMES	rs.b	1			; Best staff times screen
+FID_STAFFTIMES	rs.b	1			; Best staff times screen
 FID_DUMMY5	rs.b	1			; Copy of sound test (Unused)
 FID_DUMMY6	rs.b	1			; Copy of sound test (Unused)
 FID_DUMMY7	rs.b	1			; Copy of sound test (Unused)
@@ -249,7 +249,7 @@ SCMD_BOSSMUS	rs.b	1			; Play boss music
 SCMD_FINALMUS	rs.b	1			; Play final boss music
 SCMD_TITLEMUS	rs.b	1			; Play title screen music
 SCMD_TMATKMUS	rs.b	1			; Play time attack menu music
-SCMD_LVLENDMUS	rs.b	1			; Play level end music
+SCMD_RESULTMUS	rs.b	1			; Play results music
 SCMD_SHOESMUS	rs.b	1			; Play speed shoes music
 SCMD_INVINCMUS	rs.b	1			; Play invincibility music
 SCMD_GMOVERMUS	rs.b	1			; Play game over music
@@ -268,9 +268,9 @@ SCMD_YESSFX	rs.b	1			; Play "Yes" voice clip
 SCMD_YEAHSFX	rs.b	1			; Play "Yeah" voice clip
 SCMD_GIGGLESFX	rs.b	1			; Play Amy giggle voice clip
 SCMD_YELPSFX	rs.b	1			; Play Amy yelp voice clip
-SCMD_STOMPSFX	rs.b	1			; Play boss stomp sound
+SCMD_STOMPSFX	rs.b	1			; Play mech stomp sound
 SCMD_BUMPERSFX	rs.b	1			; Play bumper sound
-SCMD_PastMUS	rs.b	1			; Play Past music
+SCMD_PASTMUS	rs.b	1			; Play Past music
 SCMD_DAGARDEN	rs.b	1			; Load D.A. Garden
 SCMD_FADEPCM	rs.b	1			; Fade out PCM
 SCMD_STOPPCM	rs.b	1			; Stop PCM
@@ -299,7 +299,7 @@ SCMD_YESSFXT	rs.b	1			; Play "Yes" voice clip (sound test)
 SCMD_YEAHSFXT	rs.b	1			; Play "Yeah" voice clip (sound test)
 SCMD_GIGGLESFXT	rs.b	1			; Play Amy giggle voice clip (sound test)
 SCMD_YELPSFXT	rs.b	1			; Play Amy yelp voice clip (sound test)
-SCMD_STOMPSFXT	rs.b	1			; Play boss stomp sound (sound test)
+SCMD_STOMPSFXT	rs.b	1			; Play mech stomp sound (sound test)
 SCMD_BUMPERSFXT	rs.b	1			; Play bumper sound (sound test)
 SCMD_R1BMUST	rs.b	1			; Play Palmtree Panic Past music (sound test)
 SCMD_R3BMUST	rs.b	1			; Play Collision Chaos Past music (sound test)
@@ -309,7 +309,7 @@ SCMD_R6BMUST	rs.b	1			; Play Palmtree Panic Past music (sound test)
 SCMD_R7BMUST	rs.b	1			; Play Palmtree Panic Past music (sound test)
 SCMD_R8BMUST	rs.b	1			; Play Palmtree Panic Past music (sound test)
 SCMD_FUNISINF	rs.b	1			; Load "Fun is infinite" screen
-SCMD_STAFFCREDS	rs.b	1			; Load staff credits
+SCMD_SS8CREDS	rs.b	1			; Load special stage 8 credits
 SCMD_MCSONIC	rs.b	1			; Load M.C. Sonic screen
 SCMD_TAILS	rs.b	1			; Load Tails screen
 SCMD_BATMAN	rs.b	1			; Load Batman Sonic screen
@@ -399,7 +399,7 @@ FILENAMESZ	EQU	12			; File name length
 
 	rsset	SPVariables
 curPCMDriver	rs.l	1			; Current PCM driver
-ssFlags		rs.b	1			; Special stage flags
+ssFlagsCopy	rs.b	1			; Special stage flags copy
 pcmDrvFlags	rs.b	1			; PCM driver flags
 		rs.b	$400-__rs
 SPVARSSZ	rs.b	1			; Size of structure

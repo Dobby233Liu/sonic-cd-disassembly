@@ -11,6 +11,8 @@
 	include	"_Include/Backup RAM.i"
 	include	"_Include/Sound.i"
 	include	"Sound Drivers/PCM/_Variables.i"
+	include	"Special Stage/_Global Variables.i"
+	include	"DA Garden/Track Title Labels.i"
 
 ; -------------------------------------------------------------------------
 ; Files
@@ -18,13 +20,13 @@
 
 	org	SPX
 File_R11A:
-	dc.b	"R11A__.MMD;1", 0		; Palmtree Panic Act 1 present
+	dc.b	"R11A__.MMD;1", 0		; Palmtree Panic Act 1 Present
 File_R11B:
-	dc.b	"R11B__.MMD;1", 0		; Palmtree Panic Act 1 past
+	dc.b	"R11B__.MMD;1", 0		; Palmtree Panic Act 1 Past
 File_R11C:
-	dc.b	"R11C__.MMD;1", 0		; Palmtree Panic Act 1 good future
+	dc.b	"R11C__.MMD;1", 0		; Palmtree Panic Act 1 Good Future
 File_R11D:
-	dc.b	"R11D__.MMD;1", 0		; Palmtree Panic Act 1 bad future
+	dc.b	"R11D__.MMD;1", 0		; Palmtree Panic Act 1 Bad Future
 File_MDInit:
 	dc.b	"MDINIT.MMD;1", 0		; Mega Drive initialization
 File_SoundTest:
@@ -32,13 +34,13 @@ File_SoundTest:
 File_StageSelect:
 	dc.b	"STSEL_.MMD;1", 0		; Stage select
 File_R12A:
-	dc.b	"R12A__.MMD;1", 0		; Palmtree Panic Act 2 present
+	dc.b	"R12A__.MMD;1", 0		; Palmtree Panic Act 2 Present
 File_R12B:
-	dc.b	"R12B__.MMD;1", 0		; Palmtree Panic Act 2 past
+	dc.b	"R12B__.MMD;1", 0		; Palmtree Panic Act 2 Past
 File_R12C:
-	dc.b	"R12C__.MMD;1", 0		; Palmtree Panic Act 2 good future
+	dc.b	"R12C__.MMD;1", 0		; Palmtree Panic Act 2 Good Future
 File_R12D:
-	dc.b	"R12D__.MMD;1", 0		; Palmtree Panic Act 2 bad future
+	dc.b	"R12D__.MMD;1", 0		; Palmtree Panic Act 2 Bad Future
 File_TitleMain:
 	dc.b	"TITLEM.MMD;1", 0		; Title screen (Main CPU)
 File_TitleSub:
@@ -70,129 +72,129 @@ File_DAGardenMain:
 File_DAGardenSub:
 	dc.b	"PLANET_S.BIN;1", 0		; D.A. Garden (Sub CPU)
 File_R31A:
-	dc.b	"R31A__.MMD;1", 0		; Collision Chaos Act 1 present
+	dc.b	"R31A__.MMD;1", 0		; Collision Chaos Act 1 Present
 File_R31B:
-	dc.b	"R31B__.MMD;1", 0		; Collision Chaos Act 1 past
+	dc.b	"R31B__.MMD;1", 0		; Collision Chaos Act 1 Past
 File_R31C:
-	dc.b	"R31C__.MMD;1", 0		; Collision Chaos Act 1 good future
+	dc.b	"R31C__.MMD;1", 0		; Collision Chaos Act 1 Good Future
 File_R31D:
-	dc.b	"R31D__.MMD;1", 0		; Collision Chaos Act 1 bad future
+	dc.b	"R31D__.MMD;1", 0		; Collision Chaos Act 1 Bad Future
 File_R32A:
-	dc.b	"R32A__.MMD;1", 0		; Collision Chaos Act 2 present
+	dc.b	"R32A__.MMD;1", 0		; Collision Chaos Act 2 Present
 File_R32B:
-	dc.b	"R32B__.MMD;1", 0		; Collision Chaos Act 2 past
+	dc.b	"R32B__.MMD;1", 0		; Collision Chaos Act 2 Past
 File_R32C:
-	dc.b	"R32C__.MMD;1", 0		; Collision Chaos Act 2 good future
+	dc.b	"R32C__.MMD;1", 0		; Collision Chaos Act 2 Good Future
 File_R32D:
-	dc.b	"R32D__.MMD;1", 0		; Collision Chaos Act 2 bad future
+	dc.b	"R32D__.MMD;1", 0		; Collision Chaos Act 2 Bad Future
 File_R33C:
-	dc.b	"R33C__.MMD;1", 0		; Collision Chaos Act 3 good future
+	dc.b	"R33C__.MMD;1", 0		; Collision Chaos Act 3 Good Future
 File_R33D:
-	dc.b	"R33D__.MMD;1", 0		; Collision Chaos Act 3 bad future
+	dc.b	"R33D__.MMD;1", 0		; Collision Chaos Act 3 Bad Future
 File_R13C:
-	dc.b	"R13C__.MMD;1", 0		; Palmtree Panic Act 3 good future
+	dc.b	"R13C__.MMD;1", 0		; Palmtree Panic Act 3 Good Future
 File_R13D:
-	dc.b	"R13D__.MMD;1", 0		; Palmtree Panic Act 3 bad future
+	dc.b	"R13D__.MMD;1", 0		; Palmtree Panic Act 3 Bad Future
 File_R41A:
-	dc.b	"R41A__.MMD;1", 0		; Tidal Tempest Act 1 present
+	dc.b	"R41A__.MMD;1", 0		; Tidal Tempest Act 1 Present
 File_R41B:
-	dc.b	"R41B__.MMD;1", 0		; Tidal Tempest Act 1 past
+	dc.b	"R41B__.MMD;1", 0		; Tidal Tempest Act 1 Past
 File_R41C:
-	dc.b	"R41C__.MMD;1", 0		; Tidal Tempest Act 1 good future
+	dc.b	"R41C__.MMD;1", 0		; Tidal Tempest Act 1 Good Future
 File_R41D:
-	dc.b	"R41D__.MMD;1", 0		; Tidal Tempest Act 1 bad future
+	dc.b	"R41D__.MMD;1", 0		; Tidal Tempest Act 1 Bad Future
 File_R42A:
-	dc.b	"R42A__.MMD;1", 0		; Tidal Tempest Act 2 present
+	dc.b	"R42A__.MMD;1", 0		; Tidal Tempest Act 2 Present
 File_R42B:
-	dc.b	"R42B__.MMD;1", 0		; Tidal Tempest Act 2 past
+	dc.b	"R42B__.MMD;1", 0		; Tidal Tempest Act 2 Past
 File_R42C:
-	dc.b	"R42C__.MMD;1", 0		; Tidal Tempest Act 2 good future
+	dc.b	"R42C__.MMD;1", 0		; Tidal Tempest Act 2 Good Future
 File_R42D:
-	dc.b	"R42D__.MMD;1", 0		; Tidal Tempest Act 2 bad future
+	dc.b	"R42D__.MMD;1", 0		; Tidal Tempest Act 2 Bad Future
 File_R43C:
-	dc.b	"R43C__.MMD;1", 0		; Tidal Tempest Act 3 good future
+	dc.b	"R43C__.MMD;1", 0		; Tidal Tempest Act 3 Good Future
 File_R43D:
-	dc.b	"R43D__.MMD;1", 0		; Tidal Tempest Act 3 bad future
+	dc.b	"R43D__.MMD;1", 0		; Tidal Tempest Act 3 Bad Future
 File_R51A:
-	dc.b	"R51A__.MMD;1", 0		; Quartz Quadrant Act 1 present
+	dc.b	"R51A__.MMD;1", 0		; Quartz Quadrant Act 1 Present
 File_R51B:
-	dc.b	"R51B__.MMD;1", 0		; Quartz Quadrant Act 1 past
+	dc.b	"R51B__.MMD;1", 0		; Quartz Quadrant Act 1 Past
 File_R51C:
-	dc.b	"R51C__.MMD;1", 0		; Quartz Quadrant Act 1 good future
+	dc.b	"R51C__.MMD;1", 0		; Quartz Quadrant Act 1 Good Future
 File_R51D:
-	dc.b	"R51D__.MMD;1", 0		; Quartz Quadrant Act 1 bad future
+	dc.b	"R51D__.MMD;1", 0		; Quartz Quadrant Act 1 Bad Future
 File_R52A:
-	dc.b	"R52A__.MMD;1", 0		; Quartz Quadrant Act 2 present
+	dc.b	"R52A__.MMD;1", 0		; Quartz Quadrant Act 2 Present
 File_R52B:
-	dc.b	"R52B__.MMD;1", 0		; Quartz Quadrant Act 2 past
+	dc.b	"R52B__.MMD;1", 0		; Quartz Quadrant Act 2 Past
 File_R52C:
-	dc.b	"R52C__.MMD;1", 0		; Quartz Quadrant Act 2 good future
+	dc.b	"R52C__.MMD;1", 0		; Quartz Quadrant Act 2 Good Future
 File_R52D:
-	dc.b	"R52D__.MMD;1", 0		; Quartz Quadrant Act 2 bad future
+	dc.b	"R52D__.MMD;1", 0		; Quartz Quadrant Act 2 Bad Future
 File_R53C:
-	dc.b	"R53C__.MMD;1", 0		; Quartz Quadrant Act 3 good future
+	dc.b	"R53C__.MMD;1", 0		; Quartz Quadrant Act 3 Good Future
 File_R53D:
-	dc.b	"R53D__.MMD;1", 0		; Quartz Quadrant Act 3 bad future
+	dc.b	"R53D__.MMD;1", 0		; Quartz Quadrant Act 3 Bad Future
 File_R61A:
-	dc.b	"R61A__.MMD;1", 0		; Wacky Workbench Act 1 present
+	dc.b	"R61A__.MMD;1", 0		; Wacky Workbench Act 1 Present
 File_R61B:
-	dc.b	"R61B__.MMD;1", 0		; Wacky Workbench Act 1 past
+	dc.b	"R61B__.MMD;1", 0		; Wacky Workbench Act 1 Past
 File_R61C:
-	dc.b	"R61C__.MMD;1", 0		; Wacky Workbench Act 1 good future
+	dc.b	"R61C__.MMD;1", 0		; Wacky Workbench Act 1 Good Future
 File_R61D:
-	dc.b	"R61D__.MMD;1", 0		; Wacky Workbench Act 1 bad future
+	dc.b	"R61D__.MMD;1", 0		; Wacky Workbench Act 1 Bad Future
 File_R62A:
-	dc.b	"R62A__.MMD;1", 0		; Wacky Workbench Act 2 present
+	dc.b	"R62A__.MMD;1", 0		; Wacky Workbench Act 2 Present
 File_R62B:
-	dc.b	"R62B__.MMD;1", 0		; Wacky Workbench Act 2 past
+	dc.b	"R62B__.MMD;1", 0		; Wacky Workbench Act 2 Past
 File_R62C:
-	dc.b	"R62C__.MMD;1", 0		; Wacky Workbench Act 2 good future
+	dc.b	"R62C__.MMD;1", 0		; Wacky Workbench Act 2 Good Future
 File_R62D:
-	dc.b	"R62D__.MMD;1", 0		; Wacky Workbench Act 2 bad future
+	dc.b	"R62D__.MMD;1", 0		; Wacky Workbench Act 2 Bad Future
 File_R63C:
-	dc.b	"R63C__.MMD;1", 0		; Wacky Workbench Act 3 good future
+	dc.b	"R63C__.MMD;1", 0		; Wacky Workbench Act 3 Good Future
 File_R63D:
-	dc.b	"R63D__.MMD;1", 0		; Wacky Workbench Act 3 bad future
+	dc.b	"R63D__.MMD;1", 0		; Wacky Workbench Act 3 Bad Future
 File_R71A:
-	dc.b	"R71A__.MMD;1", 0		; Stardust Speedway Act 1 present
+	dc.b	"R71A__.MMD;1", 0		; Stardust Speedway Act 1 Present
 File_R71B:
-	dc.b	"R71B__.MMD;1", 0		; Stardust Speedway Act 1 past
+	dc.b	"R71B__.MMD;1", 0		; Stardust Speedway Act 1 Past
 File_R71C:
-	dc.b	"R71C__.MMD;1", 0		; Stardust Speedway Act 1 good future
+	dc.b	"R71C__.MMD;1", 0		; Stardust Speedway Act 1 Good Future
 File_R71D:
-	dc.b	"R71D__.MMD;1", 0		; Stardust Speedway Act 1 bad future
+	dc.b	"R71D__.MMD;1", 0		; Stardust Speedway Act 1 Bad Future
 File_R72A:
-	dc.b	"R72A__.MMD;1", 0		; Stardust Speedway Act 2 present
+	dc.b	"R72A__.MMD;1", 0		; Stardust Speedway Act 2 Present
 File_R72B:
-	dc.b	"R72B__.MMD;1", 0		; Stardust Speedway Act 2 past
+	dc.b	"R72B__.MMD;1", 0		; Stardust Speedway Act 2 Past
 File_R72C:
-	dc.b	"R72C__.MMD;1", 0		; Stardust Speedway Act 2 good future
+	dc.b	"R72C__.MMD;1", 0		; Stardust Speedway Act 2 Good Future
 File_R72D:
-	dc.b	"R72D__.MMD;1", 0		; Stardust Speedway Act 2 bad future
+	dc.b	"R72D__.MMD;1", 0		; Stardust Speedway Act 2 Bad Future
 File_R73C:
-	dc.b	"R73C__.MMD;1", 0		; Stardust Speedway Act 3 good future
+	dc.b	"R73C__.MMD;1", 0		; Stardust Speedway Act 3 Good Future
 File_R73D:
-	dc.b	"R73D__.MMD;1", 0		; Stardust Speedway Act 3 bad future
+	dc.b	"R73D__.MMD;1", 0		; Stardust Speedway Act 3 Bad Future
 File_R81A:
-	dc.b	"R81A__.MMD;1", 0		; Metallic Madness Act 1 present
+	dc.b	"R81A__.MMD;1", 0		; Metallic Madness Act 1 Present
 File_R81B:
-	dc.b	"R81B__.MMD;1", 0		; Metallic Madness Act 1 past
+	dc.b	"R81B__.MMD;1", 0		; Metallic Madness Act 1 Past
 File_R81C:
-	dc.b	"R81C__.MMD;1", 0		; Metallic Madness Act 1 good future
+	dc.b	"R81C__.MMD;1", 0		; Metallic Madness Act 1 Good Future
 File_R81D:
-	dc.b	"R81D__.MMD;1", 0		; Metallic Madness Act 1 bad future
+	dc.b	"R81D__.MMD;1", 0		; Metallic Madness Act 1 Bad Future
 File_R82A:
-	dc.b	"R82A__.MMD;1", 0		; Metallic Madness Act 2 present
+	dc.b	"R82A__.MMD;1", 0		; Metallic Madness Act 2 Present
 File_R82B:
-	dc.b	"R82B__.MMD;1", 0		; Metallic Madness Act 2 past
+	dc.b	"R82B__.MMD;1", 0		; Metallic Madness Act 2 Past
 File_R82C:
-	dc.b	"R82C__.MMD;1", 0		; Metallic Madness Act 2 good future
+	dc.b	"R82C__.MMD;1", 0		; Metallic Madness Act 2 Good Future
 File_R82D:
-	dc.b	"R82D__.MMD;1", 0		; Metallic Madness Act 2 bad future
+	dc.b	"R82D__.MMD;1", 0		; Metallic Madness Act 2 Bad Future
 File_R83C:
-	dc.b	"R83C__.MMD;1", 0		; Metallic Madness Act 3 good future
+	dc.b	"R83C__.MMD;1", 0		; Metallic Madness Act 3 Good Future
 File_R83D:
-	dc.b	"R83D__.MMD;1", 0		; Metallic Madness Act 3 bad future
+	dc.b	"R83D__.MMD;1", 0		; Metallic Madness Act 3 Bad Future
 File_SpecialMain:
 	dc.b	"SPMM__.MMD;1", 0		; Special Stage (Main CPU)
 File_SpecialSub:
@@ -216,9 +218,9 @@ File_BossPCM:
 File_FinalPCM:
 	dc.b	"SNCBNKB2.BIN;1", 0		; PCM driver (Final boss)
 File_DAGardenData:
-	dc.b	"PLANET_D.BIN;1", 0		; D.A Garden data
+	dc.b	"PLANET_D.BIN;1", 0		; D.A Garden track title data
 File_Demo11A:
-	dc.b	"DEMO11A.MMD;1", 0		; Palmtree Panic Act 1 present demo
+	dc.b	"DEMO11A.MMD;1", 0		; Palmtree Panic Act 1 Present demo
 File_VisualMode:
 	dc.b	"VM____.MMD;1", 0		; Visual Mode
 File_BuRAMInit:
@@ -241,8 +243,8 @@ File_BadEndSub:
 	dc.b	"BADEND.BIN;1", 0 		; Bad ending FMV (Sub CPU)
 File_FunIsInf:
 	dc.b	"NISI.MMD;1", 0			; "Fun is infinite" screen
-File_StaffCredits:
-	dc.b	"SPEEND.MMD;1", 0		; Staff credits
+File_SS8Credits:
+	dc.b	"SPEEND.MMD;1", 0		; Special stage 8 credits
 File_MCSonic:
 	dc.b	"DUMMY0.MMD;1", 0		; M.C. Sonic screen
 File_Tails:
@@ -254,23 +256,23 @@ File_CuteSonic:
 File_StaffTimes:
 	dc.b	"DUMMY4.MMD;1", 0		; Best staff times screen
 File_Dummy5:
-	dc.b	"DUMMY5.MMD;1", 0		; Copy of sound test (Unused)
+	dc.b	"DUMMY5.MMD;1", 0		; Copy of prototype sound test (Unused)
 File_Dummy6:
-	dc.b	"DUMMY6.MMD;1", 0		; Copy of sound test (Unused)
+	dc.b	"DUMMY6.MMD;1", 0		; Copy of prototype sound test (Unused)
 File_Dummy7:
-	dc.b	"DUMMY7.MMD;1", 0		; Copy of sound test (Unused)
+	dc.b	"DUMMY7.MMD;1", 0		; Copy of prototype sound test (Unused)
 File_Dummy8:
-	dc.b	"DUMMY8.MMD;1", 0		; Copy of sound test (Unused)
+	dc.b	"DUMMY8.MMD;1", 0		; Copy of prototype sound test (Unused)
 File_Dummy9:
-	dc.b	"DUMMY9.MMD;1", 0		; Copy of sound test (Unused)
+	dc.b	"DUMMY9.MMD;1", 0		; Copy of prototype sound test (Unused)
 File_PencilTestMain:
 	dc.b	"PTEST.MMD;1", 0		; Pencil test FMV (Main CPU)
 File_PencilTestSub:
 	dc.b	"PTEST.BIN;1", 0		; Pencil test FMV (Sub CPU)
 File_Demo43C:
-	dc.b	"DEMO43C.MMD;1", 0		; Tidal Tempest Act 3 good future demo
+	dc.b	"DEMO43C.MMD;1", 0		; Tidal Tempest Act 3 Good Future demo
 File_Demo82A:
-	dc.b	"DEMO82A.MMD;1", 0		; Metallic Madness Act 2 present demo
+	dc.b	"DEMO82A.MMD;1", 0		; Metallic Madness Act 2 Present demo
 	even
 
 ; -------------------------------------------------------------------------
@@ -331,120 +333,120 @@ BuRAMWriteParams:
 
 .SPCmds:
 	dc.w	0				; Invalid
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 1 present
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 1 past
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 1 good future
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 1 bad future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 1 Present
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 1 Past
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 1 Good Future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 1 Bad Future
 	dc.w	SPCmd_LoadMDInit-.SPCmds	; Load Mega Drive initialization
 	dc.w	SPCmd_LoadStageSel-.SPCmds	; Load stage select
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 2 present
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 2 past
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 2 good future
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 2 bad future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 2 Present
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 2 Past
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 2 Good Future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 2 Bad Future
 	dc.w	SPCmd_LoadTitle-.SPCmds		; Load title screen
 	dc.w	SPCmd_LoadWarp-.SPCmds		; Load warp sequence
 	dc.w	SPCmd_LoadTimeAttack-.SPCmds	; Load time attack menu
 	dc.w	SPCmd_FadeOutCDDA-.SPCmds	; Fade out CDDA music
-	dc.w	SPCmd_PlayR1AMus-.SPCmds	; Play Palmtree Panic present music
-	dc.w	SPCmd_PlayR1CMus-.SPCmds	; Play Palmtree Panic good future music
-	dc.w	SPCmd_PlayR1DMus-.SPCmds	; Play Palmtree Panic bad future music
-	dc.w	SPCmd_PlayR3AMus-.SPCmds	; Play Collision Chaos present music
-	dc.w	SPCmd_PlayR3CMus-.SPCmds	; Play Collision Chaos good future music
-	dc.w	SPCmd_PlayR3DMus-.SPCmds	; Play Collision Chaos bad future music
-	dc.w	SPCmd_PlayR4AMus-.SPCmds	; Play Tidal Tempest present music
-	dc.w	SPCmd_PlayR4CMus-.SPCmds	; Play Tidal Tempest good future music
-	dc.w	SPCmd_PlayR4DMus-.SPCmds	; Play Tidal Tempest bad future music
-	dc.w	SPCmd_PlayR5AMus-.SPCmds	; Play Quartz Quadrant present music
-	dc.w	SPCmd_PlayR5CMus-.SPCmds	; Play Quartz Quadrant good future music
-	dc.w	SPCmd_PlayR5DMus-.SPCmds	; Play Quartz Quadrant bad future music
-	dc.w	SPCmd_PlayR6AMus-.SPCmds	; Play Wacky Workbench present music
-	dc.w	SPCmd_PlayR6CMus-.SPCmds	; Play Wacky Workbench good future music
-	dc.w	SPCmd_PlayR6DMus-.SPCmds	; Play Wacky Workbench bad future music
-	dc.w	SPCmd_PlayR7AMus-.SPCmds	; Play Stardust Speedway present music
-	dc.w	SPCmd_PlayR7CMus-.SPCmds	; Play Stardust Speedway good future music
-	dc.w	SPCmd_PlayR7DMus-.SPCmds	; Play Stardust Speedway bad future music
-	dc.w	SPCmd_PlayR8AMus-.SPCmds	; Play Metallic Madness present music
-	dc.w	SPCmd_PlayR8CMus-.SPCmds	; Play Metallic Madness good future music
+	dc.w	SPCmd_PlayR1AMus-.SPCmds	; Play Palmtree Panic Present music
+	dc.w	SPCmd_PlayR1CMus-.SPCmds	; Play Palmtree Panic Good Future music
+	dc.w	SPCmd_PlayR1DMus-.SPCmds	; Play Palmtree Panic Bad Future music
+	dc.w	SPCmd_PlayR3AMus-.SPCmds	; Play Collision Chaos Present music
+	dc.w	SPCmd_PlayR3CMus-.SPCmds	; Play Collision Chaos Good Future music
+	dc.w	SPCmd_PlayR3DMus-.SPCmds	; Play Collision Chaos Bad Future music
+	dc.w	SPCmd_PlayR4AMus-.SPCmds	; Play Tidal Tempest Present music
+	dc.w	SPCmd_PlayR4CMus-.SPCmds	; Play Tidal Tempest Good Future music
+	dc.w	SPCmd_PlayR4DMus-.SPCmds	; Play Tidal Tempest Bad Future music
+	dc.w	SPCmd_PlayR5AMus-.SPCmds	; Play Quartz Quadrant Present music
+	dc.w	SPCmd_PlayR5CMus-.SPCmds	; Play Quartz Quadrant Good Future music
+	dc.w	SPCmd_PlayR5DMus-.SPCmds	; Play Quartz Quadrant Bad Future music
+	dc.w	SPCmd_PlayR6AMus-.SPCmds	; Play Wacky Workbench Present music
+	dc.w	SPCmd_PlayR6CMus-.SPCmds	; Play Wacky Workbench Good Future music
+	dc.w	SPCmd_PlayR6DMus-.SPCmds	; Play Wacky Workbench Bad Future music
+	dc.w	SPCmd_PlayR7AMus-.SPCmds	; Play Stardust Speedway Present music
+	dc.w	SPCmd_PlayR7CMus-.SPCmds	; Play Stardust Speedway Good Future music
+	dc.w	SPCmd_PlayR7DMus-.SPCmds	; Play Stardust Speedway Bad Future music
+	dc.w	SPCmd_PlayR8AMus-.SPCmds	; Play Metallic Madness Present music
+	dc.w	SPCmd_PlayR8CMus-.SPCmds	; Play Metallic Madness Good Future music
 	dc.w	SPCmd_LoadIPX-.SPCmds		; Load main program
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 3 good future demo
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 2 present demo
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 3 Good Future demo
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 2 Present demo
 	dc.w	SPCmd_LoadSndTest-.SPCmds	; Load sound test
 	dc.w	SPCmd_LoadLevel-.SPCmds		; Invalid
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 1 present
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 1 past
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 1 good future
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 1 bad future
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 2 present 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 2 past 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 2 good future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 2 bad future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 3 good future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 3 bad future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 3 good future
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 3 bad future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 1 present
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 1 past
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 1 good future
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 1 bad future
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 2 present 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 2 past 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 2 good future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 2 bad future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 3 good future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 3 bad future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 1 present
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 1 past
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 1 good future
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 1 bad future
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 2 present 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 2 past 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 2 good future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 2 bad future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 3 good future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 3 bad future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 1 present
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 1 past
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 1 good future
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 1 bad future
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 2 present 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 2 past 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 2 good future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 2 bad future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 3 good future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 3 bad future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 1 present
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 1 past
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 1 good future
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 1 bad future
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 2 present 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 2 past 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 2 good future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 2 bad future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 3 good future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 3 bad future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 1 present
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 1 past
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 1 good future
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 1 bad future
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 2 present 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 2 past 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 2 good future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 2 bad future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 3 good future 
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 3 bad future 
-	dc.w	SPCmd_PlayR8DMus-.SPCmds	; Play Metallic Madness bad future music
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 1 Present
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 1 Past
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 1 Good Future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 1 Bad Future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 2 Present 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 2 Past 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 2 Good Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 2 Bad Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 3 Good Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Collision Chaos Act 3 Bad Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 3 Good Future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 3 Bad Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 1 Present
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 1 Past
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 1 Good Future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 1 Bad Future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 2 Present 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 2 Past 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 2 Good Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 2 Bad Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 3 Good Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Tidal Tempest Act 3 Bad Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 1 Present
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 1 Past
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 1 Good Future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 1 Bad Future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 2 Present 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 2 Past 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 2 Good Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 2 Bad Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 3 Good Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Quartz Quadrant Act 3 Bad Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 1 Present
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 1 Past
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 1 Good Future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 1 Bad Future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 2 Present 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 2 Past 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 2 Good Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 2 Bad Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 3 Good Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Wacky Workbench Act 3 Bad Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 1 Present
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 1 Past
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 1 Good Future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 1 Bad Future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 2 Present 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 2 Past 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 2 Good Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 2 Bad Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 3 Good Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Stardust Speedway Act 3 Bad Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 1 Present
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 1 Past
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 1 Good Future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 1 Bad Future
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 2 Present 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 2 Past 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 2 Good Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 2 Bad Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 3 Good Future 
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Metallic Madness Act 3 Bad Future 
+	dc.w	SPCmd_PlayR8DMus-.SPCmds	; Play Metallic Madness Bad Future music
 	dc.w	SPCmd_PlayBossMus-.SPCmds	; Play boss music
 	dc.w	SPCmd_PlayFinalMus-.SPCmds	; Play final boss music
 	dc.w	SPCmd_PlayTitleMus-.SPCmds	; Play title screen music
 	dc.w	SPCmd_PlayTimeAtkMus-.SPCmds	; Play time attack menu music
-	dc.w	SPCmd_PlayLvlEndMus-.SPCmds	; Play level end music
+	dc.w	SPCmd_PlayResultsMus-.SPCmds	; Play results music
 	dc.w	SPCmd_PlayShoesMus-.SPCmds	; Play speed shoes music
 	dc.w	SPCmd_PlayInvincMus-.SPCmds	; Play invincibility music
 	dc.w	SPCmd_PlayGameOverMus-.SPCmds	; Play game over music
-	dc.w	SPCmd_PlaySpecialMus-.SPCmds	; Play special stage music
+	dc.w	SPCmd_PlaySpecStgMus-.SPCmds	; Play special stage music
 	dc.w	SPCmd_PlayDAGardenMus-.SPCmds	; Play D.A. Garden music
 	dc.w	SPCmd_PlayProtoWarp-.SPCmds	; Play prototype warp sound
-	dc.w	SPCmd_PlayIntroMus-.SPCmds	; Play opening music
+	dc.w	SPCmd_PlayOpeningMus-.SPCmds	; Play opening music
 	dc.w	SPCmd_PlayEndingMus-.SPCmds	; Play ending music
 	dc.w	SPCmd_StopCDDA-.SPCmds		; Stop CDDA music
 	dc.w	SPCmd_LoadSpecStage-.SPCmds	; Load special stage
@@ -456,13 +458,13 @@ BuRAMWriteParams:
 	dc.w	SPCmd_PlayYeahSFX-.SPCmds	; Play "Yeah" voice clip
 	dc.w	SPCmd_PlayGiggleSFX-.SPCmds	; Play Amy giggle voice clip
 	dc.w	SPCmd_PlayAmyYelpSFX-.SPCmds	; Play Amy yelp voice clip
-	dc.w	SPCmd_PlayStompSFX-.SPCmds	; Play boss stomp sound
+	dc.w	SPCmd_PlayStompSFX-.SPCmds	; Play mech stomp sound
 	dc.w	SPCmd_PlayBumperSFX-.SPCmds	; Play bumper sound
 	dc.w	SPCmd_PlayPastMus-.SPCmds	; Play past music
 	dc.w	SPCmd_LoadDAGarden-.SPCmds	; Load D.A. Garden
 	dc.w	SPCmd_FadeOutPCM-.SPCmds	; Fade out PCM
 	dc.w	SPCmd_StopPCM-.SPCmds		; Stop PCM
-	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 1 present demo
+	dc.w	SPCmd_LoadLevel-.SPCmds		; Load Palmtree Panic Act 1 Present demo
 	dc.w	SPCmd_LoadVisualMode-.SPCmds	; Load Visual Mode menu
 	dc.w	SPCmd_ResetSSFlags2-.SPCmds	; Reset special stage flags
 	dc.w	SPCmd_ReadSaveData-.SPCmds	; Read save data
@@ -487,17 +489,17 @@ BuRAMWriteParams:
 	dc.w	SPCmd_TestYeahSFX-.SPCmds	; Play "Yeah" voice clip (sound test)
 	dc.w	SPCmd_TestGiggleSFX-.SPCmds	; Play Amy giggle voice clip (sound test)
 	dc.w	SPCmd_TestAmyYelpSFX-.SPCmds	; Play Amy yelp voice clip (sound test)
-	dc.w	SPCmd_TestStompSFX-.SPCmds	; Play boss stomp sound (sound test)
+	dc.w	SPCmd_TestStompSFX-.SPCmds	; Play mech stomp sound (sound test)
 	dc.w	SPCmd_TestBumperSFX-.SPCmds	; Play bumper sound (sound test)
-	dc.w	SPCmd_TestR1BMus-.SPCmds	; Play Palmtree Panic past music (sound test)
-	dc.w	SPCmd_TestR3BMus-.SPCmds	; Play Collision Chaos past music (sound test)
-	dc.w	SPCmd_TestR4BMus-.SPCmds	; Play Tidal Tempest past music (sound test)
-	dc.w	SPCmd_TestR5BMus-.SPCmds	; Play Quartz Quadrant past music (sound test)
-	dc.w	SPCmd_TestR6BMus-.SPCmds	; Play Palmtree Panic past music (sound test)
-	dc.w	SPCmd_TestR7BMus-.SPCmds	; Play Palmtree Panic past music (sound test)
-	dc.w	SPCmd_TestR8BMus-.SPCmds	; Play Palmtree Panic past music (sound test)
+	dc.w	SPCmd_TestR1BMus-.SPCmds	; Play Palmtree Panic Past music (sound test)
+	dc.w	SPCmd_TestR3BMus-.SPCmds	; Play Collision Chaos Past music (sound test)
+	dc.w	SPCmd_TestR4BMus-.SPCmds	; Play Tidal Tempest Past music (sound test)
+	dc.w	SPCmd_TestR5BMus-.SPCmds	; Play Quartz Quadrant Past music (sound test)
+	dc.w	SPCmd_TestR6BMus-.SPCmds	; Play Palmtree Panic Past music (sound test)
+	dc.w	SPCmd_TestR7BMus-.SPCmds	; Play Palmtree Panic Past music (sound test)
+	dc.w	SPCmd_TestR8BMus-.SPCmds	; Play Palmtree Panic Past music (sound test)
 	dc.w	SPCmd_LoadFunIsInf-.SPCmds	; Load "Fun is infinite" screen
-	dc.w	SPCmd_LoadStaffCreds-.SPCmds	; Load staff credits
+	dc.w	SPCmd_LoadSS8Credits-.SPCmds	; Load special stage 8 credits
 	dc.w	SPCmd_LoadMCSonic-.SPCmds	; Load M.C. Sonic screen
 	dc.w	SPCmd_LoadTails-.SPCmds		; Load Tails screen
 	dc.w	SPCmd_LoadBatmanSonic-.SPCmds	; Load Batman Sonic screen
@@ -585,10 +587,10 @@ SPCmd_LoadThankYou:
 
 SPCmd_ResetSSFlags:
 	moveq	#0,d0
-	move.b	d0,GACOMSTATA.w
-	move.b	d0,GACOMSTAT3.w
-	move.l	d0,GACOMSTAT6.w
-	move.w	d0,GACOMSTAT4.w
+	move.b	d0,timeStonesSub.w		; Reset time stones retrieved
+	move.b	d0,specStageID.w		; Reset stage ID
+	move.l	d0,specStageTimer.w		; Reset timer
+	move.w	d0,specStageRings.w		; Reset rings
 	bra.w	SPCmdFinish
 
 ; -------------------------------------------------------------------------
@@ -597,10 +599,10 @@ SPCmd_ResetSSFlags:
 
 SPCmd_ResetSSFlags2:
 	moveq	#0,d0
-	move.b	d0,GACOMSTATA.w
-	move.b	d0,GACOMSTAT3.w
-	move.l	d0,GACOMSTAT6.w
-	move.w	d0,GACOMSTAT4.w
+	move.b	d0,timeStonesSub.w		; Reset time stones retrieved
+	move.b	d0,specStageID.w		; Reset stage ID
+	move.l	d0,specStageTimer.w		; Reset timer
+	move.w	d0,specStageRings.w		; Reset rings
 	bra.w	SPCmdFinish
 
 ; -------------------------------------------------------------------------
@@ -1102,11 +1104,11 @@ SPCmd_LoadCominSoon:
 	jmp	_CDBIOS.w
 
 ; -------------------------------------------------------------------------
-; Load staff credits
+; Load special stage 8 credits
 ; -------------------------------------------------------------------------
 
-SPCmd_LoadStaffCreds:
-	lea	File_StaffCredits(pc),a0	; Load file
+SPCmd_LoadSS8Credits:
+	lea	File_SS8Credits(pc),a0		; Load file
 	bsr.w	WaitWordRAMAccess
 	lea	WORDRAM2M,a1
 	jsr	LoadFile.w
@@ -1138,7 +1140,7 @@ SPCmd_LoadMCSonic:
 	jsr	LoadFile.w
 	bsr.w	GiveWordRAMAccess
 
-	bra.w	SPCmd_PlayR8AMus		; Play Metallic Madness present music
+	bra.w	SPCmd_PlayR8AMus		; Play Metallic Madness Present music
 
 ; -------------------------------------------------------------------------
 ; Load Tails screen
@@ -1177,7 +1179,7 @@ SPCmd_LoadCuteSonic:
 	jsr	LoadFile.w
 	bsr.w	GiveWordRAMAccess
 
-	bra.w	SPCmd_PlayR1CMus		; Play Palmtree Panic good future music
+	bra.w	SPCmd_PlayR1CMus		; Play Palmtree Panic Good Future music
 
 ; -------------------------------------------------------------------------
 ; Load best staff times screen
@@ -1292,7 +1294,7 @@ SPCmd_LoadDAGarden:
 
 	lea	File_DAGardenData(pc),a0	; Load data file
 	bsr.w	WaitWordRAMAccess
-	lea	WORDRAM2M+$12C00,a1
+	lea	WORDRAM2M+DAGrdnTrkTitles,a1
 	jsr	LoadFile.w
 	bsr.w	GiveWordRAMAccess
 
@@ -1392,9 +1394,9 @@ SPCmd_LoadGoodEnd:
 SPCmd_LoadSpecStage:
 	bclr	#3,GAIRQMASK.w			; Disable timer interrupt
 
-	move.b	GACOMCMD3.w,GACOMSTAT3.w	; Set stage ID
-	move.b	GACOMCMDA.w,GACOMSTATA.w	; Set stages beaten array
-	move.b	GACOMCMDB.w,ssFlags.w		; Set flags
+	move.b	specStageIDCmd.w,specStageID.w	; Set stage ID
+	move.b	timeStonesCmd.w,timeStonesSub.w	; Set time stones retrieved
+	move.b	specStageFlags.w,ssFlagsCopy.w	; Copy flags
 
 	lea	File_SpecialMain(pc),a0		; Load Main CPU file
 	bsr.w	WaitWordRAMAccess
@@ -1405,13 +1407,13 @@ SPCmd_LoadSpecStage:
 	lea	PRGRAM+$10000,a1
 	jsr	LoadFile.w
 
-	moveq	#0,d0				; Copy background graphics data into Word RAM
-	move.b	GACOMSTAT3.w,d0
+	moveq	#0,d0				; Copy stage data into Word RAM
+	move.b	specStageID.w,d0
 	mulu.w	#6,d0
-	lea	PRGRAM+$18000,a0
+	lea	SpecStageData,a0
 	move.w	4(a0,d0.w),d7
 	movea.l	(a0,d0.w),a0
-	lea	WORDRAM2M+$6D00,a1
+	lea	WORDRAM2M+SpecStgDataCopy,a1
 
 .CopyData:
 	move.b	(a0)+,(a1)+
@@ -1428,16 +1430,16 @@ SPCmd_LoadSpecStage:
 
 	move.l	#SPIRQ2,_USERCALL2+2.w		; Restore IRQ2
 	
-	btst	#1,ssFlags.w			; Were we in time attack mode?
-	bne.s	.NoLevelEndMusic		; If so, branch
+	btst	#1,ssFlagsCopy.w		; Were we in time attack mode?
+	bne.s	.NoResultsMusic			; If so, branch
 	
-	bsr.w	ResetCDDAVol			; If not, play level end music
-	lea	MusID_LevelEnd(pc),a0
+	bsr.w	ResetCDDAVol			; If not, play results music
+	lea	MusID_Results(pc),a0
 	move.w	#MSCPLAY1,d0
 	jsr	_CDBIOS.w
 
-.NoLevelEndMusic:
-	move.b	#0,ssFlags.w			; Clear special stage flags
+.NoResultsMusic:
+	move.b	#0,ssFlagsCopy.w		; Clear special stage flags copy
 	move.l	#0,curPCMDriver.w		; Reset current PCM driver
 	rts
 
@@ -1506,7 +1508,7 @@ SPCmd_PlayAmyYelpSFX:
 	bra.w	SPCmdFinish
 
 ; -------------------------------------------------------------------------
-; Play boss stomp sound
+; Play mech stomp sound
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayStompSFX:
@@ -1633,7 +1635,7 @@ ResetCDDAVol:
 	rts
 
 ; -------------------------------------------------------------------------
-; Play Palmtree Panic present music
+; Play Palmtree Panic Present music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR1AMus:
@@ -1641,7 +1643,7 @@ SPCmd_PlayR1AMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Palmtree Panic good future music
+; Play Palmtree Panic Good Future music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR1CMus:
@@ -1649,7 +1651,7 @@ SPCmd_PlayR1CMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Palmtree Panic bad future music
+; Play Palmtree Panic Bad Future music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR1DMus:
@@ -1657,7 +1659,7 @@ SPCmd_PlayR1DMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Collision Chaos present music
+; Play Collision Chaos Present music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR3AMus:
@@ -1665,7 +1667,7 @@ SPCmd_PlayR3AMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Collision Chaos good future music
+; Play Collision Chaos Good Future music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR3CMus:
@@ -1673,7 +1675,7 @@ SPCmd_PlayR3CMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Collision Chaos bad future music
+; Play Collision Chaos Bad Future music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR3DMus:
@@ -1681,7 +1683,7 @@ SPCmd_PlayR3DMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Tidal Tempest present music
+; Play Tidal Tempest Present music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR4AMus:
@@ -1689,7 +1691,7 @@ SPCmd_PlayR4AMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Tidal Tempest good future music
+; Play Tidal Tempest Good Future music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR4CMus:
@@ -1697,7 +1699,7 @@ SPCmd_PlayR4CMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Tidal Tempest bad future music
+; Play Tidal Tempest Bad Future music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR4DMus:
@@ -1705,7 +1707,7 @@ SPCmd_PlayR4DMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Quartz Quadrant present music
+; Play Quartz Quadrant Present music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR5AMus:
@@ -1713,7 +1715,7 @@ SPCmd_PlayR5AMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Quartz Quadrant good future music
+; Play Quartz Quadrant Good Future music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR5CMus:
@@ -1721,7 +1723,7 @@ SPCmd_PlayR5CMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Quartz Quadrant bad future music
+; Play Quartz Quadrant Bad Future music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR5DMus:
@@ -1729,7 +1731,7 @@ SPCmd_PlayR5DMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Wacky Workbench present music
+; Play Wacky Workbench Present music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR6AMus:
@@ -1737,7 +1739,7 @@ SPCmd_PlayR6AMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Wacky Workbench good future music
+; Play Wacky Workbench Good Future music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR6CMus:
@@ -1745,7 +1747,7 @@ SPCmd_PlayR6CMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Wacky Workbench bad future music
+; Play Wacky Workbench Bad Future music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR6DMus:
@@ -1753,7 +1755,7 @@ SPCmd_PlayR6DMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Stardust Speedway present music
+; Play Stardust Speedway Present music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR7AMus:
@@ -1761,7 +1763,7 @@ SPCmd_PlayR7AMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Stardust Speedway good future music
+; Play Stardust Speedway Good Future music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR7CMus:
@@ -1769,7 +1771,7 @@ SPCmd_PlayR7CMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Stardust Speedway bad future music
+; Play Stardust Speedway Bad Future music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR7DMus:
@@ -1777,7 +1779,7 @@ SPCmd_PlayR7DMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Metallic Madness present music
+; Play Metallic Madness Present music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR8AMus:
@@ -1785,7 +1787,7 @@ SPCmd_PlayR8AMus:
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
-; Play Metallic Madness good future music
+; Play Metallic Madness Good Future music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR8CMus:
@@ -1805,7 +1807,7 @@ LoopCDDA:
 	bra.w	SPCmdFinish
 
 ; -------------------------------------------------------------------------
-; Play Metallic Madness bad future music
+; Play Metallic Madness Bad Future music
 ; -------------------------------------------------------------------------
 
 SPCmd_PlayR8DMus:
@@ -1840,7 +1842,7 @@ SPCmd_PlayTimeAtkMus:
 ; Play special stage music
 ; -------------------------------------------------------------------------
 
-SPCmd_PlaySpecialMus:
+SPCmd_PlaySpecStgMus:
 	lea	MusID_Special(pc),a0
 	bra.s	LoopCDDA
 
@@ -1864,8 +1866,8 @@ SPCmd_PlayProtoWarp:
 ; Play opening music
 ; -------------------------------------------------------------------------
 
-SPCmd_PlayIntroMus:
-	lea	MusID_Intro(pc),a0
+SPCmd_PlayOpeningMus:
+	lea	MusID_Opening(pc),a0
 	bra.s	LoopCDDA
 
 ; -------------------------------------------------------------------------
@@ -1885,11 +1887,11 @@ SPCmd_PlayTitleMus:
 	bra.s	PlayCDDA
 
 ; -------------------------------------------------------------------------
-; Play level end music
+; Play results music
 ; -------------------------------------------------------------------------
 
-SPCmd_PlayLvlEndMus:
-	lea	MusID_LevelEnd(pc),a0
+SPCmd_PlayResultsMus:
+	lea	MusID_Results(pc),a0
 	bra.s	PlayCDDA
 
 ; -------------------------------------------------------------------------
@@ -2009,7 +2011,7 @@ SPCmd_TestAmyYelpSFX:
 	bra.w	SPCmdFinish
 
 ; -------------------------------------------------------------------------
-; Play stomp sound (sound test)
+; Play mech stomp sound (sound test)
 ; -------------------------------------------------------------------------
 
 SPCmd_TestStompSFX:
@@ -2182,47 +2184,47 @@ WaitWordRAMAccess:
 MusID_ProtoWarp:
 	dc.w	CDDA_WARP			; Prototype warp
 MusID_R1A:
-	dc.w	CDDA_R1A			; Palmtree Panic present
+	dc.w	CDDA_R1A			; Palmtree Panic Present
 MusID_R1C:
-	dc.w	CDDA_R1C			; Palmtree Panic good future
+	dc.w	CDDA_R1C			; Palmtree Panic Good Future
 MusID_R1D:
-	dc.w	CDDA_R1D			; Palmtree Panic bad future
+	dc.w	CDDA_R1D			; Palmtree Panic Bad Future
 MusID_R3A:
-	dc.w	CDDA_R3A			; Collision Chaos present
+	dc.w	CDDA_R3A			; Collision Chaos Present
 MusID_R3C:
-	dc.w	CDDA_R3C			; Collision Chaos good future
+	dc.w	CDDA_R3C			; Collision Chaos Good Future
 MusID_R3D:
-	dc.w	CDDA_R3D			; Collision Chaos bad future
+	dc.w	CDDA_R3D			; Collision Chaos Bad Future
 MusID_R4A:
-	dc.w	CDDA_R4A			; Tidal Tempest present
+	dc.w	CDDA_R4A			; Tidal Tempest Present
 MusID_R4C:
-	dc.w	CDDA_R4C			; Tidal Tempest good future
+	dc.w	CDDA_R4C			; Tidal Tempest Good Future
 MusID_R4D:
-	dc.w	CDDA_R4D			; Tidal Tempest bad future
+	dc.w	CDDA_R4D			; Tidal Tempest Bad Future
 MusID_R5A:
-	dc.w	CDDA_R5A			; Quartz Quadrant present
+	dc.w	CDDA_R5A			; Quartz Quadrant Present
 MusID_R5C:
-	dc.w	CDDA_R5C			; Quartz Quadrant good future
+	dc.w	CDDA_R5C			; Quartz Quadrant Good Future
 MusID_R5D:
-	dc.w	CDDA_R5D			; Quartz Quadrant bad future
+	dc.w	CDDA_R5D			; Quartz Quadrant Bad Future
 MusID_R6A:
-	dc.w	CDDA_R6A			; Wacky Workbench present
+	dc.w	CDDA_R6A			; Wacky Workbench Present
 MusID_R6C:
-	dc.w	CDDA_R6C			; Wacky Workbench good future
+	dc.w	CDDA_R6C			; Wacky Workbench Good Future
 MusID_R6D:
-	dc.w	CDDA_R6D			; Wacky Workbench bad future
+	dc.w	CDDA_R6D			; Wacky Workbench Bad Future
 MusID_R7A:
-	dc.w	CDDA_R7A			; Stardust Speedway present
+	dc.w	CDDA_R7A			; Stardust Speedway Present
 MusID_R7C:
-	dc.w	CDDA_R7C			; Stardust Speedway good future
+	dc.w	CDDA_R7C			; Stardust Speedway Good Future
 MusID_R7D:
-	dc.w	CDDA_R7D			; Stardust Speedway bad future
+	dc.w	CDDA_R7D			; Stardust Speedway Bad Future
 MusID_R8A:
-	dc.w	CDDA_R8A			; Metallic Madness present
+	dc.w	CDDA_R8A			; Metallic Madness Present
 MusID_R8C:
-	dc.w	CDDA_R8C			; Metallic Madness good future
+	dc.w	CDDA_R8C			; Metallic Madness Good Future
 MusID_R8D:
-	dc.w	CDDA_R8D			; Metallic Madness bad future
+	dc.w	CDDA_R8D			; Metallic Madness Bad Future
 MusID_Boss:
 	dc.w	CDDA_BOSS			; Boss
 MusID_Final:
@@ -2231,8 +2233,8 @@ MusID_Title:
 	dc.w	CDDA_TITLE			; Title screen
 MusID_TimeAttack:
 	dc.w	CDDA_TMATK			; Time attack menu
-MusID_LevelEnd:
-	dc.w	CDDA_LVLEND			; Level end
+MusID_Results:
+	dc.w	CDDA_RESULTS			; Results
 MusID_Shoes:
 	dc.w	CDDA_SHOES			; Speed shoes
 MusID_Invinc:
@@ -2243,7 +2245,7 @@ MusID_Special:
 	dc.w	CDDA_SPECIAL			; Special stage
 MusID_DAGarden:
 	dc.w	CDDA_DAGARDEN			; D.A. Garden
-MusID_Intro:
+MusID_Opening:
 	dc.w	CDDA_INTRO			; Opening
 MusID_Ending:
 	dc.w	CDDA_ENDING			; Ending

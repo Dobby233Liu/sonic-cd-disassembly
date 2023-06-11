@@ -13,6 +13,8 @@
 ; Driver
 ; -------------------------------------------------------------------------
 
+BOSS	EQU	0
+
 	org	PCMDriver
 	dc.b	"SNCBNK25.S28    "
 	include	"Sound Drivers/PCM/_Driver.asm"
@@ -30,7 +32,7 @@ SFXIndex:
 	dc.l	SFX_Yeah
 	dc.l	SFX_AmyGiggle
 	dc.l	SFX_AmyYelp
-	dc.l	SFX_BossStomp
+	dc.l	SFX_MechStomp
 	dc.l	SFX_Bumper
 
 ; -------------------------------------------------------------------------
@@ -54,7 +56,7 @@ SFXPriorities:
 	dc.b	$70				; "Yeah"
 	dc.b	$70				; Amy giggle
 	dc.b	$70				; Amy yelp
-	dc.b	$70				; Boss stomp
+	dc.b	$70				; Mech stomp
 	dc.b	$70				; Bumper
 	even
 
@@ -113,8 +115,8 @@ SFX_AmyGiggle:
 SFX_AmyYelp:
 	include	"Sound Drivers/PCM/SFX/Amy Yelp.asm"
 	even
-SFX_BossStomp:
-	include	"Sound Drivers/PCM/SFX/Boss Stomp.asm"
+SFX_MechStomp:
+	include	"Sound Drivers/PCM/SFX/Mech Stomp.asm"
 	even
 SFX_Bumper:
 	include	"Sound Drivers/PCM/SFX/Blank 1.asm"
@@ -136,7 +138,7 @@ SampleIndex:
 	SAMPPTR	Strings
 	SAMPPTR	Future
 	SAMPPTR	Past
-	SAMPPTR	BossStomp
+	SAMPPTR	MechStomp
 	SAMPPTR	AmyGiggle
 	SAMPPTR	AmyYelp
 	SAMPPTR	Alright
@@ -159,7 +161,7 @@ SampleIndex:
 	SAMPLE	Strings,	$06CC, 0, 0, 0
 	SAMPLE	Future,		$0000, 0, 0, 0
 	SAMPLE	Past,		$0000, 0, 0, 0
-	SAMPLE	BossStomp,	$0000, 0, 0, 0
+	SAMPLE	MechStomp,	$0000, 0, 0, 0
 	SAMPLE	AmyGiggle,	$0000, 0, 0, 0
 	SAMPLE	AmyYelp,	$0000, 0, 0, 0
 	SAMPLE	Alright,	$0000, 0, 0, 0
@@ -189,7 +191,7 @@ SampleIndex:
 	even
 	SAMPDAT	Future,		"Sound Drivers/PCM/Samples/Future.bin"
 	SAMPDAT	Past,		"Sound Drivers/PCM/Samples/Past.bin"
-	SAMPDAT	BossStomp,	"Sound Drivers/PCM/Samples/Boss Stomp.bin"
+	SAMPDAT	MechStomp,	"Sound Drivers/PCM/Samples/Mech Stomp.bin"
 	SAMPDAT	AmyGiggle,	"Sound Drivers/PCM/Samples/Amy Giggle.bin"
 	SAMPDAT	AmyYelp,	"Sound Drivers/PCM/Samples/Amy Yelp.bin"
 	SAMPDAT	Alright,	"Sound Drivers/PCM/Samples/Alright.bin"

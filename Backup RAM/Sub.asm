@@ -19,7 +19,7 @@ VARSSTART	rs.b	0			; Start of variables
 		rs.b	$800			; Unused
 irq1Flag	rs.b	1			; IRQ1 flag
 		rs.b	$17FF			; Unused
-VARSSZ		EQU	__rs-VARSSTART		; Size of variables area
+VARSLEN		EQU	__rs-VARSSTART		; Size of variables area
 
 decompWindow	EQU	WORDRAM2M+$38000	; Decompression sliding window
 
@@ -38,13 +38,13 @@ decompWindow	EQU	WORDRAM2M+$38000	; Decompression sliding window
 	move.l	d0,GACOMSTAT8.w
 	move.l	d0,GACOMSTATC.w
 	
-	bset	#7,GASUBFLAG.w			; Tell Main CPU we're ready to accept Word RAM access
+	bset	#7,GASUBFLAG.w			; Mark as started
 	bclr	#1,GAIRQMASK.w			; Disable level 1 interrupt
 	bclr	#3,GAIRQMASK.w			; Disable timer interrupt
 	move.b	#3,GACDCDEVICE.w		; Set CDC device to "Sub CPU"
 
 	lea	VARSSTART,a0			; Clear variables
-	move.w	#VARSSZ/4-1,d7
+	move.w	#VARSLEN/4-1,d7
 
 .ClearVars:
 	move.l	#0,(a0)+
@@ -61,7 +61,7 @@ decompWindow	EQU	WORDRAM2M+$38000	; Decompression sliding window
 	dbf	d7,.ClearWordRAM
 
 	bset	#1,GAIRQMASK.w			; Enable level 1 interrupt
-	bclr	#7,GASUBFLAG.w			; Tell Main CPU we're done initializing
+	bclr	#7,GASUBFLAG.w			; Mark as initialized
 
 ; -------------------------------------------------------------------------
 
@@ -167,17 +167,77 @@ UnkDecomp:
 	rts
 
 ; -------------------------------------------------------------------------
-; Mass copy 128 bytes
+; Mass copy
 ; -------------------------------------------------------------------------
 ; PARAMETERS:
 ;	a1.l - Pointer to source data
 ;	a2.l - Pointer to destination buffer
 ; -------------------------------------------------------------------------
 
-MassCopy:
-	rept	32
-		move.l	(a1)+,(a2)+
-	endr
+Copy128:
+	move.l	(a1)+,(a2)+
+Copy124:
+	move.l	(a1)+,(a2)+
+Copy120:
+	move.l	(a1)+,(a2)+
+Copy116:
+	move.l	(a1)+,(a2)+
+Copy112:
+	move.l	(a1)+,(a2)+
+Copy108:
+	move.l	(a1)+,(a2)+
+Copy104:
+	move.l	(a1)+,(a2)+
+Copy100:
+	move.l	(a1)+,(a2)+
+Copy96:
+	move.l	(a1)+,(a2)+
+Copy92:
+	move.l	(a1)+,(a2)+
+Copy88:
+	move.l	(a1)+,(a2)+
+Copy84:
+	move.l	(a1)+,(a2)+
+Copy80:
+	move.l	(a1)+,(a2)+
+Copy76:
+	move.l	(a1)+,(a2)+
+Copy72:
+	move.l	(a1)+,(a2)+
+Copy68:
+	move.l	(a1)+,(a2)+
+Copy64:
+	move.l	(a1)+,(a2)+
+Copy60:
+	move.l	(a1)+,(a2)+
+Copy56:
+	move.l	(a1)+,(a2)+
+Copy52:
+	move.l	(a1)+,(a2)+
+Copy48:
+	move.l	(a1)+,(a2)+
+Copy44:
+	move.l	(a1)+,(a2)+
+Copy40:
+	move.l	(a1)+,(a2)+
+Copy36:
+	move.l	(a1)+,(a2)+
+Copy32:
+	move.l	(a1)+,(a2)+
+Copy28:
+	move.l	(a1)+,(a2)+
+Copy24:
+	move.l	(a1)+,(a2)+
+Copy20:
+	move.l	(a1)+,(a2)+
+Copy16:
+	move.l	(a1)+,(a2)+
+Copy12:
+	move.l	(a1)+,(a2)+
+Copy8:
+	move.l	(a1)+,(a2)+
+Copy4:
+	move.l	(a1)+,(a2)+
 	rts
 
 ; -------------------------------------------------------------------------
