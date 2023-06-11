@@ -61,7 +61,7 @@ if exist "DA Garden\Track Titles.sym" ( del "DA Garden\Track Titles.sym" > nul )
 %ASM68K% /e PROTOTYPE=0 /e H32=0 "Title Screen\Secrets\Special Stage 8 Credits.asm", "_Built\Files\SPEEND.MMD", , "Title Screen\Secrets\Special Stage 8 Credits.lst"
 
 if exist "_Built\Files\DUMMY5.MMD" (del "_Built\Files\DUMMY5.MMD" > nul)
-%ASM68K% /e PROTOTYPE=1 /e H32=0 "Title Screen\Secrets\Sound Test (Prototype).asm", "_Built\Files\DUMMY5.MMD", , "Title Screen\Secrets\Sound Test (Prototype).lst"
+%ASM68K% /e PROTOTYPE=0 /e H32=0 "Title Screen\Secrets\Sound Test.asm", "_Built\Files\DUMMY5.MMD", , "Title Screen\Secrets\Sound Test.lst"
 if exist "_Built\Files\DUMMY5.MMD" (
     copy "_Built\Files\DUMMY5.MMD" "_Built\Files\DUMMY6.MMD" > nul
     copy "_Built\Files\DUMMY5.MMD" "_Built\Files\DUMMY7.MMD" > nul
