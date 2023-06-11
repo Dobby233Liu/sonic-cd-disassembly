@@ -707,7 +707,7 @@ VInterrupt:
 	dc.w	VInt_CopyFrameData-.Routines
 	dc.w	VInt_CopyFrameData-.Routines
 	dc.w	VInt_CopyFrameData-.Routines
-	dc.w	VInt_LoadFrameWork-.Routines
+	dc.w	VInt_CopyFrameData-.Routines
 	
 ; -------------------------------------------------------------------------
 
@@ -774,36 +774,6 @@ VInt_LoadFramePal:
 VInt_End:
 	movem.l	(sp)+,d0-a6
 	rte
-
-; -------------------------------------------------------------------------
-; Unused V-INT routine to copy the currently worked on frame data
-; into VDP memory
-; -------------------------------------------------------------------------
-
-VInt_LoadFrameWork:
-	lea	frameDMA.w,a0			; Get frame DMA info
-	move.w	(a0),d7				; Get activated flag
-	clr.w	(a0)+				; Clear it
-	tst.w	d7				; Was the flag set?
-	beq.s	.NoArt				; If not, branch
-	
-	move.l	(a0)+,d0			; Copy frame art into VRAM
-	move.l	(a0)+,d1
-	move.w	#$12C0/2,d2
-	movem.l	d7-a0,-(sp)
-	jsr	BIOS_DMA68k.w
-	movem.l	(sp)+,d7-a0
-
-.NoArt:
-	VDPCMD	move.l,$0000,CRAM,WRITE,VDPCTRL	; Copy currently displayed frame palette into CRAM
-	moveq	#$20/2-1,d7
-	lea	palette.w,a1
-
-.CopyFramePal:
-	move.w	(a1)+,(a5)
-	dbf	d7,.CopyFramePal
-	
-	bra.w	VInt_LoadFramePal		; Load palette data
 
 ; -------------------------------------------------------------------------
 ; Data

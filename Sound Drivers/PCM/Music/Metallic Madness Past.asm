@@ -1,8 +1,7 @@
 MetallicMadnessPast_Header:
 	smpsHeaderStartSong	$07
-	smpsHeaderChan		$09
+	smpsHeaderChan		$08
 	smpsHeaderTempo		$01, $0B
-	smpsHeaderPCM		MetallicMadnessPast_Rhythm, $00, $FF
 	smpsHeaderPCM		MetallicMadnessPast_PCM1, $DB, $FF
 	smpsHeaderPCM		MetallicMadnessPast_PCM2, $DB, $EF
 	smpsHeaderPCM		MetallicMadnessPast_PCM3, $CE, $BF

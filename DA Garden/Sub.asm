@@ -102,7 +102,6 @@ ctrlTap		EQU	ctrlData+1		; Controller tapped buttons data
 	move.l	d0,GACOMSTAT8.w
 	move.l	d0,GACOMSTATC.w
 	
-	bclr	#3,GASUBFLAG.w			; Clear unused flag
 	bclr	#4,GASUBFLAG.w			; Clear music change flag
 	bclr	#5,GASUBFLAG.w			; Clear music change communication flag
 	bclr	#6,GASUBFLAG.w			; Clear exit flag

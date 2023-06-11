@@ -918,16 +918,6 @@ StageSels:
 	; Special Stage 1 demo
 	dc.w	SCMD_SPECSTAGE, $000
 	dc.b	TIME_PAST, 0
-	
-	; Unused
-	dc.w	SCMD_R11A, $000
-	dc.b	TIME_PRESENT, 0
-	dc.w	SCMD_R11A, $000
-	dc.b	TIME_PRESENT, 0
-	dc.w	SCMD_R11A, $000
-	dc.b	TIME_PRESENT, 0
-	dc.w	SCMD_R11A, $000
-	dc.b	TIME_PRESENT, 0
 
 ; -------------------------------------------------------------------------
 ; Demo mode

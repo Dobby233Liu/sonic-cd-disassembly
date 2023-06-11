@@ -704,7 +704,6 @@ StartResults:
 	move.w	#0,playerCtrlHold.w		; If so, force the player to stay still
 
 .NotSSZ3:
-	move.b	#180,oLvlEndTimer(a0)		; Set (unused) timer
 	addq.b	#2,oRoutine(a0)			; Next routine
 
 	jsr	FindObjSlot			; Spawn results

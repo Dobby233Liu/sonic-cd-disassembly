@@ -251,18 +251,13 @@ leftBound 		rs.w	1		; Camera left boundary
 rightBound 		rs.w	1		; Camera right boundary
 topBound 		rs.w	1		; Camera top boundary
 bottomBound 		rs.w	1		; Camera bottom boundary
-unusedF730 		rs.w	1
 leftBound3 		rs.w	1
 			rs.b	6
 scrollXDiff		rs.w	1		; Horizontal scroll difference
 scrollYDiff		rs.w	1		; Vertical scroll difference
 camYCenter 		rs.w	1		; Camera Y center
-unusedF740 		rs.b	1
-unusedF741 		rs.b	1
 eventRoutine		rs.w	1		; Level event routine ID
 scrollLock 		rs.w	1		; Scroll lock flag
-unusedF746 		rs.w	1
-unusedF748 		rs.w	1
 horizBlkCrossed		rs.b	1		; Horizontal block crossed flag
 vertiBlkCrossed		rs.b	1		; Vertical block crossed flag
 horizBlkCrossedBg	rs.b	1		; Horizontal block crossed flag (background)

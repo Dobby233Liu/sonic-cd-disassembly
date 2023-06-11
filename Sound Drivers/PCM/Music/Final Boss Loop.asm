@@ -1,8 +1,7 @@
 FinalBossLoop_Header:
 	smpsHeaderStartSong	$07
-	smpsHeaderChan		$09
+	smpsHeaderChan		$08
 	smpsHeaderTempo		$01, $06
-	smpsHeaderPCM		FinalBossLoop_Rhythm, $00, $FF
 	smpsHeaderPCM		FinalBossLoop_PCM1, $00, $FF
 	smpsHeaderPCM		FinalBossLoop_PCM2, $00, $FF
 	smpsHeaderPCM		FinalBossLoop_Rhythm, $00, $FF

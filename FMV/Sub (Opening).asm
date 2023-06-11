@@ -63,7 +63,7 @@
 	; RAM, and also results in the last 8 bytes in a PCM data packet to go
 	; unused, causing clicks/skipping.
 	; See the note below for why this workaround wasn't even necessary to begin with.
-	move.w	#$FFF-1,d3			; Number of bytes per bank
+	move.w	#$1000-1,d3			; Number of bytes per bank
 	lea	PCMWAVE,a6			; PCM wave RAM
 	
 .StreamPCMLoop:
@@ -157,7 +157,7 @@ InitPCMWave:
 	; why the PCM streaming code doesn't copy enough bytes. Setting this flag is
 	; actually unnecessary in this context, because the PCM chip wraps back to
 	; the very start after it goes past the end anyways.
-	move.b	#$FF,PCMWAVE+($FFF*2)		; Set loop flag
+	;move.b	#$FF,PCMWAVE+($FFF*2)		; Set loop flag
 	rts
 	
 ; -------------------------------------------------------------------------
@@ -167,9 +167,7 @@ InitPCMWave:
 InitPCMRegs:
 	movem.l	d2-d7,-(sp)			; Save registers
 	
-	lea	PCMREGS,a6			; PCM registers
 	lea	.RegValues,a5			; Register values
-	
 	lea	PCMREGS,a6			; Control and sound PCM1
 	move.b	#$C0,PCMCTRL-PCMREGS(a6)
 	addq.l	#PCMENV-PCMREGS,a6		; Go to the ENV register
@@ -182,6 +180,9 @@ InitPCMRegs:
 	addq.l	#2,a6				; Next register
 	dbf	d7,.InitPCM1			; Loop until all registers are initialized
 	
+	; Dobby: a5's value was incremented above.
+	; Reset it back to the start of the data.
+	lea	.RegValues,a5			; Register values
 	lea	PCMREGS,a6			; Control and sound PCM2
 	move.b	#$C1,PCMCTRL-PCMREGS(a6)
 	addq.l	#PCMENV-PCMREGS,a6		; Go to the ENV register

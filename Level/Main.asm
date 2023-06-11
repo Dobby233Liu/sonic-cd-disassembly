@@ -29,7 +29,6 @@ LevelStart:
 .NotGoodFuture:
 	move.b	#0,levelStarted			; Mark the level as not started yet
 	clr.b	vintRoutine.w			; Reset V-INT routine ID
-	clr.b	usePlayer2			; Clear unused "use player 2" flag
 	if DEMO<>0
 		move.b	#0,checkpoint		; Reset checkpoint if in a demo
 	endif
@@ -526,7 +525,6 @@ UpdateGlobalAnims:
 	andi.b	#3,ringAnimFrame		; Keep the frame in range
 
 .Unknown:
-	subq.b	#1,unkAnimTimer			; Decrement Sonic 1 unused animation timer
 	bpl.s	.RingSpill			; If it hasn't run out, branch
 	move.b	#7,unkAnimTimer			; Reset animation timer
 	addq.b	#1,unkAnimFrame			; Increment frame

@@ -1,8 +1,7 @@
 StardustSpeedwayPast_Header:
 	smpsHeaderStartSong	$07
-	smpsHeaderChan		$09
+	smpsHeaderChan		$08
 	smpsHeaderTempo		$01, $04
-	smpsHeaderPCM		StardustSpeedwayPast_Rhythm, $00, $FF
 	smpsHeaderPCM		StardustSpeedwayPast_PCM1, $D4, $FF
 	smpsHeaderPCM		StardustSpeedwayPast_PCM2, $E3, $FF
 	smpsHeaderPCM		StardustSpeedwayPast_PCM3, $EE, $9F

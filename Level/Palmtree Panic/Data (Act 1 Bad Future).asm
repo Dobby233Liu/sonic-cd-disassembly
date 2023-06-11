@@ -272,9 +272,6 @@ MapSpr_Explosion:
 	include	"Level/_Objects/Explosion/Data/Mappings.asm"
 	even
 	
-	incbin	"Level/_Data/Unused/Unknown Data.bin"
-	even
-	
 Ani_Checkpoint:
 	include	"Level/_Objects/Checkpoint/Data/Animations.asm"
 	even
@@ -448,20 +445,11 @@ Art_Tamabboh:
 Art_Springboard:
 	incbin	"Level/Palmtree Panic/Objects/Springboard/Data/Art.nem"
 	even
-Art_Button:
-	incbin	"Level/Palmtree Panic/Data/Unused/Art (Button).nem"
-	even
 Art_Spikes:
 	incbin	"Level/_Objects/Spikes/Data/Art.nem"
 	even
-Art_SwingingPlatform:
-	incbin	"Level/Palmtree Panic/Data/Unused/Art (Swinging Platform).nem"
-	even
 Art_Animals:
 	incbin	"Level/Palmtree Panic/Objects/Animal/Data/Art.nem"
-	even
-Art_SpinningDiscDrill:
-	incbin	"Level/Palmtree Panic/Data/Unused/Art (Spinning Disc Drill).nem"
 	even
 Art_RobotGenWithered:
 	incbin	"Level/_Objects/Robot Generator/Data/Art (Withered).nem"
@@ -490,17 +478,17 @@ LevelCollision:
 
 LevelLayouts:
 	dc.w	.FG-LevelLayouts,    .BG-LevelLayouts,    .Null-LevelLayouts
-	dc.w	.FG2-LevelLayouts,   .Null3-LevelLayouts, .Null2-LevelLayouts
-	dc.w	.FG3-LevelLayouts,   .Null3-LevelLayouts, .Null3-LevelLayouts
-	dc.w	.Null4-LevelLayouts, .Null4-LevelLayouts, .Null4-LevelLayouts
+	dc.w	.Null-LevelLayouts,   .Null-LevelLayouts, .Null-LevelLayouts
+	dc.w	.Null-LevelLayouts,   .Null-LevelLayouts, .Null-LevelLayouts
+	dc.w	.Null-LevelLayouts, .Null-LevelLayouts, .Null-LevelLayouts
 	dc.w	.FG-LevelLayouts,    .BG-LevelLayouts,    .Null-LevelLayouts
-	dc.w	.FG2-LevelLayouts,   .Null3-LevelLayouts, .Null2-LevelLayouts
-	dc.w	.FG3-LevelLayouts,   .Null3-LevelLayouts, .Null3-LevelLayouts
-	dc.w	.Null4-LevelLayouts, .Null4-LevelLayouts, .Null4-LevelLayouts
+	dc.w	.Null-LevelLayouts,   .Null-LevelLayouts, .Null-LevelLayouts
+	dc.w	.Null-LevelLayouts,   .Null-LevelLayouts, .Null-LevelLayouts
+	dc.w	.Null-LevelLayouts, .Null-LevelLayouts, .Null-LevelLayouts
 	dc.w	.FG-LevelLayouts,    .BG-LevelLayouts,    .Null-LevelLayouts
-	dc.w	.FG2-LevelLayouts,   .Null3-LevelLayouts, .Null2-LevelLayouts
-	dc.w	.FG3-LevelLayouts,   .Null3-LevelLayouts, .Null3-LevelLayouts
-	dc.w	.Null4-LevelLayouts, .Null4-LevelLayouts, .Null4-LevelLayouts
+	dc.w	.Null-LevelLayouts,   .Null-LevelLayouts, .Null-LevelLayouts
+	dc.w	.Null-LevelLayouts,   .Null-LevelLayouts, .Null-LevelLayouts
+	dc.w	.Null-LevelLayouts, .Null-LevelLayouts, .Null-LevelLayouts
 
 .FG:
 	incbin	"Level/Palmtree Panic/Data/Foreground (Act 1 Bad Future).bin"
@@ -509,18 +497,6 @@ LevelLayouts:
 	incbin	"Level/Palmtree Panic/Data/Background (Act 1 Bad Future).bin"
 	even
 .Null:
-	dc.b	0, 0, 0, 0
-.FG2:
-	incbin	"Level/_Data/Unused/Unknown Layout 1.bin"
-	even
-.Null2:
-	dc.b	0, 0, 0, 0
-.FG3:
-	incbin	"Level/_Data/Unused/Unknown Layout 2.bin"
-	even
-.Null3:
-	dc.b	0, 0, 0, 0
-.Null4:
 	dc.b	0, 0, 0, 0
 
 ; -------------------------------------------------------------------------

@@ -1,8 +1,7 @@
 QuartzQuadrantPast_Header:
 	smpsHeaderStartSong	$07
-	smpsHeaderChan		$09
+	smpsHeaderChan		$08
 	smpsHeaderTempo		$01, $07
-	smpsHeaderPCM		QuartzQuadrantPast_Rhythm, $00, $FF
 	smpsHeaderPCM		QuartzQuadrantPast_PCM1, $EF, $FF
 	smpsHeaderPCM		QuartzQuadrantPast_PCM2, $DC, $BF
 	smpsHeaderPCM		QuartzQuadrantPast_PCM3, $C7, $9F
