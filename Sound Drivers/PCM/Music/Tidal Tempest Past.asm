@@ -1,8 +1,7 @@
 TidalTempestPast_Header:
 	smpsHeaderStartSong	$07
-	smpsHeaderChan		$08
+	smpsHeaderChan		$07
 	smpsHeaderTempo		$01, $04
-	smpsHeaderPCM		TidalTempestPast_Rhythm, $00, $6F
 	smpsHeaderPCM		TidalTempestPast_PCM1, $00, $9F
 	smpsHeaderPCM		TidalTempestPast_PCM2, $00, $6F
 	smpsHeaderPCM		TidalTempestPast_PCM3, $00, $6F

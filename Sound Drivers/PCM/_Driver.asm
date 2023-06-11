@@ -64,16 +64,17 @@ UpdateTracks:
 	moveq	#PCM_TRACK_CNT-1,d7
 
 .SongTracks:
-	adda.w	#ptrkSize,a3			; Next track
 	tst.b	(a3)				; Is this track playing?
 	bpl.s	.NextSongTrack			; If not, branch
 	jsr	UpdateTrack(pc)			; Update track
 
 .NextSongTrack:
+	adda.w	#ptrkSize,a3			; Next track
 	dbf	d7,.SongTracks			; Loop until all song tracks are updated
 
-	lea	pdrvPCMSFX1(a5),a3		; Update SFX PCM tracks
 	move.b	#$80,pdrvSFXMode(a5)		; SFX mode
+
+	lea	pdrvPCMSFX1(a5),a3		; Update SFX PCM tracks
 	moveq	#PCM_TRACK_CNT-1,d7
 
 .SFXTracks:

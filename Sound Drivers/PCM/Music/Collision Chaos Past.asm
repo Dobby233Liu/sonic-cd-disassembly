@@ -1,8 +1,7 @@
 CollisionChaosPast_Header:
 	smpsHeaderStartSong	$07
-	smpsHeaderChan		$09
+	smpsHeaderChan		$08
 	smpsHeaderTempo		$01, $05
-	smpsHeaderPCM		CollisionChaosPast_Rhythm, $00, $FF
 	smpsHeaderPCM		CollisionChaosPast_PCM1, $03, $6F
 	smpsHeaderPCM		CollisionChaosPast_PCM2, $16, $5F
 	smpsHeaderPCM		CollisionChaosPast_PCM3, $16, $6F

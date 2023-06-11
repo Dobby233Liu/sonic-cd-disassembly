@@ -1,8 +1,7 @@
 WackyWorkbenchPast_Header:
 	smpsHeaderStartSong	$07
-	smpsHeaderChan		$08
+	smpsHeaderChan		$07
 	smpsHeaderTempo		$01, $05
-	smpsHeaderPCM		WackyWorkbenchPast_Rhythm, $00, $6F
 	smpsHeaderPCM		WackyWorkbenchPast_PCM1, $05, $9F
 	smpsHeaderPCM		WackyWorkbenchPast_PCM2, $00, $AF
 	smpsHeaderPCM		WackyWorkbenchPast_PCM3, $00, $9F

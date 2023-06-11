@@ -1,8 +1,7 @@
 PalmtreePanicPast_Header:
 	smpsHeaderStartSong	$07
-	smpsHeaderChan		$08
+	smpsHeaderChan		$07
 	smpsHeaderTempo		$01, $04
-	smpsHeaderPCM		PalmtreePanicPast_Rhythm, $00, $EF
 	smpsHeaderPCM		PalmtreePanicPast_PCM1, $00, $EF
 	smpsHeaderPCM		PalmtreePanicPast_PCM2, $E7, $FF
 	smpsHeaderPCM		PalmtreePanicPast_PCM3, $D2, $7F

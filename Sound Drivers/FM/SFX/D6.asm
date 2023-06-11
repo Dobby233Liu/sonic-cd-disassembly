@@ -2,7 +2,7 @@ SonicCD_D6_Header:
 	smpsHeaderStartSong	$06
 	smpsHeaderVoice		SonicCD_D6_Voices
 	smpsHeaderTempoSFX	$01
-	smpsHeaderChanSFX	$02	; BUG: Should be 1
+	smpsHeaderChanSFX	$01
 	smpsHeaderSFXChannel	cFM6, SonicCD_D6_FM6, $00, $04
 
 SonicCD_D6_FM6:
