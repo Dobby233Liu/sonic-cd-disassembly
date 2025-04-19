@@ -1,6 +1,7 @@
 @echo off
 set REGION=1
 set OUTPUT=SCD.iso
+set OUTPUTB=SCD.bin
 set ASM68K=_Bin\asm68k.exe /p /o ae-,l.,ow+ /e REGION=%REGION%
 set AS=_Bin\asw.exe -q -xx -n -A -L -U -E -i .
 set P2BIN=_Bin\p2bin.exe
@@ -104,7 +105,8 @@ echo.
 echo Compiling filesystem...
 _Bin\mkisofs.exe -quiet -abstract ABS.TXT -biblio BIB.TXT -copyright CPY.TXT -A "SEGA ENTERPRISES" -V "SONIC_CD___" -publisher "SEGA ENTERPRISES" -p "SEGA ENTERPRISES" -sysid "MEGA_CD" -iso-level 1 -o _Built\Misc\Files.BIN _Built\Files
 
-%ASM68K% main.asm, _Built\%OUTPUT%
+%ASM68K% /e BINMODE=0 main.asm, _Built\%OUTPUT%
+rem %ASM68K% /e BINMODE=1 main.asm, _Built\%OUTPUTB%
 del _Built\Misc\Files.BIN > nul
 
 pause

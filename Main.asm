@@ -9,6 +9,11 @@
 ; Header
 ; -------------------------------------------------------------------------
 
+	if BINMODE=1
+		dc.l	$00ffffff, $ffffffff, $ffffff00
+		dc.w	$0002, $0001
+	endif
+
 	dc.b	"SEGADISCSYSTEM  "		; Disk type ID
 	;if REGION=JAPAN				; Volume ID
 	;	dc.b	"SEGAIPSAMP ", 0
